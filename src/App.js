@@ -6,14 +6,12 @@ import Landing from "./components/Landing";
 function App() {
   return (
     <div className="App">
-      <h1>Profile</h1>
         <BrowserRouter>
             <Routes>
                 <Route exact path="/profile" element={<Profile/>}/>
                 <Route exact path="/landing" element={<Landing/>}/>
             </Routes>
         </BrowserRouter>
-
     </div>
   );
 }
