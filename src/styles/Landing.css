@@ -1,0 +1,59 @@
+.title {
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 55px;
+    line-height: 60px;
+    position: relative;
+    top: 150px;
+    left: 70px;
+    margin: auto;
+}
+
+.buttonContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.loginButtonLanding {
+    background-color: #5977E3;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 50px;
+    position: relative;
+    top: 300px;
+    left: 70px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 300px;
+    height: 60px;
+}
+
+.registerButtonLanding {
+    background-color: #70C2AC;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 50px;
+    position: relative;
+    top: 300px;
+    left: 70px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 300px;
+    height: 60px;
+}
+
+.registerButtonLanding:hover {
+    background-color: #589E8B;
+}
+
+.loginButtonLanding:hover{
+    background-color: #4862BE;
+}
