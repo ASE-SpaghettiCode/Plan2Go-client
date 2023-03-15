@@ -1,20 +1,18 @@
 import React from 'react';
 import '../styles/Landing.css';
 import logo from '../images/Logo.png';
+import LandingLayout from "./LandingLayout";
 
 const Landing = () => {
     return (
-        <div>
-                <div className={"backgroundImage"}>
-                    <div className={"backgroundColor"}></div>
-                    <img src={logo} className={"logo"}/>
-                    <hr className={"line"}/>
-                    <p className={"title"}>Where will you go next?</p>
-                    <p className={"subtitle"}>Find your next adventure, let's go!</p>
-                    <button className={"button"}>👤 Log In</button>
-                    <button className={"button"}>📝 Register</button>
-                </div>
-        </div>
+        <LandingLayout>
+            <p className={"title"}>Tell us about your last adventure</p>
+            <p className={"title"}>and start your next today</p>
+            <div className={"buttonContainer"}>
+                <button className={"loginButtonLanding"}>Log In</button>
+                <button className={"registerButtonLanding"}>Register</button>
+            </div>
+        </LandingLayout>
     );
 }
 
