@@ -26,6 +26,7 @@
     width: 120px;
     position: relative;
     margin-left: 60px;
+    cursor: pointer;
 }
 
 .line {
