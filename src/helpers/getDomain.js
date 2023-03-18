@@ -5,10 +5,10 @@
  * @returns {string}
  */
 export const getDomain = () => {
-    return 'http://localhost:8080';
+    return 'http://localhost:8081';
 };
 
-export const getWebsocketDomain = () => {
-    return 'ws://localhost:8080';
+// export const getWebsocketDomain = () => {
+//     return 'ws://localhost:8081';
     // return devUrl;
-}
+// }
