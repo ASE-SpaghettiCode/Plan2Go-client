@@ -9,10 +9,11 @@ export const Register = () => {
     const [password, setPassword] = useState(null);
 
     const handleRegister = async () => {
+        const newUser = new User({username, password});
+        console.log(newUser);
         try {
-            const requestBody = JSON.stringify({username, password});
-            const response = await api.post('/users', requestBody);
-
+            const response = await api.post('/users', newUser);
+            console.log(response.data);
             // Get the returned user and update a new object.
             const user = new User(response.data);
 
@@ -24,7 +25,7 @@ export const Register = () => {
             // Login successfully worked --> navigate to the route /home in the HomeRouter
             window.location.href = `/home`;
         } catch (error) {
-            alert(`Something went wrong during the login: \n${handleError(error)}`);
+            alert(`Something went wrong during the register: \n${handleError(error)}`);
         }
     }
     return (
@@ -32,14 +33,14 @@ export const Register = () => {
             <form className={"registerForm"} onSubmit={handleRegister}>
                 <div className={"formColor"}></div>
                 <h2 className="titleRegister">Welcome to Plan2Go!</h2>
-                <label className="label" for={"username"}>Username</label>
+                <label className="label" htmlFor={"username"}>Username</label>
                 <input className="input" type="text" id="username" value={username}
                        onChange={(e) => setUsername(e.target.value)}/>
-                <label className="label" for={"password"}>Password</label>
+                <label className="label" htmlFor={"password"}>Password</label>
                 <input className="input" type={"password"} id={"password"} value={password}
                        onChange={(e) => setPassword(e.target.value)}/>
                 <div className={"buttonContainer"}>
-                    <button className={"registerButtonReg"} type={"submit"}>Register</button>
+                    <button className={"registerButtonReg"} type={"submit"} onSubmit={handleRegister}>Register</button>
                 </div>
                 <p className={"registerText"}>Already have an account? <Link to={`/login`}>Log in here</Link></p>
             </form>
