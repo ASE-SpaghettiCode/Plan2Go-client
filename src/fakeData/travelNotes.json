@@ -1,0 +1,47 @@
+{
+  "travelNotes": [
+    {
+      "note_id": 1,
+      "note_title": "My Note: Zoological Museum, University Of Zurich",
+      "author_id": "user_1",
+      "author_name": "Duan1",
+      "coordinates": [47.375339257534954, 8.547955666377264]
+    },
+    {
+      "note_id": 2,
+      "note_title": "My Note: Kunsthaus Zurich",
+      "author_id": "user_2",
+      "author_name": "Duan2",
+      "coordinates": [47.37079813093797, 8.549060736523257]
+    },
+    {
+      "note_id": 3,
+      "note_title": "My Note3",
+      "author_id": "user_3",
+      "author_name": "Duan3",
+      "coordinates": [47.37079813093797, 8.549060736523257]
+    },
+    {
+      "note_id": 4,
+      "note_title": "My Note4",
+      "author_id": "user_3",
+      "author_name": "Duan3",
+      "coordinates": [47.373, 8.550]
+    },
+    {
+      "note_id": 5,
+      "note_title": "My Note5",
+      "author_id": "user_3",
+      "author_name": "Duan3",
+      "coordinates": [47.368, 8.545]
+    },
+    {
+      "note_id": 6,
+      "note_title": "My Note6",
+      "author_id": "user_3",
+      "author_name": "Duan3",
+      "coordinates": [47.359, 8.52]
+    }
+
+  ]
+}
