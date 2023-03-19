@@ -1,0 +1,114 @@
+.main{
+    min-height: 100vh;
+    background-image: linear-gradient(45deg,rgba(74, 65, 117, 0.7),rgba(43, 85, 117, 0.7));
+    font-family: Inter;
+    color: antiquewhite;
+}
+.main footer{
+    font-size: 12px;
+    font-family: "Open Sans", sans-serif;
+    padding: 15px;
+}
+.container{
+    display: grid;
+    grid-template-columns: 20% 80%;
+}
+.user{
+    margin: 20px;
+    align-items: center;
+    border-right-style: solid;
+    border-right-color: white;
+    border-right-width: 1px;
+}
+.avatar{
+    width: 80%;
+    height: 250px;
+    vertical-align: middle;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    padding-top: 50px;
+    margin: 0;
+}
+.avatar img{
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin: auto;
+    position: relative;
+}
+.information{
+    text-align: left;
+    align-items: center;
+    padding: 20px;
+    font-family: 'Inter';
+    color: #f8f5eb;
+}
+h2{
+    margin: 10px;
+}
+.follow{
+    font-style: oblique;
+    font-size: 12px;
+    margin:5px;
+}
+.postnav{
+    list-style-type: none;
+    height: 100px;
+    overflow: hidden;
+}
+.postnav a{
+    border: solid #f8f5eb;
+    border-radius: 20px;
+    padding: 10px 20px;
+    margin-left: 35px;
+    margin-right: 35px;
+    margin-top: 35px;
+    display: block;
+    color: antiquewhite;
+    float: left;
+}
+.postnav a:hover{
+    opacity: 0.7;
+}
+.postcontainer{
+    margin: 20px;
+    display: grid;
+    grid-template-columns: 320px 320px 320px;
+    align-items: center;
+    filter: drop-shadow(0 0.2rem 0.25rem rgba(0, 0, 0, 0.2));
+}
+.postcard{
+    overflow: hidden;
+    text-align: left;
+    font-family:"Times New Roman";
+    color: rgba(10, 10, 10, 0.65);
+    margin:20px;
+    height: 200px;
+    width: 280px;
+    background-color: aliceblue;
+    border-radius: 15px;
+}
+.postcard:hover{
+    opacity: 0.7;
+}
+.postcard img{
+    width: 100%;
+    height: 120px;
+    vertical-align: middle;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+}
+.postcard h1{
+    padding-left: 10px;
+    font-size: 16px;
+    font-style: italic;
+}
+.postcard h4{
+    font-size: 10px;
+    padding-left: 10px;
+    padding-top: 0;
+    font-style: normal;
+    font-weight: normal;
+}
