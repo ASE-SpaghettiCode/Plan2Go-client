@@ -6,6 +6,9 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import HomeMap from "./components/HomeMap";
 
+import TravelNoteCreation from "./components/TravelNoteCreation"
+
+
 function App() {
   return (
     <div className="App">
@@ -15,6 +18,7 @@ function App() {
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/register" element={<Register/>}/>
                 <Route path="/map" element={<HomeMap/>}/>
+                <Route path="/travel-note-creation" element={<TravelNoteCreation/>}/>
             </Routes>
         </BrowserRouter>
     </div>
