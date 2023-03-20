@@ -4,6 +4,7 @@ import Profile from "./components/Profile";
 import Landing from "./components/Landing";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import TravelNoteCreation from "./components/TravelNoteCreation"
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
                 <Route path="/landing" element={<Landing/>}/>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/register" element={<Register/>}/>
+                <Route path="/travel-note-creation" element={<TravelNoteCreation/>}/>
             </Routes>
         </BrowserRouter>
     </div>

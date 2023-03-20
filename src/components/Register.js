@@ -2,6 +2,7 @@ import '../styles/Register.css'
 import React, {useState} from "react";
 import LandingLayout from "./LandingLayout";
 import {Link} from "react-router-dom";
+
 export const Register = () => {
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
