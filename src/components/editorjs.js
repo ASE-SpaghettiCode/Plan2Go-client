@@ -3,7 +3,6 @@ import React, {useState, useEffect, useRef} from "react";
 import EditorJS from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 import ImageTool from '@editorjs/image'
-import * as MyAjax from "@testing-library/user-event/dist/upload";
 import Axios from "axios";
 
 
@@ -53,18 +52,18 @@ const EditorJs = (props) => {
                              * @return {Promise.<{success, file: {url}}>}
                              */
                             uploadByFile(file){
-                                // TODO my own logic here
-                                console.log(file)
+                                // my own upload logic here
+                                // console.log(file)
                                 const formData = new FormData;
                                 formData.append("file",file);
                                 formData.append("upload_preset","ml_default");
 
                                 return Axios.post("https://api.cloudinary.com/v1_1/drlkip0yc/image/upload",formData
                                 ).then((response)=>{
-                                        console.log(response)
-                                        //console.log(response.data['secure_url']);
+                                        // console.log(response)
+                                        // console.log(response.data['secure_url']);
                                         let newPictureLocation=response.data['secure_url'].toString();
-                                        console.log({newPictureLocation});
+                                        // console.log({newPictureLocation});
                                         return newPictureLocation
                                     }
                                 ).then((newPictureLocation) => {
