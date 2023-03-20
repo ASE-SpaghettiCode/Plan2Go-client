@@ -17,6 +17,8 @@ function App() {
                 <Route path="/landing" element={<Landing/>}/>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/register" element={<Register/>}/>
+                <Route path="/users/:id" element={<Profile/>}/>
+
                 <Route path="/map" element={<HomeMap/>}/>
                 <Route path="/travel-note-creation" element={<TravelNoteCreation readOnly={false}/>}/>
                 <Route exact path="/travel-notes/:id" element={<TravelNoteCreation readOnly={true}/>}/>

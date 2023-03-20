@@ -20,6 +20,7 @@ const User=({match})=>{
         async function fetchData() {
             try {
                 const response = await api.get('/users/' + userID);
+                console.log(response.data);
                 setUsers(response.data);
 
             } catch (error) {
@@ -38,11 +39,13 @@ const User=({match})=>{
             <div className="avatar">
                        <img src="https://images.pexels.com/photos/15652565/pexels-photo-15652565.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" />
             </div>
-            <h2>Username</h2>
-            <h2><UserUsername/></h2>
+            <h2><UserUsername user={user}/></h2>
             <p className="follow">Follower 20</p>
             <p className="follow">Following 35</p>
             <div className="information">
+                <div>
+                    <UserInfo user={user}/>
+                </div>
                 <div>We were good, we were gold
                     Kinda dream that can't be sold
                     We were right 'til we weren't
@@ -58,5 +61,12 @@ const UserUsername = ({user}) => {
             <div>{user.username}</div>
     );
 };
+
+const UserInfo = ({user}) => {
+    return (
+        <div>{user.info}</div>
+    );
+};
+
 
 export default User;
