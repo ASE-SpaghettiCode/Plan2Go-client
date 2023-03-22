@@ -17,7 +17,14 @@ const EditFormField = props => {
             type={props.type}
             placeholder={props.placeholder}
             value={props.value}
-            onChange={e => props.onChange(e.target.value)}
+            onChange={e => {
+                if (props.type === 'number'){
+                    console.log("yes")
+                    return props.onChange(Number(e.target.value))
+                }
+                console.log(props.type)
+                return props.onChange(e.target.value)
+            }}
         />
     );
 };

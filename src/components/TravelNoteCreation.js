@@ -12,9 +12,9 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import EditorJs from "./editorjs";
+import Axios from "axios";
 
 
-const fakeTitle_short = "10 Days in Italy - What A Trip!"
 const DEFAULT_INITIAL_DATA = () => {
     return {
         "time": new Date().getTime(),
@@ -31,7 +31,12 @@ const DEFAULT_INITIAL_DATA = () => {
 }
 
 
-export default function TravelNoteCreation(){
+export default function TravelNoteCreation(props){
+    const [authorId, setAuthorId] = useState("fake_author_id")
+    const [authorProfileImage,setAuthorProfileImage] = useState('https://res.cloudinary.com/drlkip0yc/image/upload/v1679279539/fake-profile-photo_qess5v.jpg')
+    const [noteTitle, setNoteTitle] =  useState("Give your travel note a name here.")
+    const [coverImage, setCoverImage] = useState("https://res.cloudinary.com/drlkip0yc/image/upload/v1679311004/cover-landscape_w1fbtf.jpg")
+
     const [date, setDate] = useState("");
     const [duration, setDuration] = useState(1);
     const [rating, setRating] = useState(0);
@@ -47,11 +52,25 @@ export default function TravelNoteCreation(){
     const [editorData, setEditorData] = useState(DEFAULT_INITIAL_DATA);
     // console.log(editorData)
 
-    const [readOnly, setReadOnly] = useState(false);
+    const [readOnly, setReadOnly] = useState(props.readOnly);
 
-    console.log(showOptions)
-    // console.log(destination)
-    // console.log(coordinates)
+
+    // TODO POST data; return note_id
+    const requestBody = {
+        authorId,
+        noteTitle,
+        coverImage,
+        date,
+        duration,
+        rating,
+        expense:expense,
+        numTravelers,
+        targetGroup,
+        destination,
+        coordinates,
+        editorData,
+    };
+    console.log(requestBody)
 
     // const NOMINATIM_BASE_URI = 'https://nominatim.openstreetmap.org/search?'
     const NOMINATIM_BASE_URI = 'https://photon.komoot.io/api/?' // must have "https:"
@@ -97,25 +116,54 @@ export default function TravelNoteCreation(){
         }
     }, [destination])
 
+    function handleCoverImageChange(e){
+        let file = e.target.files[0];
+        const formData = new FormData;
+        formData.append("file",file);
+        formData.append("upload_preset","ml_default");
+        Axios.post("https://api.cloudinary.com/v1_1/drlkip0yc/image/upload",formData
+        ).then((response)=>{
+            let newImageUrl = response.data['secure_url'].toString();
+            setCoverImage(newImageUrl)
+        }).catch((err) => console.log("Upload image err:", err))
+    }
+
 
     return <div>
         <div className='CoverContainer'>
             {/*TODO: Should upload custom cover image*/}
-            <img id='cover-landscape' src="./cover-landscape.jpg" />
+            {!readOnly &&
+                <label className="coverImageChange">
+                    <input id="inputCoverImage" type="file" onChange={e => handleCoverImageChange(e)}/>
+                    💡 Click here to change your cover image
+                </label>
+            }
+            <img id='cover-landscape' src={coverImage} />
         </div>
         <div className='CreationContainer'>
             <div className='AuthorContainer'>
-                <img id='authorPhoto' src='./fake-profile-photo.jpg'/>
+                <img id='authorPhoto' src={authorProfileImage}/>
                 <p id='authorName'> By: <span>Fake Duan Huiran </span> </p>
             </div>
             <div className='TitleContainer'>
-                <p id='noteTitle'> {fakeTitle_short} </p>
+                {readOnly?
+                    <div className="noteTitle">{noteTitle}</div>
+                    :
+                    <input
+                        type="text"
+                        className="noteTitle"
+                        value={noteTitle}
+                        maxLength="55"
+                        onChange={e => setNoteTitle(e.target.value)}
+                    />
+                }
             </div>
 
             <div className='IndicatorContainer'>
                 <div id='indicator1' className="indicatorItem">
                     <div className="indicatorLabel"> 🗓 Travel Date: </div>
                     <EditFormField
+                        readOnly={readOnly}
                         value={date}
                         placeholder="dd.MM.yyyy"
                         className="edit-field"
@@ -125,6 +173,7 @@ export default function TravelNoteCreation(){
                 <div id='indicator2' className="indicatorItem">
                     <div className="indicatorLabel"> 🔢 Duration: </div>
                     <EditFormField
+                        readOnly={readOnly}
                         value={duration}
                         placeholder=""
                         endAdornment={<InputAdornment position="end">(days)</InputAdornment>}
@@ -134,8 +183,9 @@ export default function TravelNoteCreation(){
                     />
                 </div>
                 <div id='indicator3' className="indicatorItem">
-                    <div className="indicatorLabel"> 💯 Rating: </div>
+                    <div className="ratingLabel indicatorLabel"> 💯 Rating: </div>
                     <RatingField
+                        readOnly={readOnly}
                         value={rating}
                         className="rating-field"
                         onChange={un => setRating(un)}
@@ -145,6 +195,7 @@ export default function TravelNoteCreation(){
                 <div id='indicator4' className="indicatorItem">
                     <div className="indicatorLabel"> 💰 Expense: </div>
                     <EditFormField
+                        readOnly={readOnly}
                         value={expense}
                         placeholder="how much ..."
                         type='number'
@@ -156,6 +207,7 @@ export default function TravelNoteCreation(){
                 <div id='indicator5' className="indicatorItem">
                     <div className="indicatorLabel"> 👬 No. of Travelers: </div>
                     <EditFormField
+                        readOnly={readOnly}
                         value={numTravelers}
                         placeholder="how many ..."
                         type='number'
@@ -166,6 +218,7 @@ export default function TravelNoteCreation(){
                 <div id='indicator6' className="indicatorItem">
                     <div className="indicatorLabel"> 🎯 Target Group: </div>
                     <EditFormField
+                        readOnly={readOnly}
                         value={targetGroup}
                         placeholder="suitable for ..."
                         className="edit-field"
@@ -175,16 +228,16 @@ export default function TravelNoteCreation(){
                 <div id='indicator7' className="indicatorItem locationItem">
                     <div className="locationLabel"> 📍 Destination: </div>
                     <EditFormField
+                        readOnly={readOnly}
                         value={destination}
                         placeholder="Search and select the exact address to be displayed on the map..."
                         className="location-edit-field"
                         onChange={un => setDestination(un)}
-                        readOnly={readOnly}
                     />
-                    <TravelExploreIcon className="search-icon" />
+                    {!readOnly && <TravelExploreIcon className="search-icon" />}
                 </div>
 
-                {showOptions && <nav className='optionList'>
+                {showOptions && !readOnly && <nav className='optionList'>
                     <List >
                         {destinationOptions.map((item) => {
                             const display_name = getDisplayName(item)

@@ -11,7 +11,7 @@ const RatingField = props => {
             className={props.className}
             placeholder={props.placeholder}
             value={props.value}
-            onChange={e => props.onChange(e.target.value)}
+            onChange={e => props.onChange(Number(e.target.value))}
         />
     );
 };
