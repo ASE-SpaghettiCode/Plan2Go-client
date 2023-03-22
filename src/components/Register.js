@@ -10,7 +10,8 @@ export const Register = () => {
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
 
-    const handleRegister = async () => {
+    const handleRegister = async (e) => {
+        e.preventDefault();
         const newUser = new User({username, password});
         console.log(newUser);
         try {
