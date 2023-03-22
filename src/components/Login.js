@@ -8,7 +8,8 @@ export const Login = () => {
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
 
-    const handleLogin = async () => {
+    const handleLogin = async (e) => {
+        e.preventDefault();
         try {
             const requestBody = JSON.stringify({username,password});
             const response = await api.post('/users/checking', requestBody);
