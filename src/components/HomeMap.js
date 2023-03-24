@@ -1,5 +1,5 @@
 import '../styles/HomeMap.css'
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMapEvents, ZoomControl } from "react-leaflet";
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import { Icon } from "leaflet";
@@ -9,6 +9,7 @@ import EditFormField from "./form_field/EditFormField";
 import {InputAdornment} from "@mui/material";
 import RatingField from "./form_field/RatingField";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
+import {api, api_server} from "../helpers/api";
 
 const myMarker = new Icon({
     iconUrl: '/myMarker.svg',
@@ -17,9 +18,24 @@ const myMarker = new Icon({
 
 
 export default function HomeMap() {
+    const [notes, setNotes] = useState(myFakeData)
     const [activeNote, setActiveNote] = useState(null)
     const [style, setStyle] = useState("mapColumn")
     const centerPosition = [47.37, 8.55]; // UZH [47.37430028227907, 8.550981197860574]
+
+    useEffect(() => {
+        async function fetchData(){
+            api_server.get(`/notes`).then((notes) => {
+                let notesWithCoordinates = notes.data.filter(note => note.coordinates !== null && note.coordinates.length !== 0)
+                setNotes(notesWithCoordinates)
+            })
+        }
+        fetchData()
+    },[])
+
+    function handleClickDetails(){
+        window.location.href = `/travel-notes/${activeNote.noteId}`
+    }
 
     function handleClick(e){
         const { lat, lng } = e.latlng;
@@ -35,7 +51,7 @@ export default function HomeMap() {
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
                     <MarkerClusterGroup chunkedLoading={true} maxClusterRadius={67}>
-                        {myFakeData.map(note => (
+                        {notes.map(note => (
                             <Marker key={note.noteId}
                                     position={[note.coordinates[1], note.coordinates[0]]}
                                     eventHandlers={{
@@ -108,7 +124,7 @@ export default function HomeMap() {
                                 readOnly={true}
                                 value={activeNote.rating}
                                 className="rating-field-sidebar"
-                                disable={true}
+                                disabled={true}
                             />
                         </div>
                         <div id='indicator7' className="indicatorItemSideBar">
@@ -120,7 +136,7 @@ export default function HomeMap() {
                             />
                         </div>
                     </div>
-                    <div className="sideBarDetailsButton"> DETAILS 🔍</div>
+                    <div onClick={handleClickDetails} className="sideBarDetailsButton"> DETAILS 🔍</div>
                 </div>}
         </div>
     )

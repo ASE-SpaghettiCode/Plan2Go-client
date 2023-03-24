@@ -2,9 +2,16 @@ import axios from 'axios';
 import { getDomain } from './getDomain';
 
 export const api = axios.create({
-    baseURL: getDomain(),
+    baseURL: getDomain("user"),
     headers: { 'Content-Type': 'application/json' }
 });
+
+export const api_server = axios.create({
+    baseURL: getDomain("note"),
+    headers: { 'Content-Type': 'application/json' }
+});
+
+console.log(getDomain("note"))
 
 export const handleError = error => {
     const response = error.response;
