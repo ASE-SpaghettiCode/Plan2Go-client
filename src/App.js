@@ -8,6 +8,8 @@ import HomeMap from "./components/HomeMap";
 
 import TravelNoteCreation from "./components/TravelNoteCreation"
 import HomeLayout from "./components/HomeLayout";
+// import EditProfile from "./components/EditProfile";
+import ProfileEdition from "./components/ProfileEdition";
 
 
 function App() {
@@ -20,6 +22,7 @@ function App() {
                 <Route path="/register" element={<Register/>}/>
                 <Route path="/users/:id" element={<Profile/>}/>
                 <Route path="/home" element={<HomeLayout/>}/>
+                <Route exat path="/profile/editing" element={<ProfileEdition/>}/>
 
                 <Route path="/map" element={<HomeMap/>}/>
                 <Route path="/travel-note-creation" element={<TravelNoteCreation readOnly={false}/>}/>
