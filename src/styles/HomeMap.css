@@ -18,11 +18,75 @@
 }
 
 .sideBar{
+    /*background: linear-gradient(70deg, rgba(200,0,0,0.05), rgba(0,0,200,0.05));*/
+    background-color: #f8f5eb;
     z-index: 99999;
+    min-width: 300px;
     width: 30%;
     height: 100vh;
     position: fixed;
     top: 0;
     left: 0;
+}
+
+.sideBarClose{
+    cursor: pointer;
+    margin: 10px 2% 0 90% ;
+
+}
+
+.noteTitleSideBar{
+    width: 90%;
+    margin-left: 5%;
+    font-weight: 600;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #505050;
+    font-size: 26px;
+    color: aliceblue;
+    font-family: 'Poppins', sans-serif;
+    background: none;
+    border: none;
+}
+
+.IndicatorContainerSideBar{
+    margin-top: 10px;
+    width: 90%;
+    margin-left: 5%;
+}
+
+.indicatorItemSideBar{
+    width: 100%;
+    display: inline-block;
+    margin-bottom: 2%;
+    padding-left: 1%;
+    border-radius: 5px;
+    background: linear-gradient(70deg, rgba(200,0,0,0.05), rgba(0,0,200,0.05));
+}
+.rating-field-sidebar{
+    margin-left: -5px;
+}
+.locationLabelDestinationSideBar{
+    margin-top: 10px;
+    width: 100%;
+}
+.location-edit-field-side-bar{
+    width: 98%;
+    margin: 5px 0 10px 0 !important;
+}
+.sideBarDetailsButton{
+    cursor: pointer;
+    margin: 20px 6% 0 60% ;
+    background: linear-gradient(70deg, rgba(200,0,0,0.05), rgba(0,0,200,0.05));
+    box-shadow: 3px 3px 2px 1px rgba(0, 0, 255, .09);
+    transition: background-color 0.3s linear 0s;
+    border: 1px solid rgb(255, 219, 219);
+    font-weight: 700;
+    color: #505050;
+    border-radius: 5px;
+    text-align: center;
+    padding: 10px;
+}
+.sideBarDetailsButton:hover {
+    background-color: #bcfdfd;
 }
 

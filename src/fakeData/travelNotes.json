@@ -1,47 +1,81 @@
-{
-  "travelNotes": [
+[
     {
-      "note_id": 1,
-      "note_title": "My Note: Zoological Museum, University Of Zurich",
-      "author_id": "user_1",
-      "author_name": "Duan1",
-      "coordinates": [47.375339257534954, 8.547955666377264]
+      "noteId": "01",
+      "authorId": "01_fake_author_id",
+      "noteTitle": "01_Give your travel note a name here.",
+      "coverImage": "https://res.cloudinary.com/drlkip0yc/image/upload/v1679311004/cover-landscape_w1fbtf.jpg",
+      "date": "20.03.2023",
+      "duration": 3,
+      "rating": 3,
+      "expense": 700,
+      "numTravelers": 3,
+      "targetGroup": "family",
+      "destination": "Universität Zürich (UZH), Zentrum, Rämistrasse, Hochschulen, 8092, Zurich, Switzerland,",
+      "coordinates": [
+        8.551061422763539,
+        47.3739351
+      ]
     },
     {
-      "note_id": 2,
-      "note_title": "My Note: Kunsthaus Zurich",
-      "author_id": "user_2",
-      "author_name": "Duan2",
-      "coordinates": [47.37079813093797, 8.549060736523257]
+      "noteId": "02",
+      "authorId": "02_fake_author_id",
+      "noteTitle": "02_Give your travel note a name here.",
+      "coverImage": "https://res.cloudinary.com/drlkip0yc/image/upload/v1679311004/cover-landscape_w1fbtf.jpg",
+      "date": "20.03.2023",
+      "duration": 3,
+      "rating": 3,
+      "expense": 700,
+      "numTravelers": 3,
+      "targetGroup": "family",
+      "destination": "Universität Zürich (UZH), Zentrum, Rämistrasse, Hochschulen, 8092, Zurich, Switzerland,",
+      "coordinates": [8.549060736523257, 47.37079813093797 ]
     },
     {
-      "note_id": 3,
-      "note_title": "My Note3",
-      "author_id": "user_3",
-      "author_name": "Duan3",
-      "coordinates": [47.37079813093797, 8.549060736523257]
+      "noteId": "03",
+      "authorId": "03_fake_author_id",
+      "noteTitle": "03_Give your travel note a name here.",
+      "coverImage": "https://res.cloudinary.com/drlkip0yc/image/upload/v1679311004/cover-landscape_w1fbtf.jpg",
+      "date": "20.03.2023",
+      "duration": 3,
+      "rating": 3,
+      "expense": 700,
+      "numTravelers": 3,
+      "targetGroup": "family",
+      "destination": "Universität Zürich (UZH), Zentrum, Rämistrasse, Hochschulen, 8092, Zurich, Switzerland,",
+      "coordinates": [8.545, 47.368]
     },
     {
-      "note_id": 4,
-      "note_title": "My Note4",
-      "author_id": "user_3",
-      "author_name": "Duan3",
-      "coordinates": [47.373, 8.550]
+      "noteId": "04",
+      "authorId": "04_fake_author_id",
+      "noteTitle": "04_Give your travel note a name here.",
+      "coverImage": "https://res.cloudinary.com/drlkip0yc/image/upload/v1679311004/cover-landscape_w1fbtf.jpg",
+      "date": "20.03.2023",
+      "duration": 3,
+      "rating": 3,
+      "expense": 700,
+      "numTravelers": 3,
+      "targetGroup": "family",
+      "destination": "Universität Zürich (UZH), Zentrum, Rämistrasse, Hochschulen, 8092, Zurich, Switzerland,",
+      "coordinates": [
+        8.551061422763539,
+        47.3739351
+      ]
     },
     {
-      "note_id": 5,
-      "note_title": "My Note5",
-      "author_id": "user_3",
-      "author_name": "Duan3",
-      "coordinates": [47.368, 8.545]
-    },
-    {
-      "note_id": 6,
-      "note_title": "My Note6",
-      "author_id": "user_3",
-      "author_name": "Duan3",
-      "coordinates": [47.359, 8.52]
+      "noteId": "05",
+      "authorId": "05_fake_author_id",
+      "noteTitle": "05_Give your travel note a name here.",
+      "coverImage": "https://res.cloudinary.com/drlkip0yc/image/upload/v1679311004/cover-landscape_w1fbtf.jpg",
+      "date": "20.03.2023",
+      "duration": 3,
+      "rating": 3,
+      "expense": 700,
+      "numTravelers": 3,
+      "targetGroup": "family",
+      "destination": "Universität Zürich (UZH), Zentrum, Rämistrasse, Hochschulen, 8092, Zurich, Switzerland,",
+      "coordinates": [
+        8.551061422763539,
+        47.3739351
+      ]
     }
-
-  ]
-}
+]

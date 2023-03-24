@@ -1,12 +1,10 @@
 import logo from "../images/Logo.png";
-import React from "react";
+import React, {useState} from "react";
 import NaviBar from "./NaviBar";
 
 import {Layout} from 'antd';
 
 const { Header, Content, Footer } = Layout;
-
-
 
 const HomeLayout: React.FC = () => {
     const goHome = () => {

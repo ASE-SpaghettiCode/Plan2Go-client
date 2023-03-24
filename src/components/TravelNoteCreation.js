@@ -130,6 +130,7 @@ export default function TravelNoteCreation(props){
 
 
     return <div>
+        {!readOnly && <div className="submitContainer"> SUBMIT </div> }
         <div className='CoverContainer'>
             {/*TODO: Should upload custom cover image*/}
             {!readOnly &&
@@ -143,7 +144,7 @@ export default function TravelNoteCreation(props){
         <div className='CreationContainer'>
             <div className='AuthorContainer'>
                 <img id='authorPhoto' src={authorProfileImage}/>
-                <p id='authorName'> By: <span>Fake Duan Huiran </span> </p>
+                <p id='authorName'> By: <span id="authorNameSpan">Fake Duan Huiran </span> </p>
             </div>
             <div className='TitleContainer'>
                 {readOnly?

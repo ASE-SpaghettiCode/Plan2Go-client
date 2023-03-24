@@ -15,6 +15,10 @@ const User=({match})=>{
         username:"",
     });
 
+    function handleEditClick() {
+        navigate('/profile/editing');
+    }
+
     const path = window.location.pathname;
     const userID = path.substring(path.lastIndexOf('/') + 1);
 
@@ -55,7 +59,7 @@ const User=({match})=>{
                     We were right 'til we weren't
                     Built a home and watched it burn</div>
             </div>
-            <Button variant="contained" color='secondary'>Edit</Button>
+            <Button variant="contained" color='secondary' onClick={handleEditClick}>Edit</Button>
         </div>
     )
 }
