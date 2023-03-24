@@ -58,7 +58,7 @@ input[type="file"] {
     width: 300%;
 }
 
-span {
+#authorNameSpan {
     display: inline-block;
     font-style:italic;
     text-decoration:underline;
@@ -168,6 +168,28 @@ span {
 .DetailsContainer{
     width: 80%;
     margin: 0 auto;
+}
+
+.submitContainer{
+    cursor: pointer;
+    border: 1px solid rgb(255, 219, 219);
+    box-shadow: 3px 3px 2px 1px rgba(0, 0, 255, .09);
+    width: 70px;
+    height: 70px;
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    border-radius: 50%;
+    background-color: #dbffff;
+    z-index: 9999999;
+    text-align: center;
+    line-height:70px;
+    transition: background-color 0.3s linear 0s;
+    font-weight: 700;
+    color: #505050;
+}
+.submitContainer:hover {
+    background-color: #50cccc;
 }
 
 

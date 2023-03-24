@@ -11,6 +11,7 @@ const RatingField = props => {
             className={props.className}
             placeholder={props.placeholder}
             value={props.value}
+            disable={props.disable}
             onChange={e => props.onChange(Number(e.target.value))}
         />
     );
