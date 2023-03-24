@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {Button} from "@mui/material";
 import '../styles/Profile.css';
 import {useNavigate} from "react-router-dom";
 import {api, handleError} from "../helpers/api";
@@ -7,12 +6,17 @@ import {api, handleError} from "../helpers/api";
 import {fill} from "@cloudinary/url-gen/actions/resize";
 import {CloudinaryImage} from '@cloudinary/url-gen';
 import {AdvancedImage} from "@cloudinary/react";
+import {max} from "@cloudinary/url-gen/actions/roundCorners";
+
+const myUserId = localStorage.getItem('id');
+
 
 const User=({match})=>{
     const navigate=useNavigate();
     const [user, setUsers]=useState({
         userId:"",
         username:"",
+        imageLink:"",
     });
 
     function handleEditClick() {
@@ -21,6 +25,30 @@ const User=({match})=>{
 
     const path = window.location.pathname;
     const userID = path.substring(path.lastIndexOf('/') + 1);
+
+    const UserImage=()=>{
+        const imageUrl=user.imageLink;
+        if(imageUrl!=null){
+            const rawimage=imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
+            const userImage = new CloudinaryImage(rawimage,{cloudName:"dgnzmridn"});
+            userImage.resize(fill().height(200).width(200)).roundCorners(max())
+            return(
+                <div>
+                    <AdvancedImage cldImg={userImage}/>
+                </div>
+            )
+        }else{
+            const fakeimageUrl="https://res.cloudinary.com/dgnzmridn/image/upload/v1653055086/n9miv50ifxgpwgshy09w.jpg"
+            const rawimage=fakeimageUrl.substring(fakeimageUrl.lastIndexOf('/') + 1);
+            const userImage = new CloudinaryImage(rawimage,{cloudName:"dgnzmridn"});
+            userImage.resize(fill().height(200).width(200)).roundCorners(max())
+            return(
+                <div>
+                    <AdvancedImage cldImg={userImage}/>
+                </div>
+            )
+        }
+    }
 
 
     useEffect(() => {
@@ -45,7 +73,7 @@ const User=({match})=>{
     return(
         <div className="user">
             <div className="avatar">
-                       <img src="https://images.pexels.com/photos/15652565/pexels-photo-15652565.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" />
+                <UserImage/>
             </div>
             <h2><UserUsername user={user}/></h2>
             <p className="follow">Follower 20</p>
@@ -59,7 +87,9 @@ const User=({match})=>{
                     We were right 'til we weren't
                     Built a home and watched it burn</div>
             </div>
-            <Button variant="contained" color='secondary' onClick={handleEditClick}>Edit</Button>
+            <div style={{display:myUserId==userID?'block':'none'}}>
+                <button className="userbutton" onClick={handleEditClick}>Edit Profile</button>
+            </div>
         </div>
     )
 }
@@ -76,13 +106,8 @@ const UserInfo = ({user}) => {
     );
 };
 
-const UserImage=({user})=>{
-    const newImage= new CloudinaryImage();
-    return(
-        <div>
-            <AdvancedImage cldImg={newImage}/>
-        </div>
-    );
-};
+
+
+
 
 export default User;
