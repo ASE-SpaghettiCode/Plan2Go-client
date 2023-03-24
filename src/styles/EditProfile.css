@@ -109,6 +109,12 @@ body {
     cursor: pointer;
 
 }
+.profileImage{
+    max-height: 200px;
+    width: auto;
+    padding: 20px;
+    max-width: 100%;
+}
 input[type="file"] {
     display: none;
 }

@@ -38,9 +38,8 @@ const ProfileEdition: React.FC = () => {
     }, []);
 
     function AvatarUpload(){
-        const [ImageSelected, setImageSelected]=useState("");
         const UploadImage=(event)=>{
-            setImageSelected(event.target.files[0]);
+            let ImageSelected=event.target.files[0];
             const formData = new FormData;
             formData.append("file",ImageSelected);
             formData.append("upload_preset","kkluslzq");
@@ -69,19 +68,21 @@ const ProfileEdition: React.FC = () => {
                     </label>
                 </div>
                 <div>
-                    {loading? (<b>Loading</b>): <img src={image} className="profile edit display-image"/>}
+                    {loading? (<b>Loading</b>): <img src={image} className="profileImage"/>}
                 </div>
             </div>
 
         )
 
     }
+
+
     return (
         <form className={"editProfileForm"} style={{ width: "400px", margin: "0 auto", height: "100vh" }}>
             <div className={"formColor"}/>
             <h2 className="titleEdit">Person info</h2>
             <div>
-                <AvatarUpload/>
+               <AvatarUpload/>
             </div>
             <label className="label" htmlFor={"username"}>Username</label>
             <input className="input" type="text" id="username" value={username}
