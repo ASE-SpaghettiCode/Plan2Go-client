@@ -1,8 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {Button} from "@mui/material";
-import '../Profile.css'
+import '../styles/Profile.css';
 import {useNavigate} from "react-router-dom";
 import {api, handleError} from "../helpers/api";
+
+import {fill} from "@cloudinary/url-gen/actions/resize";
+import {CloudinaryImage} from '@cloudinary/url-gen';
+import {AdvancedImage} from "@cloudinary/react";
 
 const User=({match})=>{
     const navigate=useNavigate();
@@ -68,5 +72,13 @@ const UserInfo = ({user}) => {
     );
 };
 
+const UserImage=({user})=>{
+    const newImage= new CloudinaryImage();
+    return(
+        <div>
+            <AdvancedImage cldImg={newImage}/>
+        </div>
+    );
+};
 
 export default User;
