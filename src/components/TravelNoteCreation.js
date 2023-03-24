@@ -13,10 +13,10 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import EditorJs from "./editorjs";
 import Axios from "axios";
+import {api, api_server} from "../helpers/api";
 
 
-const DEFAULT_INITIAL_DATA = () => {
-    return {
+let DEFAULT_INITIAL_DATA = {
         "time": new Date().getTime(),
         "blocks": [
             {
@@ -28,12 +28,18 @@ const DEFAULT_INITIAL_DATA = () => {
             },
         ]
     }
-}
 
 
 export default function TravelNoteCreation(props){
-    const [authorId, setAuthorId] = useState("fake_author_id")
+    const readOnly = props.readOnly;
+    const localUserId = localStorage.getItem('id')
+    const localUserName = localStorage.getItem('username')
+
+    const [authorId, setAuthorId] = useState(localUserId)
+    const [authorName, setAuthorName] = useState(localUserName)
+
     const [authorProfileImage,setAuthorProfileImage] = useState('https://res.cloudinary.com/drlkip0yc/image/upload/v1679279539/fake-profile-photo_qess5v.jpg')
+    // const [authorProfileImage, setAuthorProfileImage] = useState("")
     const [noteTitle, setNoteTitle] =  useState("Give your travel note a name here.")
     const [coverImage, setCoverImage] = useState("https://res.cloudinary.com/drlkip0yc/image/upload/v1679311004/cover-landscape_w1fbtf.jpg")
 
@@ -50,27 +56,79 @@ export default function TravelNoteCreation(props){
     const [showOptions, setShowOptions] = useState(false);
 
     const [editorData, setEditorData] = useState(DEFAULT_INITIAL_DATA);
-    // console.log(editorData)
 
-    const [readOnly, setReadOnly] = useState(props.readOnly);
+    const path = window.location.pathname
+    const noteId = path.substring(path.lastIndexOf('/')+1)
 
 
-    // TODO POST data; return note_id
-    const requestBody = {
-        authorId,
-        noteTitle,
-        coverImage,
-        date,
-        duration,
-        rating,
-        expense:expense,
-        numTravelers,
-        targetGroup,
-        destination,
-        coordinates,
-        editorData,
-    };
-    console.log(requestBody)
+    useEffect(() => {
+        async function fetchData(){
+            if (readOnly){
+                console.log(localUserId)
+                console.log(noteId)
+                api_server.get(`/notes/${noteId}`).then((response) => {
+                    const responseData = response.data
+                    setAuthorId(responseData.authorId)
+                    setNoteTitle(responseData.noteTitle)
+                    setCoverImage(responseData.coverImage)
+                    setDate(responseData.date)
+                    setDuration(responseData.duration)
+                    setRating(responseData.rating)
+                    setExpense(responseData.expense)
+                    setNumTravelers(responseData.numTravelers)
+                    setTargetGroup(responseData.targetGroup)
+                    setDestination(responseData.destination)
+                    setCoordinates(responseData.coordinates)
+                    return responseData.authorId
+                }).then( (newAuthorId) =>
+                    api.get(`/users/${newAuthorId}`).then((response) => {
+                        console.log(response.data.username)
+                        setAuthorName(response.data.username)
+                        const userImageURL = response.data.imageLink
+                        console.log("userImageURL:", userImageURL)
+                        if (userImageURL){
+                            setAuthorProfileImage(userImageURL)
+                        }
+                    })
+                )
+
+            }else{ // creation mode
+                api.get(`/users/${authorId}`).then((response) => {
+                    setAuthorName(response.data.username)
+                    const userImageURL = response.data.imageLink
+                    console.log("userImageURL:", userImageURL)
+                    if (userImageURL){
+                        setAuthorProfileImage(userImageURL)
+                    }
+                })
+
+            }
+        }
+        fetchData()
+    },[])
+
+    function doSubmit(){
+        const requestBody = {
+            authorId,
+            noteTitle,
+            coverImage,
+            date,
+            duration,
+            rating,
+            expense:expense,
+            numTravelers,
+            targetGroup,
+            destination,
+            coordinates,
+            editorData,
+        };
+        api_server.post('/notes', requestBody)
+            .then((response) => {
+                const responseNoteId = response.data.noteId
+                window.location.href = `/travel-notes/${responseNoteId}`
+            }).catch((err) => console.log("submit error:", err))
+    }
+
 
     // const NOMINATIM_BASE_URI = 'https://nominatim.openstreetmap.org/search?'
     const NOMINATIM_BASE_URI = 'https://photon.komoot.io/api/?' // must have "https:"
@@ -130,9 +188,8 @@ export default function TravelNoteCreation(props){
 
 
     return <div>
-        {!readOnly && <div className="submitContainer"> SUBMIT </div> }
+        {!readOnly && <div onClick={doSubmit} className="submitContainer"> SUBMIT </div> }
         <div className='CoverContainer'>
-            {/*TODO: Should upload custom cover image*/}
             {!readOnly &&
                 <label className="coverImageChange">
                     <input id="inputCoverImage" type="file" onChange={e => handleCoverImageChange(e)}/>
@@ -144,7 +201,7 @@ export default function TravelNoteCreation(props){
         <div className='CreationContainer'>
             <div className='AuthorContainer'>
                 <img id='authorPhoto' src={authorProfileImage}/>
-                <p id='authorName'> By: <span id="authorNameSpan">Fake Duan Huiran </span> </p>
+                <p id='authorName'> By: <span id="authorNameSpan">{authorName} </span> </p>
             </div>
             <div className='TitleContainer'>
                 {readOnly?
@@ -187,6 +244,7 @@ export default function TravelNoteCreation(props){
                     <div className="ratingLabel indicatorLabel"> 💯 Rating: </div>
                     <RatingField
                         readOnly={readOnly}
+                        disabled={readOnly}
                         value={rating}
                         className="rating-field"
                         onChange={un => setRating(un)}
@@ -265,7 +323,9 @@ export default function TravelNoteCreation(props){
             </div>
             <div className='DetailsContainer'>
                 <div className='editorContainer'>
-                    <EditorJs readOnly={readOnly} editorData={editorData} setEditorData={setEditorData}/>
+
+                    <EditorJs readOnly={readOnly} noteId={noteId} editorData={editorData} setEditorData={setEditorData}/>
+
                 </div>
             </div>
         </div>
