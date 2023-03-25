@@ -2,22 +2,25 @@ import React, {useEffect, useState} from "react";
 import {Layout} from 'antd';
 import '../styles/EditProfile.css'
 // import {Link} from "@mui/material";
-import { Link } from "react-router-dom";
-import { Input } from 'antd';
+import {Link} from "react-router-dom";
+import {Input} from 'antd';
 import Axios from "axios";
 import {api, handleError} from "../helpers/api";
+import logo from "../images/Logo.png";
+import NaviBar from "./NaviBar";
+import {Header} from "antd/es/layout/layout";
 
 
-const { TextArea } = Input;
+const {TextArea} = Input;
 const myUserId = localStorage.getItem('id');
 const ProfileEdition: React.FC = () => {
 
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
     const [intro, setIntro] = useState(null);
-    const [imageLink,setImageLink]=useState("https://res.cloudinary.com/dgnzmridn/image/upload/v1650889351/xnqp6ymq1ro6rm82onbj.jpg")
-    const [image, setImage]=useState(null);
-    const [loading,setLoading]=useState(false);
+    const [imageLink, setImageLink] = useState("https://res.cloudinary.com/dgnzmridn/image/upload/v1650889351/xnqp6ymq1ro6rm82onbj.jpg")
+    const [image, setImage] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
@@ -34,19 +37,20 @@ const ProfileEdition: React.FC = () => {
                 alert("Something went wrong while fetching the users! See the console for details.");
             }
         }
+
         fetchData();
     }, []);
 
-    function AvatarUpload(){
-        const UploadImage=(event)=>{
-            let ImageSelected=event.target.files[0];
+    function AvatarUpload() {
+        const UploadImage = (event) => {
+            let ImageSelected = event.target.files[0];
             const formData = new FormData;
-            formData.append("file",ImageSelected);
-            formData.append("upload_preset","kkluslzq");
+            formData.append("file", ImageSelected);
+            formData.append("upload_preset", "kkluslzq");
             setLoading(true);
-            Axios.post("https://api.cloudinary.com/v1_1/dgnzmridn/image/upload",formData
-            ).then((response)=>{
-                    let newImageLink=response.data['secure_url'].toString();
+            Axios.post("https://api.cloudinary.com/v1_1/dgnzmridn/image/upload", formData
+            ).then((response) => {
+                    let newImageLink = response.data['secure_url'].toString();
                     setImageLink(newImageLink);
                     setImage(newImageLink);
                     setLoading(false);
@@ -60,47 +64,62 @@ const ProfileEdition: React.FC = () => {
                 <div>
                     <label className="avatarChange">
                         <input type="file"
-                               onChange={(event)=>{
+                               onChange={(event) => {
                                    UploadImage(event)
                                }
-                        }/>
+                               }/>
                         Choose file
                     </label>
                 </div>
                 <div>
-                    {loading? (<b>Loading</b>): <img src={image} className="profileImage"/>}
+                    {loading ? (<b>Loading</b>) : <img src={image} className="profileImage"/>}
                 </div>
             </div>
-
         )
 
     }
 
+    const goHome = () => {
+        window.location.href = `/home`;
+    }
 
     return (
-        <form className={"editProfileForm"} style={{ width: "400px", margin: "0 auto", height: "100vh" }}>
-            <div className={"formColor"}/>
-            <h2 className="titleEdit">Person info</h2>
-            <div>
-               <AvatarUpload/>
-            </div>
-            <label className="label" htmlFor={"username"}>Username</label>
-            <input className="input" type="text" id="username" value={username}
-                   onChange={(e) => setUsername(e.target.value)}/>
-            <label className="label" htmlFor={"password"}>Password</label>
-            <input className="input" type={"password"} id={"password"} value={password}
-                   onChange={(e) => setPassword(e.target.value)}/>
-            <label className="label" htmlFor={"intro"}>Introduction</label>
-            <TextArea rows={3} className="inputIntro" type={"intro"} id={"intro"} value={intro}
-                      onChange={(e) => setIntro(e.target.value)}/>
-            {/*<input className="inputIntro" type={"intro"} id={"intro"} value={intro}*/}
-            {/*       onChange={(e) => setIntro(e.target.value)}/>*/}
-            <div className={"buttonContainer"}>
-                <button className={"loginButtonLogin"} type={"submit"}>Summit</button>
-            </div>
-            <p className={"cancel"} style={{ textAlign: "center", cursor: "pointer" }}> <Link to={`/users/${myUserId}`}>cancel</Link></p>
-            {/*<p className={"cancel"} style={{ textAlign: "center", cursor: "pointer" }}> <Link to={`/register`}>cancel</Link></p>*/}
-        </form>
+        <div>
+            <Header style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'flex-start',
+                backgroundColor: 'white',
+                width: '100%'
+            }}>
+                <img src={logo} className={"naviLogo"} onClick={goHome}/>
+                <NaviBar style={{marginLeft: 'auto'}}/>
+            </Header>
+            <form className={"editProfileForm"} style={{width: "400px", margin: "0 auto", height: "100vh"}}>
+                <div className={"formColor"}/>
+                <h2 className="titleEdit">Person info</h2>
+                <div>
+                    <AvatarUpload/>
+                </div>
+                <label className="label" htmlFor={"username"}>Username</label>
+                <input className="input" type="text" id="username" value={username}
+                       onChange={(e) => setUsername(e.target.value)}/>
+                <label className="label" htmlFor={"password"}>Password</label>
+                <input className="input" type={"password"} id={"password"} value={password}
+                       onChange={(e) => setPassword(e.target.value)}/>
+                <label className="label" htmlFor={"intro"}>Introduction</label>
+                <TextArea rows={3} className="inputIntro" type={"intro"} id={"intro"} value={intro}
+                          onChange={(e) => setIntro(e.target.value)}/>
+                {/*<input className="inputIntro" type={"intro"} id={"intro"} value={intro}*/}
+                {/*       onChange={(e) => setIntro(e.target.value)}/>*/}
+                <div className={"buttonContainer"}>
+                    <button className={"loginButtonLogin"} type={"submit"}>Summit</button>
+                </div>
+                <p className={"cancel"} style={{textAlign: "center", cursor: "pointer"}}><Link
+                    to={`/users/${myUserId}`}>cancel</Link></p>
+                {/*<p className={"cancel"} style={{ textAlign: "center", cursor: "pointer" }}> <Link to={`/register`}>cancel</Link></p>*/}
+            </form>
+        </div>
     )
 };
 

@@ -28,7 +28,7 @@ const items: MenuProps['items'] = [
                     },
                     {
                         label: (
-                            <a href={`/landing`}>
+                            <a href={`/travel-note-creation`}>
                                 Travel Note
                             </a>
                         ),

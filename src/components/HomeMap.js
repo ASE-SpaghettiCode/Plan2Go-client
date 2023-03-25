@@ -10,6 +10,9 @@ import {InputAdornment} from "@mui/material";
 import RatingField from "./form_field/RatingField";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import {api, api_server} from "../helpers/api";
+import NaviBar from "./NaviBar";
+import {Header} from "antd/es/layout/layout";
+import logo from "../images/Logo.png";
 
 const myMarker = new Icon({
     iconUrl: '/myMarker.svg',
@@ -42,8 +45,16 @@ export default function HomeMap() {
         console.log(lat, lng);
     }
 
+    const goHome = () => {
+        window.location.href = `/home`;
+    }
+
     return (
         <div>
+            <Header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', backgroundColor: 'white', width: '100%' }}>
+                <img src={logo} className={"naviLogo"} onClick={goHome}/>
+                <NaviBar style={{ marginLeft: 'auto' }} />
+            </Header>
             <div className={style}>
                 <MapContainer center={centerPosition} zoom={15} scrollWheelZoom={true}>
                     <TileLayer
