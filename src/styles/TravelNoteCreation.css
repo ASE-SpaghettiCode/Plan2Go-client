@@ -17,14 +17,13 @@
 }
 
 .coverImageChange{
-    margin-top: 6%;
     cursor: pointer;
     padding: 10px;
     border-bottom-right-radius: 10px;
     background-color: rgba(115, 115, 115, 0.6);
     color: #f8f5eb;
     position: absolute;
-    top: 0;
+    top: 64px;
 }
 
 input[type="file"] {
