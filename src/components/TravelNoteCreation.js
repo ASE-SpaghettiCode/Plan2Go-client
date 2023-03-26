@@ -193,6 +193,10 @@ export default function TravelNoteCreation(props) {
         }).catch((err) => console.log("Upload image err:", err))
     }
 
+    function handleClickAuthorName() {
+        window.location.href = `/users/${authorId}`;
+    }
+
     const goHome = () => {
         window.location.href = `/home`;
     }
@@ -211,19 +215,19 @@ export default function TravelNoteCreation(props) {
             </Header>
             <div>
                 {!readOnly && <div onClick={doSubmit} className="submitContainer"> SUBMIT </div>}
+                {!readOnly &&
+                    <label className="coverImageChange">
+                        <input id="inputCoverImage" type="file" onChange={e => handleCoverImageChange(e)}/>
+                        💡 Click here to change your cover image
+                    </label>
+                }
                 <div className='CoverContainer'>
-                    {!readOnly &&
-                        <label className="coverImageChange">
-                            <input id="inputCoverImage" type="file" onChange={e => handleCoverImageChange(e)}/>
-                            💡 Click here to change your cover image
-                        </label>
-                    }
                     <img id='cover-landscape' src={coverImage}/>
                 </div>
                 <div className='CreationContainer'>
                     <div className='AuthorContainer'>
                         <img id='authorPhoto' src={authorProfileImage}/>
-                        <p id='authorName'> By: <span id="authorNameSpan">{authorName} </span></p>
+                        <p id='authorName'> By: <span onClick={handleClickAuthorName} id="authorNameSpan">{authorName} </span></p>
                     </div>
                     <div className='TitleContainer'>
                         {readOnly ?
