@@ -17,6 +17,7 @@ const User=({match})=>{
         userId:"",
         username:"",
         imageLink:"",
+        intro:"",
     });
 
     function handleEditClick() {
@@ -102,7 +103,7 @@ const UserUsername = ({user}) => {
 
 const UserInfo = ({user}) => {
     return (
-        <div>{user.info}</div>
+        <div>{user.intro}</div>
     );
 };
 
