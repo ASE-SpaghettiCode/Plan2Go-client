@@ -25,6 +25,40 @@
     position: absolute;
     top: 64px;
 }
+.like-note-container{
+    width: 100%;
+    margin: 100px auto;
+}
+.like-note-icon {
+    background-color: #f8f5eb;
+    padding: 5px;
+    margin: 0 auto;
+    border-radius: 50%;
+    border: solid 0.5px;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    top: 100px;
+    left: 100px;
+    z-index: 9999999999;
+}
+.thumb-like-off{
+    width: 100% !important;
+    height: 100% !important;
+    color: #0a1238;
+}
+.thumb-like-on{
+    width: 100% !important;
+    height: 100% !important;
+    color: #ff2e5e;
+}
+.like-note-prompt{
+    text-align: center;
+    width: 100px;
+    margin: 5px auto;
+}
+
+
 
 input[type="file"] {
     display: none;
