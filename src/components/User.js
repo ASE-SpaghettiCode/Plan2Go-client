@@ -83,10 +83,6 @@ const User=({match})=>{
                 <div>
                     <UserInfo user={user}/>
                 </div>
-                <div>We were good, we were gold
-                    Kinda dream that can't be sold
-                    We were right 'til we weren't
-                    Built a home and watched it burn</div>
             </div>
             <div style={{display:myUserId==userID?'block':'none'}}>
                 <button className="userbutton" onClick={handleEditClick}>Edit Profile</button>
