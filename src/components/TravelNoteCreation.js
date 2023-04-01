@@ -71,8 +71,6 @@ export default function TravelNoteCreation(props) {
     useEffect(() => {
         async function fetchData() {
             if (readOnly) {
-                console.log(localUserId)
-                console.log(noteId)
                 api_note.get(`/notes/${noteId}`).then((response) => {
                     const responseData = response.data
                     setAuthorId(responseData.authorId)
@@ -86,10 +84,14 @@ export default function TravelNoteCreation(props) {
                     setTargetGroup(responseData.targetGroup)
                     setDestination(responseData.destination)
                     setCoordinates(responseData.coordinates)
+                    console.log("likedUsers:",responseData.likedUsers)
+
+                    if (responseData.likedUsers.includes(localUserId)){
+                        setLiked(true)
+                    }
                     return responseData.authorId
                 }).then((newAuthorId) =>
                     api.get(`/users/${newAuthorId}`).then((response) => {
-                        console.log(response.data.username)
                         setAuthorName(response.data.username)
                         const userImageURL = response.data.imageLink
                         console.log("userImageURL:", userImageURL)
@@ -207,9 +209,14 @@ export default function TravelNoteCreation(props) {
     function handleLikeClick() {
         console.log("localUserId:", localUserId)
         console.log("noteId:", noteId)
+        if(liked){
+            api_note.delete(`/users/${localUserId}/likes/notes/${noteId}`)
+                .catch((err) => console.log("submit error:", err))
+        }else{
+            api_note.post(`/users/${localUserId}/likes/notes/${noteId}`)
+                .catch((err) => console.log("submit error:", err))
+        }
         setLiked(!liked);
-        api_note.post(`/users/${localUserId}/likes/notes/${noteId}`)
-            .catch((err) => console.log("submit error:", err))
     }
 
     return (
@@ -233,7 +240,6 @@ export default function TravelNoteCreation(props) {
                     </label>
                 }
                 <div className='CoverContainer'>
-                    {/*<img id="note_like" src="/like_off.png" />*/}
                     <img id='cover-landscape' src={coverImage}/>
                 </div>
                 <div className='CreationContainer'>
