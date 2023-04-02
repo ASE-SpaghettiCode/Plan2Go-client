@@ -4,7 +4,7 @@ import EditorJS from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 import ImageTool from '@editorjs/image'
 import Axios from "axios";
-import {api_server} from "../helpers/api";
+import {api_note} from "../helpers/api";
 
 
 
@@ -88,7 +88,7 @@ const EditorJs = (props) => {
 
     const initEditor = () => {
         if(readOnly){
-            api_server.get(`/notes/${noteId}`)
+            api_note.get(`/notes/${noteId}`)
                 .then((response) => response.data.editorData)
                 .then((fakeData) => {
                     handleEditorConfig(fakeData)

@@ -9,7 +9,7 @@ import EditFormField from "./form_field/EditFormField";
 import {InputAdornment} from "@mui/material";
 import RatingField from "./form_field/RatingField";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
-import {api, api_server} from "../helpers/api";
+import {api, api_note} from "../helpers/api";
 import NaviBar from "./NaviBar";
 import {Header} from "antd/es/layout/layout";
 import logo from "../images/Logo.png";
@@ -28,7 +28,7 @@ export default function HomeMap() {
 
     useEffect(() => {
         async function fetchData(){
-            api_server.get(`/notes`).then((notes) => {
+            api_note.get(`/notes`).then((notes) => {
                 let notesWithCoordinates = notes.data.filter(note => note.coordinates !== null && note.coordinates.length !== 0)
                 setNotes(notesWithCoordinates)
             })

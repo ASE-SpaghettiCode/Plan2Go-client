@@ -82,7 +82,7 @@ const ProfileEdition: React.FC = () => {
 
     const doSubmit = async () => {
         try {
-            const requestBody = JSON.stringify({userId, username, password, intro});
+            const requestBody = JSON.stringify({userId, username, password, intro,imageLink});
             console.log(requestBody);
             await api.put(`/users/${userId}`, requestBody);
 

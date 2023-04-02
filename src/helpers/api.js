@@ -6,7 +6,7 @@ export const api = axios.create({
     headers: { 'Content-Type': 'application/json' }
 });
 
-export const api_server = axios.create({
+export const api_note = axios.create({
     baseURL: getDomain("note"),
     headers: { 'Content-Type': 'application/json' }
 });

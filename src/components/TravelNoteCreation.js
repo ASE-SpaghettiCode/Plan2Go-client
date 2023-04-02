@@ -13,11 +13,14 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import EditorJs from "./editorjs";
 import Axios from "axios";
-import {api, api_server} from "../helpers/api";
-import {Layout} from 'antd';
+import {api, api_note} from "../helpers/api";
 import logo from "../images/Logo.png";
 import NaviBar from "./NaviBar";
 import {Header} from "antd/es/layout/layout";
+
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import TravelNoteComments from "./TravelNoteComments";
 
 
 let DEFAULT_INITIAL_DATA = {
@@ -60,6 +63,7 @@ export default function TravelNoteCreation(props) {
     const [showOptions, setShowOptions] = useState(false);
 
     const [editorData, setEditorData] = useState(DEFAULT_INITIAL_DATA);
+    const [liked, setLiked] = useState(false);
 
     const path = window.location.pathname
     const noteId = path.substring(path.lastIndexOf('/') + 1)
@@ -68,9 +72,7 @@ export default function TravelNoteCreation(props) {
     useEffect(() => {
         async function fetchData() {
             if (readOnly) {
-                console.log(localUserId)
-                console.log(noteId)
-                api_server.get(`/notes/${noteId}`).then((response) => {
+                api_note.get(`/notes/${noteId}`).then((response) => {
                     const responseData = response.data
                     setAuthorId(responseData.authorId)
                     setNoteTitle(responseData.noteTitle)
@@ -83,10 +85,15 @@ export default function TravelNoteCreation(props) {
                     setTargetGroup(responseData.targetGroup)
                     setDestination(responseData.destination)
                     setCoordinates(responseData.coordinates)
+                    console.log("likedUsers:",responseData.likedUsers)
+                    console.log("editorData:",responseData.editorData)
+
+                    if (responseData.likedUsers.includes(localUserId)){
+                        setLiked(true)
+                    }
                     return responseData.authorId
                 }).then((newAuthorId) =>
                     api.get(`/users/${newAuthorId}`).then((response) => {
-                        console.log(response.data.username)
                         setAuthorName(response.data.username)
                         const userImageURL = response.data.imageLink
                         console.log("userImageURL:", userImageURL)
@@ -127,7 +134,7 @@ export default function TravelNoteCreation(props) {
             coordinates,
             editorData,
         };
-        api_server.post('/notes', requestBody)
+        api_note.post('/notes', requestBody)
             .then((response) => {
                 const responseNoteId = response.data.noteId
                 window.location.href = `/travel-notes/${responseNoteId}`
@@ -201,8 +208,21 @@ export default function TravelNoteCreation(props) {
         window.location.href = `/home`;
     }
 
+    function handleLikeClick() {
+        console.log("localUserId:", localUserId)
+        console.log("noteId:", noteId)
+        if(liked){
+            api_note.delete(`/users/${localUserId}/likes/notes/${noteId}`)
+                .catch((err) => console.log("submit error:", err))
+        }else{
+            api_note.post(`/users/${localUserId}/likes/notes/${noteId}`)
+                .catch((err) => console.log("submit error:", err))
+        }
+        setLiked(!liked);
+    }
+
     return (
-        <layout>
+        <div>
             <Header style={{
                 display: 'flex',
                 justifyContent: 'space-between',
@@ -356,7 +376,24 @@ export default function TravelNoteCreation(props) {
 
                         </div>
                     </div>
+                    {readOnly &&
+                        <div className="like-note-container">
+                            <div className="like-note-icon" onClick={handleLikeClick}>
+                                {liked?
+                                    <ThumbUpAltIcon className="thumb-like-on"/>
+                                    : <ThumbUpOffAltIcon className="thumb-like-off" />}
+                            </div>
+                            <div className="like-note-prompt"> Like it?</div>
+                        </div>
+                    }
+                    {readOnly &&
+                        <TravelNoteComments
+                            localUserId={localUserId}
+                            noteId={noteId}
+                            // comments={comments}
+                        />
+                    }
                 </div>
             </div>
-        </layout>)
+        </div>)
 }
