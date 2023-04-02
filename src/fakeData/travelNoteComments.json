@@ -1,0 +1,26 @@
+[
+  {
+    "commentId": "01",
+    "commentAuthorId": "01_fake_author_id",
+    "commentAuthorName": "Alice",
+    "commentAuthorImage": "https://res.cloudinary.com/drlkip0yc/image/upload/v1679279539/fake-profile-photo_qess5v.jpg",
+    "time": 1680381449154,
+    "commentText": "Here is a comment text 1! Here is a comment text 1! Here is a comment text 1! Here is a comment text 1! Here is a comment text 1! Here is a comment text 1! Here is a comment text 1! "
+  },
+  {
+    "commentId": "02",
+    "commentAuthorId": "02_fake_author_id",
+    "commentAuthorName": "Bob",
+    "commentAuthorImage": "https://res.cloudinary.com/drlkip0yc/image/upload/v1679279539/fake-profile-photo_qess5v.jpg",
+    "time": 1680381449154,
+    "commentText": "Here is a comment text 2!  "
+  },
+  {
+    "commentId": "03",
+    "commentAuthorId": "03_fake_author_id",
+    "commentAuthorName": "Huiran",
+    "commentAuthorImage": "https://res.cloudinary.com/drlkip0yc/image/upload/v1679279539/fake-profile-photo_qess5v.jpg",
+    "time": 1680381449154,
+    "commentText": "Here is a comment text! 3 Here is a comment text! 3 Here is a comment text! 3 Here is a comment text! 3 Here is a comment text! 3 Here is a comment text! 3 Here is a comment text! 3 "
+  }
+]

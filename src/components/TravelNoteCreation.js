@@ -20,6 +20,7 @@ import {Header} from "antd/es/layout/layout";
 
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import TravelNoteComments from "./TravelNoteComments";
 
 
 let DEFAULT_INITIAL_DATA = {
@@ -85,6 +86,7 @@ export default function TravelNoteCreation(props) {
                     setDestination(responseData.destination)
                     setCoordinates(responseData.coordinates)
                     console.log("likedUsers:",responseData.likedUsers)
+                    console.log("editorData:",responseData.editorData)
 
                     if (responseData.likedUsers.includes(localUserId)){
                         setLiked(true)
@@ -383,6 +385,13 @@ export default function TravelNoteCreation(props) {
                             </div>
                             <div className="like-note-prompt"> Like it?</div>
                         </div>
+                    }
+                    {readOnly &&
+                        <TravelNoteComments
+                            localUserId={localUserId}
+                            noteId={noteId}
+                            // comments={comments}
+                        />
                     }
                 </div>
             </div>
