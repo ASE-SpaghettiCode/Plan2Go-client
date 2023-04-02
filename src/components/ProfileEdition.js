@@ -1,14 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {Layout} from 'antd';
 import '../styles/EditProfile.css'
-// import {Link} from "@mui/material";
 import {Link} from "react-router-dom";
 import {Input} from 'antd';
 import Axios from "axios";
 import {api, handleError} from "../helpers/api";
-import logo from "../images/Logo.png";
-import NaviBar from "./NaviBar";
-import {Header} from "antd/es/layout/layout";
 
 
 const {TextArea} = Input;
@@ -102,16 +97,6 @@ const ProfileEdition: React.FC = () => {
 
     return (
         <div>
-            <Header style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'flex-start',
-                backgroundColor: 'white',
-                width: '100%'
-            }}>
-                <img src={logo} className={"naviLogo"} onClick={goHome}/>
-                <NaviBar style={{marginLeft: 'auto'}}/>
-            </Header>
             <form className={"editProfileForm"} onSubmit={doSubmit}
                   style={{width: "400px", margin: "0 auto", height: "100vh"}}>
                 <div className={"formColor"}/>
@@ -122,9 +107,6 @@ const ProfileEdition: React.FC = () => {
                 <label className="label" htmlFor={"username"}>Username</label>
                 <input className="input" type="text" id="username" value={username}
                        onChange={(e) => setUsername(e.target.value)}/>
-                <label className="label" htmlFor={"password"}>Password</label>
-                <input className="input" type={"password"} id={"password"} value={password}
-                       onChange={(e) => setPassword(e.target.value)}/>
                 <label className="label" htmlFor={"intro"}>Introduction</label>
                 <TextArea rows={3} className="inputIntro" type={"intro"} id={"intro"} value={intro}
                           onChange={(e) => setIntro(e.target.value)}/>

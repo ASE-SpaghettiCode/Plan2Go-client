@@ -1,7 +1,7 @@
 import '../styles/NaviBar.css'
 import React, { useState } from 'react';
 
-import { PlusCircleOutlined, TeamOutlined, SettingOutlined } from '@ant-design/icons';
+import { PlusCircleOutlined, TeamOutlined, SettingOutlined, UserOutlined, CompassOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 
@@ -24,7 +24,6 @@ const items: MenuProps['items'] = [
                             </a>
                         ),
                         key: 'post',
-                        href: `/home`,
                     },
                     {
                         label: (
@@ -39,18 +38,38 @@ const items: MenuProps['items'] = [
         ],
     },
     {
-        label: (
-            <a href={`/landing`}>
-                Following
-            </a>
-        ),
+        label: 'Following',
         key: 'following',
-        icon: <TeamOutlined />,
+        icon: <CompassOutlined />,
+        children: [
+            {
+                type: 'group',
+                label: 'Find my followers',
+                children: [
+                    {
+                        label: (
+                            <a href={`/landing`}>
+                                Post
+                            </a>
+                        ),
+                        key: 'follower post',
+                    },
+                    {
+                        label: (
+                            <a href={`/travel-note-creation`}>
+                                Travel Note
+                            </a>
+                        ),
+                        key: 'follower travelNote',
+                    },
+                ],
+            },
+        ],
     },
     {
-        label: 'Setting',
+        label: 'Account',
         key: 'setting',
-        icon: <SettingOutlined />,
+        icon: <UserOutlined />,
         children: [
             {
                 type: 'group',
@@ -83,8 +102,6 @@ const NaviBar: React.FC = () => {
     const onClick: MenuProps['onClick'] = (e) => {
         console.log('click ', e);
         setCurrent(e.key);
-        // window.location.href = items.find((item) => item.key === e.key)?.href;
-        // window.location.href = `/home`;
     };
 
     return <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />;
