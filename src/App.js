@@ -10,6 +10,7 @@ import TravelNoteCreation from "./components/TravelNoteCreation"
 import HomeLayout from "./components/HomeLayout";
 import ProfileEdition from "./components/ProfileEdition";
 import AccountEdition from "./components/AccountEdition";
+import FollowButton from "./components/FollowButton";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
                 <Route path="/users/:id" element={<Profile/>}/>
                 <Route path="/home" element={<HomeMap/>}/>
                 <Route exat path="/profile/editing" element={<AccountEdition/>}/>
+                <Route path="/test" element={<FollowButton/>}/>
 
                 <Route path="/map" element={<HomeMap/>}/>
                 <Route path="/travel-note-creation" element={<TravelNoteCreation readOnly={false}/>}/>
