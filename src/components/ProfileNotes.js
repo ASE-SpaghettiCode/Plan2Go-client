@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {Button} from "@mui/material";
 import '../styles/Profile.css';
-import {api, api_note, handleError} from "../helpers/api";
+import {api_note, handleError} from "../helpers/api";
 
 
 const ProfileNotes=()=>{
-    const [TravelNotes,setTravelNotes]=useState(null);
+    const [TravelNotes,setTravelNotes]=useState([]);
     const path = window.location.pathname;
     const userID = path.substring(path.lastIndexOf('/') + 1);
 
@@ -25,11 +25,11 @@ const ProfileNotes=()=>{
     },[]);
 
     const listItems = TravelNotes.map((travelnote)=>
-            <div className="postcard">
-                <img src={travelnote.coverImage}/>
-                <h1>{travelnote.noteTitle}</h1>
-                <h4>{travelnote.date}</h4>
-            </div>
+        <div className="postcard">
+            <img src={travelnote.coverImage}/>
+            <h1>{travelnote.noteTitle}</h1>
+            <h4>{travelnote.date}</h4>
+        </div>
     );
 
     return(
