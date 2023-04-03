@@ -1,19 +1,22 @@
-import {Button, Space} from 'antd';
+import {Button} from 'antd';
 import {CheckCircleOutlined, PlusCircleOutlined} from "@ant-design/icons";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {api, handleError} from "../helpers/api";
 
 const FollowButton = () => {
-    const userId = localStorage.getItem("id");
+    const userId1 = localStorage.getItem("id");
     const path = window.location.pathname;
-    const user2Id = path.substring(path.lastIndexOf('/') + 1);
-    const [following, setFollowing] = useState(null);
+    const userId2 = path.substring(path.lastIndexOf('/') + 1);
+    const [following, setFollowing] = useState();
+
+    console.log(userId1, userId2)
 
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await api.get(`/users/${userId}/following/${user2Id}`);
-                setFollowing(response.data);
+                const res = await api.get(`/users/` + userId1 + `/follows/` + userId2);
+                setFollowing(res.data);
+                console.log('init' + res.data)
             } catch (error) {
                 console.error(`Something went wrong while fetching the liked recipes: \n${handleError(error)}`);
             }
@@ -24,8 +27,9 @@ const FollowButton = () => {
 
     const doFollow = async () => {
         try {
-            const response = await api.post(`users/{userId1}/follows/users/{userId2}`);
+            const response = await api.post(`/users/` + userId1 + `/follows/users/` + userId2);
             setFollowing(response.data);
+            console.log('do follow'+response.data)
         } catch (error) {
             alert(`Something went wrong during do like: \n${handleError(error)}`);
         }
@@ -33,18 +37,19 @@ const FollowButton = () => {
 
     const doUnfollow = async () => {
         try {
-            const response = await api.post(`users/{userId1}/follows/users/{userId2}`);
+            const response = await api.delete(`users/` + userId1 + `/follows/users/` + userId2);
             setFollowing(!response.data);
+            console.log('unfollow' + response.data)
         } catch (error) {
             alert(`Something went wrong during do like: \n${handleError(error)}`);
         }
     };
 
     let followButton;
-    if (following) {
+    if (following === true) {
         followButton = (<Button icon={<CheckCircleOutlined/>} onClick={doUnfollow}>Followed</Button>)
     } else {
-        followButton = (<Button type="primary" icon={<PlusCircleOutlined/>} onClick={doFollow}>Follow</Button>)
+        followButton = (<Button icon={<PlusCircleOutlined/>} onClick={doFollow}>Follow</Button>)
     }
 
     return (
