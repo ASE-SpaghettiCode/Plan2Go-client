@@ -8,8 +8,6 @@ import HomeMap from "./components/HomeMap";
 
 import TravelNoteCreation from "./components/TravelNoteCreation"
 import AccountEdition from "./components/AccountEdition";
-import LikePostButton from "./components/likePostButton";
-
 
 function App() {
   return (
@@ -22,7 +20,6 @@ function App() {
                 <Route path="/users/:id" element={<Profile/>}/>
                 <Route path="/home" element={<HomeMap/>}/>
                 <Route exat path="/profile/editing" element={<AccountEdition/>}/>
-                <Route path="/test/642bead2beef1c01ffaa56a0" element={<LikePostButton/>}/>
 
                 <Route path="/map" element={<HomeMap/>}/>
                 <Route path="/travel-note-creation" element={<TravelNoteCreation readOnly={false}/>}/>
