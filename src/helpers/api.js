@@ -11,6 +11,11 @@ export const api_note = axios.create({
     headers: { 'Content-Type': 'application/json' }
 });
 
+export const api_posts = axios.create({
+    baseURL: getDomain("post"),
+    headers: { 'Content-Type': 'application/json' }
+});
+
 console.log(getDomain("note"))
 
 export const handleError = error => {
