@@ -2,47 +2,60 @@ import '../styles/TravelNoteCreation.css'
 import React, {useState, useEffect, useRef} from "react";
 import fakeDate from '../fakeData/travelNoteComments.json'
 import EditFormField from "./form_field/EditFormField";
-
-function convertDateNumToStr(num){
-    const date = new Date(num)
-    const yyyy = date.getFullYear();  // 获取完整的年份(4位，1970)
-    const MM =date.getMonth() + 1;    // 0-11，remember +1
-    const dd =date.getDate();
-    const hh =date.getHours();
-    const mm =date.getMinutes();
-    const ss =date.getSeconds();
-    const dateStr = "On " + dd + "." + MM + "." + yyyy + " at "  + hh + ":" + mm + ':' +ss
-    return dateStr
-}
+import {api, api_note} from "../helpers/api";
+import convertJavaDateToStr from "./utils/convertJavaDateToStr";
 
 
-
+const defaultCommentAuthorImage = "https://res.cloudinary.com/dgnzmridn/image/upload/v1653055086/n9miv50ifxgpwgshy09w.jpg"
 
 
 export default function TravelNoteComments(props) {
     const {localUserId, noteId} = props
     const [addedComment, setAddedComment] = useState('')
+    const [commentList, setCommentList] = useState([])
+    const [refreshTrigger, setRefreshTrigger] = useState(true)
 
-    console.log(fakeDate)
-    const instanceFakeComment = fakeDate[0]
-    const dateNum = instanceFakeComment.time
-    const dateStr = convertDateNumToStr(dateNum)
-    console.log(dateStr)
+    console.log(commentList)
 
     function handleClickCommentAuthorImg(e){
         const commentAuthorId = e.currentTarget.id
         console.log("commentAuthorId:", commentAuthorId)
     }
+    function handleConfirmComment(){
+        const requestBody = {
+            commentAuthorId:localUserId,
+            commentText:addedComment
+        }
+        api_note.post(`/notes/${noteId}/comments`, requestBody).then(() =>{
+            setRefreshTrigger(!refreshTrigger)
+        })
+    }
+    function handleDeleteComment(commentId){
+
+        api_note.delete(`/users/${localUserId}/comments/${commentId}`).then(() =>{
+            setRefreshTrigger(!refreshTrigger)
+        })
+    }
+
+    useEffect(() => {
+        async function fetchData() {
+                api_note.get(`/notes/${noteId}/comments`).then((response) => {
+                    setCommentList(response.data)
+                })
+        }
+        fetchData()
+    }, [refreshTrigger])
 
     return (
         <div className="comments-and-add-comment">
             <div className='comment-list'>
                 <div className="comments-title">📝 Comments: </div>
-                {fakeDate.map((comment) => {
+                {commentList.map((comment) => {
                     return(
                         <div className="comment-instance" key={comment.commentId} >
                             <div className="comment-author-img-container" id={comment.commentAuthorId} onClick={handleClickCommentAuthorImg}>
-                                <img src={comment.commentAuthorImage} className='commentAuthorImage'/>
+                                <img src={comment.commentAuthorImage ? comment.commentAuthorImage : defaultCommentAuthorImage}
+                                     className='commentAuthorImage'/>
                             </div>
                             <div className="text-and-meta-data">
                                 <div className="meta-data">
@@ -50,7 +63,11 @@ export default function TravelNoteComments(props) {
                                         {comment.commentAuthorName}
                                     </div>
                                     <div className="comment-time">
-                                        {convertDateNumToStr(comment.time)}
+                                        {convertJavaDateToStr(comment.createdTime)} &ensp;
+                                        { localUserId === comment.commentAuthorId &&
+                                        <span className="comment-delete"
+                                              onClick={() => handleDeleteComment(comment.commentId)}>delete</span>
+                                        }
                                     </div>
                                 </div>
                                 <div className="comment-text">
@@ -70,7 +87,7 @@ export default function TravelNoteComments(props) {
                         value={addedComment}
                         onChange={un => setAddedComment(un)}
                     />
-                    <div className="comment-publish-button" > Confirm </div>
+                    <div className="comment-publish-button" onClick={handleConfirmComment}> Confirm </div>
                 </div>
             </div>
 
