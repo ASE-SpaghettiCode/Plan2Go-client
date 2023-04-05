@@ -34,7 +34,8 @@
     padding: 5px;
     margin: 0 auto;
     border-radius: 50%;
-    border: solid 0.5px;
+    border: rgba(159, 159, 159, 0.6) solid 1px;
+    box-shadow: 1px 1px 5px 1px rgba(255, 0, 0, 0.31);
     cursor: pointer;
     width: 50px;
     height: 50px;
@@ -253,9 +254,11 @@ input[type="file"] {
     /*display: inline-block;*/
     margin-right: 30px;
     width: 50px;
+    height: 50px;
 }
 .commentAuthorImage{
     width: inherit;
+    height: inherit;
     border-radius: 50%;
     border: solid 2px;
     box-shadow: 1px 1px 1px 1px rgba(124, 124, 124, 0.3);
@@ -268,8 +271,7 @@ input[type="file"] {
 }
 .comment-author-name{
     margin-right: 10px;
-    font-style:italic;
-    text-decoration:underline;
+    font-weight: 600;
 }
 .comment-time{
     font-weight: 420;
@@ -279,8 +281,11 @@ input[type="file"] {
     margin-top: 5px;
 }
 
-.add-comment-box{
-
+.comment-delete{
+    color: cornflowerblue;
+    text-decoration: underline;
+    font-style: italic;
+    cursor: pointer;
 }
 .comment-input{
     width: 100%;
