@@ -1,7 +1,7 @@
 import '../styles/NaviBar.css'
 import React, { useState } from 'react';
 
-import { PlusCircleOutlined, UserOutlined, CompassOutlined } from '@ant-design/icons';
+import { PlusCircleOutlined, TeamOutlined, SettingOutlined, UserOutlined, CompassOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 

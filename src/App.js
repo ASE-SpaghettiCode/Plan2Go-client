@@ -8,26 +8,29 @@ import HomeMap from "./components/HomeMap";
 
 import TravelNoteCreation from "./components/TravelNoteCreation"
 import AccountEdition from "./components/AccountEdition";
+import LikePostButton from "./components/likePostButton";
+
 
 function App() {
-  return (
-    <div className="App">
-        <BrowserRouter>
-            <Routes>
-                <Route path="/landing" element={<Landing/>}/>
-                <Route path="/login" element={<Login/>}/>
-                <Route path="/register" element={<Register/>}/>
-                <Route path="/users/:id" element={<Profile/>}/>
-                <Route path="/home" element={<HomeMap/>}/>
-                <Route exat path="/profile/editing" element={<AccountEdition/>}/>
+    return (
+        <div className="App">
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/landing" element={<Landing/>}/>
+                    <Route path="/login" element={<Login/>}/>
+                    <Route path="/register" element={<Register/>}/>
+                    <Route path="/users/:id" element={<Profile/>}/>
+                    <Route path="/home" element={<HomeMap/>}/>
+                    <Route exat path="/profile/editing" element={<AccountEdition/>}/>
+                    <Route path="/test/642bead2beef1c01ffaa56a0" element={<LikePostButton/>}/>
 
-                <Route path="/map" element={<HomeMap/>}/>
-                <Route path="/travel-note-creation" element={<TravelNoteCreation readOnly={false}/>}/>
-                <Route exact path="/travel-notes/:id" element={<TravelNoteCreation readOnly={true}/>}/>
-            </Routes>
-        </BrowserRouter>
-    </div>
-  );
+                    <Route path="/map" element={<HomeMap/>}/>
+                    <Route path="/travel-note-creation" element={<TravelNoteCreation readOnly={false}/>}/>
+                    <Route exact path="/travel-notes/:id" element={<TravelNoteCreation readOnly={true}/>}/>
+                </Routes>
+            </BrowserRouter>
+        </div>
+    );
 }
 
 export default App;
