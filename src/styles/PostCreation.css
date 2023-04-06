@@ -1,0 +1,80 @@
+.backgroundImagePost {
+    background-image: url("../images/post-backgroud.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.95;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: auto;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.creationBox {
+    margin-top: 60px;
+    width: 900px;
+    height: 200px;
+    border: solid;
+    border-radius: 5px;
+    border-width: 3px;
+    font-size: 20px;
+    font-family: Poppins;
+    font-weight: normal;
+    background-color: mintcream;
+}
+
+.creationBox:focus {
+    background-image: none;
+}
+
+.creationBox::placeholder {
+    font-size: 20px;
+}
+
+.postSubmit {
+    margin-top: 100px;
+    background-color: #5977E3;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 30px;
+    position: relative;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 200px;
+    height: 40px;
+}
+
+.postCreationTitle {
+    font-family: Poppins;
+    font-weight: bolder;
+}
+
+.postCancel {
+    background-color: #70C2AC;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 30px;
+    position: relative;
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 200px;
+    height: 40px;
+}
+
+.postSubmit:hover {
+    background-color: #4862BE;
+}
+
+.postCancel:hover{
+    background-color: #589E8B;
+}

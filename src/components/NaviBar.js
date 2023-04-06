@@ -19,7 +19,7 @@ const items: MenuProps['items'] = [
                 children: [
                     {
                         label: (
-                            <a href={`/landing`}>
+                            <a href={`/post-creation`}>
                                 Post
                             </a>
                         ),

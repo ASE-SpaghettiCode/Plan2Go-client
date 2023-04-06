@@ -9,6 +9,7 @@ import HomeMap from "./components/HomeMap";
 import TravelNoteCreation from "./components/TravelNoteCreation"
 import AccountEdition from "./components/AccountEdition";
 import LikePostButton from "./components/likePostButton";
+import PostCreation from "./components/PostCreation";
 
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
                     <Route path="/home" element={<HomeMap/>}/>
                     <Route exat path="/profile/editing" element={<AccountEdition/>}/>
                     <Route path="/test/642bead2beef1c01ffaa56a0" element={<LikePostButton/>}/>
-
+                    <Route path="/post-creation" element={<PostCreation/>} />
                     <Route path="/map" element={<HomeMap/>}/>
                     <Route path="/travel-note-creation" element={<TravelNoteCreation readOnly={false}/>}/>
                     <Route exact path="/travel-notes/:id" element={<TravelNoteCreation readOnly={true}/>}/>
