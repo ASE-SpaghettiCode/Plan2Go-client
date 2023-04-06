@@ -1,11 +1,14 @@
 import "../styles/PostCreation.css"
-import {useState} from "react";
+import React, {useState} from "react";
 import {api, handleError} from "../helpers/api";
 import User from "../models/user";
 import user from "./User";
 import {api_posts} from "../helpers/api";
 import Post from "../models/post";
 import postBackground from "../images/post-backgroud.jpg"
+import NaviBar from "./NaviBar";
+import logo from "../images/Logo.png";
+import {Header} from "antd/es/layout/layout";
 export default function PostCreation() {
     const [content, setContent] = useState(null);
     const handleSubmit = async (e) => {
@@ -31,8 +34,23 @@ export default function PostCreation() {
         window.location.href = `/home`;
     }
 
+    const goHome = () => {
+        window.location.href = `/home`;
+    }
+
     return <div>
-        <div className={"backgroundImagePost"}>
+        <Header style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start',
+            backgroundColor: 'white',
+            width: '100%'
+        }}>
+            <img src={logo} className={"naviLogo"} onClick={goHome}/>
+            <NaviBar style={{marginLeft: 'auto'}}/>
+        </Header>
+        <div className={"page"}>
+
             <h1 className={"postCreationTitle"}>💡Share Your Moment: </h1>
             <textarea type={"text"} name={"post-content"} placeholder={"Write down the moment you want to share with your friends"} className={"creationBox"} onChange={(e) => setContent(e.target.value)}></textarea>
             <button type={"submit"} className={"postSubmit"} onClick={(e) => handleSubmit(e)}>Submit</button>
