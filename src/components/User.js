@@ -59,7 +59,6 @@ const User=({match})=>{
                 const response = await api.get('/users/' + userID);
                 console.log(response.data);
                 setUsers(response.data);
-
             } catch (error) {
                 console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
                 console.error("Details:", error);
