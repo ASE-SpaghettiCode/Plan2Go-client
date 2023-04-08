@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Tab, Tabs} from "@mui/material";
 import '../styles/Profile.css';
 import {api, api_note, handleError} from "../helpers/api";
 import MyLikeList from "./LikeList";
-
+import PostList from "./PostList";
 
 const ProfileNotes=()=>{
     const [TravelNotes,setTravelNotes]=useState([]);
@@ -19,14 +18,23 @@ const ProfileNotes=()=>{
     function handleShowLikes(){
         setShowTravelNotes(false);
         setShowLikes(true);
+        setShowPosts(false);
         console.log("my likes")
     };
 
     function handleShowTravelNotes(){
         setShowLikes(false);
         setShowTravelNotes(true);
+        showPosts(false);
         console.log("travel notes");
     };
+
+    function handleShowPosts(){
+        setShowPosts(true);
+        setShowLikes(false);
+        setShowTravelNotes(false);
+        console.log("post");
+    }
 
 
     useEffect(()=>{
@@ -58,16 +66,21 @@ const ProfileNotes=()=>{
         <div>
             <div className="postnav">
                 <a onClick={handleShowTravelNotes}>My Travel Notes</a>
-                <a>My Posts</a>
+                <a onClick={handleShowPosts}>My Posts</a>
                 <a onClick={handleShowLikes}>My Likes</a>
             </div>
+
             {showTravelNotes &&
                 <div className="postcontainer">
                     {listItems}
                 </div>
             }
+
             {showLikes &&
                 <MyLikeList/>
+            }
+            {showPosts &&
+                <PostList/>
             }
 
         </div>

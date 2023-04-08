@@ -1,0 +1,30 @@
+.postbody{
+    min-height: 200px;
+    margin-right: 20px;
+}
+.postContainer{
+    min-height: 150px;
+    width: 80%;
+    background-color: aliceblue;
+    margin:5px;
+    border-radius: 5px;
+    border: solid;
+    border-width: thin;
+}
+.text{
+    padding: 10px;
+    min-height: 135px;
+}
+.delete{
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    height: 15px;
+}
+.post-delete{
+    color: cornflowerblue;
+    text-decoration: underline;
+    font-style: italic;
+    cursor: pointer;
+}
