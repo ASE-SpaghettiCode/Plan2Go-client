@@ -2,9 +2,11 @@ import {React, useState} from "react";
 import {useEffect} from "react";
 import {api,api_note, handleError} from "../helpers/api";
 import '../styles/Profile.css';
+import {useNavigate} from "react-router-dom";
 
 
 export default function MyLikeList(){
+    const navigate=useNavigate();
     const path = window.location.pathname;
     const userID=path.substring(path.lastIndexOf('/')+1);
     const [likedNotesId,setLikedNotesId]= useState([]);
@@ -16,6 +18,7 @@ export default function MyLikeList(){
         }
     );
     const [likedNotesList,setLikedNotesList]=useState([]);
+
 
     useEffect(()=>{
         async function fetchData(){
@@ -32,8 +35,6 @@ export default function MyLikeList(){
         fetchData();
     },[]);
 
-    //console.log(likedNotesId);
-
     useEffect(()=>{
         async function fetchData(){
             const promises=likedNotesId.map((id)=>api_note.get('/notes/'+id));
@@ -45,10 +46,14 @@ export default function MyLikeList(){
         fetchData();
     },[likedNotesId]);
 
-    console.log(likedNotesList);
+    const handleClickNotes=(props)=>{
+        //window.location.href=`/travel-notes/`+props.noteId;
+        navigate('/travel-notes/'+props.noteId);
+    }
+
     const likedListItems = likedNotesList.map((likenoteitem) => {
             return (
-                <div className="postcard" key={likenoteitem.date}>
+                <div className="postcard" key={likenoteitem.date} onClick={()=>handleClickNotes(likenoteitem)}>
                     <img src={likenoteitem.coverImage}/>
                     <h1>{likenoteitem.noteTitle}</h1>
                     <h4>{likenoteitem.date}</h4>

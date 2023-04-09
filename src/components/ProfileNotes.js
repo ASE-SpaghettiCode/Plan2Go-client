@@ -25,7 +25,7 @@ const ProfileNotes=()=>{
     function handleShowTravelNotes(){
         setShowLikes(false);
         setShowTravelNotes(true);
-        showPosts(false);
+        setShowPosts(false);
         console.log("travel notes");
     };
 
@@ -35,7 +35,6 @@ const ProfileNotes=()=>{
         setShowTravelNotes(false);
         console.log("post");
     }
-
 
     useEffect(()=>{
         async function fetchData(){
@@ -52,8 +51,12 @@ const ProfileNotes=()=>{
         fetchData();
     },[]);
 
+    const handleClickNotes=(props)=>{
+        window.location.href=`/travel-notes/`+props.noteId;
+    }
+
     const listItems = TravelNotes.map((travelnote)=>
-        <div className="postcard" key={travelnote.createdTime}>
+        <div className="postcard" key={travelnote.createdTime} onClick={()=>handleClickNotes(travelnote)}>
             <img src={travelnote.coverImage}/>
             <h1>{travelnote.noteTitle}</h1>
             <h4>{travelnote.date}</h4>

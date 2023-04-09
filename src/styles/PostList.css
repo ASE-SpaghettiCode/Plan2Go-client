@@ -1,19 +1,27 @@
 .postbody{
     min-height: 200px;
     margin-right: 20px;
+    margin-left: 50px;
 }
 .postContainer{
+    display: flex;
+    flex-direction: column;
     min-height: 150px;
     width: 80%;
-    background-color: aliceblue;
     margin:5px;
-    border-radius: 5px;
-    border: solid;
+    border-bottom-style: solid;
     border-width: thin;
 }
 .text{
     padding: 10px;
-    min-height: 135px;
+    height: 115px;
+    overflow: auto;
+}
+::-webkit-scrollbar{
+    width: 6px;
+}
+::-webkit-scrollbar-track{
+    background: darkgrey;
 }
 .delete{
     padding: 5px;
@@ -27,4 +35,5 @@
     text-decoration: underline;
     font-style: italic;
     cursor: pointer;
+    padding: 5px;
 }
