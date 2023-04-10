@@ -11,7 +11,7 @@ import {api_note} from "../helpers/api";
 const EDITOR_HOLDER_ID = 'editorjs';
 
 const EditorJs = (props) => {
-    const {readOnly, noteId, editorData, setEditorData} = props
+    const {readOnly, editMode, noteId, editorData, setEditorData} = props
     const ejInstance = useRef();
 
     // This will run only once
@@ -87,7 +87,7 @@ const EditorJs = (props) => {
     }
 
     const initEditor = () => {
-        if(readOnly){
+        if(readOnly || editMode){
             api_note.get(`/notes/${noteId}`)
                 .then((response) => response.data.editorData)
                 .then((fakeData) => {

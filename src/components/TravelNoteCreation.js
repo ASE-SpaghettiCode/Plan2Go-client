@@ -38,7 +38,7 @@ let DEFAULT_INITIAL_DATA = {
 
 
 export default function TravelNoteCreation(props) {
-    const readOnly = props.readOnly;
+    const {readOnly, editMode} = props;
     const localUserId = localStorage.getItem('id')
     const localUserName = localStorage.getItem('username')
 
@@ -60,7 +60,6 @@ export default function TravelNoteCreation(props) {
 
     const [destinationOptions, setDestinationOptions] = useState([]);
     const [coordinates, setCoordinates] = useState([]);
-    const [showOptions, setShowOptions] = useState(false);
 
     const [editorData, setEditorData] = useState(DEFAULT_INITIAL_DATA);
     const [liked, setLiked] = useState(false);
@@ -71,7 +70,7 @@ export default function TravelNoteCreation(props) {
 
     useEffect(() => {
         async function fetchData() {
-            if (readOnly) {
+            if (readOnly || editMode) {
                 api_note.get(`/notes/${noteId}`).then((response) => {
                     const responseData = response.data
                     setAuthorId(responseData.authorId)
@@ -140,6 +139,42 @@ export default function TravelNoteCreation(props) {
                 window.location.href = `/travel-notes/${responseNoteId}`
             }).catch((err) => console.log("submit error:", err))
     }
+    function doDelete() {
+        api_note.delete(`/users/${localUserId}/delete/notes/${noteId}`)
+            .then(() => {
+                window.location.href = `/users/${localUserId}`
+            }).catch((err) => console.log("Delete error:", err))
+    }
+
+    function goToEdit() {
+        window.location.href = `/travel-notes/edit/${noteId}`
+    }
+    function doSaveEdit() {
+        const requestBody = {
+            authorId,
+            noteTitle,
+            coverImage,
+            date,
+            duration,
+            rating,
+            expense: expense,
+            numTravelers,
+            targetGroup,
+            destination,
+            coordinates,
+            editorData,
+        };
+        api_note.put(`/users/${localUserId}/delete/notes/${noteId}`,requestBody)
+            .then(() => {
+                window.location.href = `/travel-notes/${noteId}`
+            }).catch((err) => console.log("Save edit error:", err))
+    }
+    function doCancelEdit() {
+        window.location.href = `/travel-notes/${noteId}`
+    }
+
+
+
 
 
     // const NOMINATIM_BASE_URI = 'https://nominatim.openstreetmap.org/search?'
@@ -179,8 +214,9 @@ export default function TravelNoteCreation(props) {
                     })
                     .then((result) => {
                         const result_json = JSON.parse(result)
-                        setDestinationOptions(result_json.features)
-                        setShowOptions(true)
+                        if(getDisplayName(result_json.features[0]) !== destination){
+                            setDestinationOptions(result_json.features)
+                        }
                     })
                     .catch((err) => console.log("getting coordinates err:", err))
             }, 1000)
@@ -213,10 +249,10 @@ export default function TravelNoteCreation(props) {
         console.log("noteId:", noteId)
         if(liked){
             api_note.delete(`/users/${localUserId}/likes/notes/${noteId}`)
-                .catch((err) => console.log("submit error:", err))
+                .catch((err) => console.log("unlike error:", err))
         }else{
             api_note.post(`/users/${localUserId}/likes/notes/${noteId}`)
-                .catch((err) => console.log("submit error:", err))
+                .catch((err) => console.log("like error:", err))
         }
         setLiked(!liked);
     }
@@ -234,7 +270,28 @@ export default function TravelNoteCreation(props) {
                 <NaviBar style={{marginLeft: 'auto'}}/>
             </Header>
             <div>
-                {!readOnly && <div onClick={doSubmit} className="submitContainer"> SUBMIT </div>}
+                {!readOnly && !editMode && <div onClick={doSubmit} className="noteButtonContainer"> SUBMIT </div>}
+
+                {readOnly && !editMode && localUserId === authorId &&
+                    <div onClick={goToEdit} className="noteButtonContainer noteEditButton">
+                        EDIT
+                    </div>
+                }
+                {readOnly && !editMode && localUserId === authorId &&
+                    <div onClick={doDelete} className="noteButtonContainer noteDeleteButton">
+                        DELETE
+                    </div>
+                }
+                {localUserId === authorId && editMode &&
+                    <div onClick={doSaveEdit} className="noteButtonContainer noteSaveEditButton">
+                        SAVE
+                    </div>
+                }
+                {localUserId === authorId && editMode &&
+                    <div onClick={doCancelEdit} className="noteButtonContainer noteCancelButton">
+                        CANCEL
+                    </div>
+                }
                 {!readOnly &&
                     <label className="coverImageChange">
                         <input id="inputCoverImage" type="file" onChange={e => handleCoverImageChange(e)}/>
@@ -342,7 +399,7 @@ export default function TravelNoteCreation(props) {
                             {!readOnly && <TravelExploreIcon className="search-icon"/>}
                         </div>
 
-                        {showOptions && !readOnly && <nav className='optionList'>
+                        {destinationOptions.length>0 && !readOnly && <nav className='optionList'>
                             <List>
                                 {destinationOptions.map((item) => {
                                     const display_name = getDisplayName(item)
@@ -352,7 +409,7 @@ export default function TravelNoteCreation(props) {
                                                       onClick={() => {
                                                           setDestination(display_name)
                                                           setCoordinates(item?.geometry.coordinates)
-                                                          setShowOptions(false)
+                                                          setDestinationOptions([])
                                                       }}>
                                                 <ListItemButton>
                                                     <ListItemIcon>
@@ -371,7 +428,7 @@ export default function TravelNoteCreation(props) {
                     <div className='DetailsContainer'>
                         <div className='editorContainer'>
 
-                            <EditorJs readOnly={readOnly} noteId={noteId} editorData={editorData}
+                            <EditorJs readOnly={readOnly} editMode={editMode} noteId={noteId} editorData={editorData}
                                       setEditorData={setEditorData}/>
 
                         </div>
