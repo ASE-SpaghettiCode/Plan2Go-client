@@ -10,6 +10,7 @@ import TravelNoteCreation from "./components/TravelNoteCreation"
 import AccountEdition from "./components/AccountEdition";
 import LikePostButton from "./components/likePostButton";
 import PostCreation from "./components/PostCreation";
+import FollowingTravelNotes from "./components/FollowingTravelNotes";
 
 
 function App() {
@@ -34,6 +35,9 @@ function App() {
                     />
                     <Route exact path="/travel-notes/edit/:id"
                            element={<TravelNoteCreation readOnly={false} editMode={true} creationMode={false}/>}
+                    />
+                    <Route exact path="/following/travel-notes/:id"
+                           element={<FollowingTravelNotes/>}
                     />
                 </Routes>
             </BrowserRouter>

@@ -56,7 +56,7 @@ const items: MenuProps['items'] = [
                     },
                     {
                         label: (
-                            <a href={`/travel-note-creation`}>
+                            <a href={`/following/travel-notes/${myUserId}`}>
                                 Travel Note
                             </a>
                         ),

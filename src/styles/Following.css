@@ -1,0 +1,26 @@
+.body{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+.notesContainer{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.notesCard{
+    width: 60%;
+    height: 200px;
+    margin:10px;
+    font-size: 12px;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    cursor: pointer;
+}
+.noteImage{
+    background-color: aliceblue;
+    width: 100%;
+    height: 75%;
+    cursor: pointer;
+}
