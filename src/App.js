@@ -26,8 +26,9 @@ function App() {
                     <Route path="/test/642bead2beef1c01ffaa56a0" element={<LikePostButton/>}/>
                     <Route path="/post-creation" element={<PostCreation/>} />
                     <Route path="/map" element={<HomeMap/>}/>
-                    <Route path="/travel-note-creation" element={<TravelNoteCreation readOnly={false}/>}/>
-                    <Route exact path="/travel-notes/:id" element={<TravelNoteCreation readOnly={true}/>}/>
+                    <Route path="/travel-note-creation" element={<TravelNoteCreation readOnly={false} editMode={false}/>}/>
+                    <Route exact path="/travel-notes/:id" element={<TravelNoteCreation readOnly={true} editMode={false}/> }/>
+                    <Route exact path="/travel-notes/edit/:id" element={<TravelNoteCreation readOnly={false} editMode={true}/>}/>
                 </Routes>
             </BrowserRouter>
         </div>

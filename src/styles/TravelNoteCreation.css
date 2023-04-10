@@ -205,27 +205,53 @@ input[type="file"] {
     margin: 0 auto;
 }
 
-.submitContainer{
+.noteButtonContainer{
     cursor: pointer;
     border: 1px solid rgb(255, 219, 219);
     box-shadow: 3px 3px 2px 1px rgba(0, 0, 255, .09);
-    width: 70px;
-    height: 70px;
+    width: 100px;
+    height: 40px;
     position: fixed;
     bottom: 50px;
     right: 50px;
-    border-radius: 50%;
-    background-color: #dbffff;
+    border-radius: 13px;
     z-index: 9999999;
     text-align: center;
-    line-height:70px;
+    line-height:40px;
     transition: background-color 0.3s linear 0s;
     font-weight: 700;
     color: #505050;
 }
-.submitContainer:hover {
-    background-color: #50cccc;
+
+.noteEditButton{
+    background-color: rgba(219, 255, 255, 0.15);
+    bottom: 100px;
 }
+.noteEditButton:hover {
+     background-color: #50cccc;
+ }
+
+.noteDeleteButton{
+    background-color: rgba(255, 126, 126, 0.15);
+}
+.noteDeleteButton:hover {
+     background-color: #ff6767;
+ }
+
+.noteSaveEditButton{
+    bottom: 100px;
+    background-color: rgba(253, 179, 86, 0.15);
+}
+.noteSaveEditButton:hover{
+    background-color: #ee8600;
+}
+.noteCancelButton{
+    background-color: rgba(143, 143, 143, 0.15);
+}
+.noteCancelButton:hover{
+    background-color: #8f8f8f;
+}
+
 .comments-and-add-comment{
     min-height: 50vh;
     width: 94%;
