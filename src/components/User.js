@@ -5,6 +5,7 @@ import {api, handleError} from "../helpers/api";
 
 import {fill} from "@cloudinary/url-gen/actions/resize";
 import {CloudinaryImage} from '@cloudinary/url-gen';
+import cloudinary from 'cloudinary-core';
 import {AdvancedImage} from "@cloudinary/react";
 import {max} from "@cloudinary/url-gen/actions/roundCorners";
 
@@ -27,7 +28,7 @@ const User=({match})=>{
     const path = window.location.pathname;
     const userID = path.substring(path.lastIndexOf('/') + 1);
 
-    const UserImage=()=>{
+    /*const UserImage=()=>{
         const imageUrl=user.imageLink;
         if(imageUrl!=null){
             const rawimage=imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
@@ -49,6 +50,15 @@ const User=({match})=>{
                 </div>
             )
         }
+    }*/
+
+    const UserImage=()=>{
+        const imageUrl=user.imageLink;
+        return(
+            <div>
+                <img src={imageUrl} alt="Avatar" className="avatarimage"/>
+            </div>
+        )
     }
 
 
