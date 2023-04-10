@@ -18,14 +18,13 @@
 }
 
 .sideBar{
-    /*background: linear-gradient(70deg, rgba(200,0,0,0.05), rgba(0,0,200,0.05));*/
     background-color: #f8f5eb;
     z-index: 99999;
     min-width: 300px;
     width: 30%;
-    height: 100vh;
+    height: calc(100vh - 64px);
     position: fixed;
-    top: 0;
+    top: 64px;
     left: 0;
 }
 
