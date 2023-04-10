@@ -60,7 +60,6 @@ export default function TravelNoteCreation(props) {
 
     const [destinationOptions, setDestinationOptions] = useState([]);
     const [coordinates, setCoordinates] = useState([]);
-    const [showOptions, setShowOptions] = useState(false);
 
     const [editorData, setEditorData] = useState(DEFAULT_INITIAL_DATA);
     const [liked, setLiked] = useState(false);
@@ -215,8 +214,9 @@ export default function TravelNoteCreation(props) {
                     })
                     .then((result) => {
                         const result_json = JSON.parse(result)
-                        setDestinationOptions(result_json.features)
-                        setShowOptions(true)
+                        if(getDisplayName(result_json.features[0]) !== destination){
+                            setDestinationOptions(result_json.features)
+                        }
                     })
                     .catch((err) => console.log("getting coordinates err:", err))
             }, 1000)
@@ -272,12 +272,12 @@ export default function TravelNoteCreation(props) {
             <div>
                 {!readOnly && !editMode && <div onClick={doSubmit} className="noteButtonContainer"> SUBMIT </div>}
 
-                {localUserId === authorId && !editMode &&
+                {readOnly && !editMode && localUserId === authorId &&
                     <div onClick={goToEdit} className="noteButtonContainer noteEditButton">
                         EDIT
                     </div>
                 }
-                {localUserId === authorId && !editMode &&
+                {readOnly && !editMode && localUserId === authorId &&
                     <div onClick={doDelete} className="noteButtonContainer noteDeleteButton">
                         DELETE
                     </div>
@@ -399,7 +399,7 @@ export default function TravelNoteCreation(props) {
                             {!readOnly && <TravelExploreIcon className="search-icon"/>}
                         </div>
 
-                        {showOptions && !readOnly && <nav className='optionList'>
+                        {destinationOptions.length>0 && !readOnly && <nav className='optionList'>
                             <List>
                                 {destinationOptions.map((item) => {
                                     const display_name = getDisplayName(item)
@@ -409,7 +409,7 @@ export default function TravelNoteCreation(props) {
                                                       onClick={() => {
                                                           setDestination(display_name)
                                                           setCoordinates(item?.geometry.coordinates)
-                                                          setShowOptions(false)
+                                                          setDestinationOptions([])
                                                       }}>
                                                 <ListItemButton>
                                                     <ListItemIcon>
