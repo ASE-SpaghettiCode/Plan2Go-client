@@ -148,7 +148,7 @@ export default function TravelNoteCreation(props) {
     }
 
     function goToEdit() {
-        window.location.href = `/travel-notes/edit/${localUserId}`
+        window.location.href = `/travel-notes/edit/${noteId}`
     }
     function doSaveEdit() {
         const requestBody = {
