@@ -21,10 +21,23 @@ const myMarker = new Icon({
 
 
 export default function HomeMap() {
+    // e,g., http://localhost:3000/home?lat=47.37&lng=8.56
+    const queryParameters = new URLSearchParams(window.location.search)
+    const lat_str = queryParameters.get("lat")
+    const lng_str = queryParameters.get("lng")
+    const lat = Number(lat_str)
+    const lng = Number(lng_str)
+
     const [notes, setNotes] = useState(myFakeData)
     const [activeNote, setActiveNote] = useState(null)
     const [style, setStyle] = useState("mapColumn")
-    const centerPosition = [47.37, 8.55]; // UZH [47.37430028227907, 8.550981197860574]
+    let centerPosition = [47.37, 8.55]; // UZH [47.37430028227907, 8.550981197860574]
+    if(lat_str && lng_str && !isNaN(lat) && !isNaN(lng)){ // need to check all str and number because of Number()
+        centerPosition = [lat, lng]
+    }else{
+        // just change the url without refreshing page
+        window.history.pushState({}, "", window.location.pathname);
+    }
 
     useEffect(() => {
         async function fetchData(){
@@ -56,7 +69,7 @@ export default function HomeMap() {
                 <NaviBar style={{ marginLeft: 'auto' }} />
             </Header>
             <div className={style}>
-                <MapContainer center={centerPosition} zoom={15} scrollWheelZoom={true}>
+                <MapContainer center={centerPosition} zoom={15} scrollWheelZoom={true} >
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -70,6 +83,10 @@ export default function HomeMap() {
                                             console.log("marker clicked");
                                             setActiveNote(note);
                                             setStyle("mapColumnHalf");
+                                            // just change the url without refreshing page
+                                            window.history.pushState({}, "",
+                                                window.location.pathname + `?lat=${note.coordinates[1]}&lng=${note.coordinates[0]}`
+                                            );
                                         },
                                     }}
                                     icon={myMarker}
