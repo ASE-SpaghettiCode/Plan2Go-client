@@ -26,12 +26,13 @@ export default function PostList(){
     },[]);
 
 
-    const handleClick = async(props) => {
-        const userId = localStorage.getItem('userId', user.userId);
-        const postId = props.postId;
+    const handleClick = async(post) => {
+        const userId = localStorage.getItem("id");
+        const postId = post.postId;
         try {
             const requestBody = JSON.stringify({userId,postId});
-            const response = await api.post('/users/{userId}/posts/{postId}', requestBody);
+            console.log(requestBody)
+            const response = await api_posts.delete('/users/' + userId + '/posts/' + postId);
             window.location.href = `/users/:id`;
 
         } catch (error) {
@@ -46,7 +47,7 @@ export default function PostList(){
                 {post.content}
             </div>
             <div className="delete">
-                <span className="post-delete" onClick={() => handleClick(props)}>delete</span>
+                <span className="post-delete" onClick={() => handleClick(post)}>delete</span>
             </div>
         </div>
     );
