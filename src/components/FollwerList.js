@@ -5,14 +5,14 @@ import {api, handleError} from "../helpers/api";
 import {CloseOutlined} from "@ant-design/icons";
 import Divider from "@mui/material/Divider";
 
-const FollowingList = () => {
+const FollowerList = () => {
     const [following, setFollowing] = useState([]);
     const userId = localStorage.getItem("id");
 
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await api.get('/users/' + userId + 'followings');
+                const response = await api.get('/users/' + userId + 'followers');
                 // const response = await api.get('/users/followTest');
                 console.log(response.data);
                 setFollowing(response.data);
@@ -28,7 +28,7 @@ const FollowingList = () => {
 
     return (
         <div className={"backgroundImage"}>
-            <Divider style={{marginTop: 50, fontWeight: "bold", fontSize: "larger"}}>Following</Divider>
+            <Divider style={{marginTop: 50, fontWeight: "bold", fontSize: "larger"}}>Followers</Divider>
             <div className="wrapper">
                 <Button className="exitButton" icon={<CloseOutlined/>} href={'/users/'+userId}/>
                 <List className="list"
@@ -49,4 +49,4 @@ const FollowingList = () => {
 
     )
 };
-export default FollowingList;
+export default FollowerList;
