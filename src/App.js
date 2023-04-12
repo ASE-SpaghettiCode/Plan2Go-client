@@ -8,6 +8,7 @@ import HomeMap from "./components/HomeMap";
 
 import TravelNoteCreation from "./components/TravelNoteCreation"
 import AccountEdition from "./components/AccountEdition";
+import FollowingList from "./components/FollowingList";
 
 function App() {
   return (
