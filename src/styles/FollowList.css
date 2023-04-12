@@ -1,0 +1,33 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.list {
+    width: 50%;
+    height: 80vh;
+}
+
+.exitButton {
+    position: absolute;
+    top: 0;
+    right: 250px;
+    z-index: 1;
+}
+
+.backgroundImage {
+    background-image: url("../images/followBackground.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: auto;
+    text-align: left;
+    z-index: 1;
+}
+
+.followDivider{
+    top: 20px;
+}

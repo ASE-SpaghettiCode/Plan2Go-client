@@ -5,10 +5,8 @@ import Landing from "./components/Landing";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import HomeMap from "./components/HomeMap";
-
 import TravelNoteCreation from "./components/TravelNoteCreation"
 import AccountEdition from "./components/AccountEdition";
-import LikePostButton from "./components/likePostButton";
 import PostCreation from "./components/PostCreation";
 
 
@@ -23,7 +21,6 @@ function App() {
                     <Route path="/users/:id" element={<Profile/>}/>
                     <Route path="/home" element={<HomeMap/>}/>
                     <Route exat path="/profile/editing" element={<AccountEdition/>}/>
-                    <Route path="/test/642bead2beef1c01ffaa56a0" element={<LikePostButton/>}/>
                     <Route path="/post-creation" element={<PostCreation/>} />
                     <Route path="/map" element={<HomeMap/>}/>
                     <Route exact path="/travel-note-creation"
