@@ -42,14 +42,22 @@ export default function PostList(){
 
 
     const postItems = Posts.map((post)=>
-        <div className="postContainer">
-            <div className="text">
-                {post.content}
+            <div className="postContainer">
+                <div className="postTextContainer">
+                    <div className="creationDate">
+                        <h2>
+                            APRIL
+                            13
+                        </h2>
+                    </div>
+                    <div className="text">
+                        {post.content}
+                    </div>
+                </div>
+                <div className="delete">
+                    <span className="post-delete" onClick={() => handleClick(post)}>delete</span>
+                </div>
             </div>
-            <div className="delete">
-                <span className="post-delete" onClick={() => handleClick(post)}>delete</span>
-            </div>
-        </div>
     );
 
 

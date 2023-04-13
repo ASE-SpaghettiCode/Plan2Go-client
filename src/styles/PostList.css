@@ -3,18 +3,31 @@
     margin-right: 20px;
     margin-left: 50px;
 }
+
 .postContainer{
     display: flex;
     flex-direction: column;
-    min-height: 150px;
+    height: auto;
     width: 80%;
     margin:5px;
     border-bottom-style: solid;
     border-width: thin;
 }
+.postTextContainer{
+    display: flex;
+    flex-direction: row;
+}
+.creationDate{
+    margin-top: 10px;
+    background-color: aliceblue;
+    height: 100px;
+    width: 100px;
+}
+
 .text{
     padding: 10px;
-    height: 115px;
+    height: auto;
+    width: 80%;
     overflow: auto;
 }
 ::-webkit-scrollbar{
@@ -24,11 +37,10 @@
     background: darkgrey;
 }
 .delete{
-    padding: 5px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    height: 15px;
+    height: auto;
 }
 .post-delete{
     color: cornflowerblue;

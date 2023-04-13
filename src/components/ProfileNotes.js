@@ -67,23 +67,40 @@ const ProfileNotes=()=>{
 
     return(
         <div>
-            <div className="postnav">
-                <a onClick={handleShowTravelNotes}>My Travel Notes</a>
-                <a onClick={handleShowPosts}>My Posts</a>
-                <a onClick={handleShowLikes}>My Likes</a>
-            </div>
+
 
             {showTravelNotes &&
-                <div className="postcontainer">
-                    {listItems}
+                <div>
+                    <div className="postnav">
+                        <a className="active" onClick={handleShowTravelNotes}>My Travel Notes</a>
+                        <a onClick={handleShowPosts}>My Posts</a>
+                        <a onClick={handleShowLikes}>My Likes</a>
+                    </div>
+                    <div className="postcontainer">
+                        {listItems}
+                    </div>
                 </div>
             }
 
             {showLikes &&
-                <MyLikeList/>
+                <div>
+                    <div className="postnav">
+                        <a onClick={handleShowTravelNotes}>My Travel Notes</a>
+                        <a onClick={handleShowPosts}>My Posts</a>
+                        <a className="active" onClick={handleShowLikes}>My Likes</a>
+                    </div>
+                    <MyLikeList/>
+                </div>
             }
             {showPosts &&
+                <div>
+                    <div className="postnav">
+                        <a onClick={handleShowTravelNotes}>My Travel Notes</a>
+                        <a className="active" onClick={handleShowPosts}>My Posts</a>
+                        <a onClick={handleShowLikes}>My Likes</a>
+                    </div>
                 <PostList/>
+                </div>
             }
 
         </div>

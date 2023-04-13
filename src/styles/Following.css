@@ -10,17 +10,30 @@
     align-items: center;
 }
 .notesCard{
-    width: 60%;
+    width: 80%;
     height: 200px;
     margin:10px;
     font-size: 12px;
-    border-radius: 5px;
+    border-radius: 10px;
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     cursor: pointer;
 }
+.imageContainer{
+    width: 100%;
+    height: 65%;
+}
 .noteImage{
     background-color: aliceblue;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     width: 100%;
-    height: 75%;
+    height: 100%;
     cursor: pointer;
+    object-fit: cover;
+}
+.notetitle{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-right:10px;
 }
