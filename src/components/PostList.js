@@ -33,11 +33,19 @@ export default function PostList(){
             const requestBody = JSON.stringify({userId,postId});
             console.log(requestBody)
             const response = await api_posts.delete('/users/' + userId + '/posts/' + postId);
-            window.location.href = `/users/:id`;
-
+            window.location.href = `/users/`+userId;
         } catch (error) {
             alert(`Something went wrong during deleting the post: \n${handleError(error)}`);
         }
+    }
+    const dateTransfer=(props)=>{
+        const date=new Date(props);
+        const month=date.toLocaleString('en-GB',{month:'long'});
+        const day=date.getDate();
+        const createdDate=`${month}\n${day}`;
+        return(
+            createdDate
+        )
     }
 
 
@@ -46,8 +54,7 @@ export default function PostList(){
                 <div className="postTextContainer">
                     <div className="creationDate">
                         <h2>
-                            APRIL
-                            13
+                            {dateTransfer(post.createdTime)}
                         </h2>
                     </div>
                     <div className="text">
