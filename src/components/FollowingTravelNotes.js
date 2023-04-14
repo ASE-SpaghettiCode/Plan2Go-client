@@ -30,16 +30,34 @@ export default function FollowingTravelNotes(){
         window.location.href = `/home`;
     }
 
+    const handleTimeFormat=(props)=>{
+        const date=new Date(props);
+        const createdDate=date.toLocaleString('en-GB',{weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'});
+        return(
+            createdDate
+        )
+    }
+
+    const handleClickTravelNotes=(props)=>{
+        window.location.href=`/travel-notes/`+props.note.noteId;
+    }
+
     const TravelNoteItems=travelNotes.map((travelnote)=>
         <div className="notesContainer">
-            <div className="notesCard">
+            <div className="notesCard" onClick={()=>{handleClickTravelNotes(travelnote)}}>
                 <div className="imageContainer">
-                    <img className="noteImage" src={travelnote.coverImage}/>
+                    <img className="noteImage" src={travelnote.note.coverImage}/>
                 </div>
-                <div className="notetitle">
-                    <h2>{travelnote.noteTitle}</h2>
-                    <h5>{travelnote.date}</h5>
+                <div className="noteInfo">
+                    <div className="notetitle">
+                        <h2>{travelnote.note.noteTitle}</h2>
+                    </div>
+                    <div className="author">
+                        <h5>{travelnote.authorName}&ensp; • &ensp;</h5>
+                        <h6>{handleTimeFormat(travelnote.note.createdTime)}</h6>
+                    </div>
                 </div>
+
             </div>
         </div>
     );

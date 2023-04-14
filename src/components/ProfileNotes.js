@@ -55,20 +55,27 @@ const ProfileNotes=()=>{
         window.location.href=`/travel-notes/`+props.noteId;
     }
 
+    const handleTimeFormat=(props)=>{
+        const date=new Date(props);
+        const createdDate=date.toLocaleString('en-GB',{year: 'numeric', month: 'long', day: 'numeric'});
+        return(
+            createdDate
+        )
+    }
+
     const listItems = TravelNotes.map((travelnote)=>
         <div className="postcard" key={travelnote.createdTime} onClick={()=>handleClickNotes(travelnote)}>
             <img src={travelnote.coverImage}/>
             <h1>{travelnote.noteTitle}</h1>
-            <h4>{travelnote.date}</h4>
+            <h4>{handleTimeFormat(travelnote.createdTime)}</h4>
         </div>
     );
 
 
 
+
     return(
         <div>
-
-
             {showTravelNotes &&
                 <div>
                     <div className="postnav">

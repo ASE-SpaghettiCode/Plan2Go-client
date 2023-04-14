@@ -37,3 +37,19 @@
     justify-content: space-between;
     margin-right:10px;
 }
+.noteInfo{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+.author{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    padding-right: 10px;
+}
+h6{
+
+    font-weight: lighter;
+}

@@ -51,12 +51,20 @@ export default function MyLikeList(){
         navigate('/travel-notes/'+props.noteId);
     }
 
+    const handleTimeFormat=(props)=>{
+        const date = new Date(props);
+        const createdDate=date.toLocaleString('en-GB',{year:"numeric",month:'long',day:'numeric'});
+        return(
+            createdDate
+        );
+    };
+
     const likedListItems = likedNotesList.map((likenoteitem) => {
             return (
                 <div className="postcard" key={likenoteitem.date} onClick={()=>handleClickNotes(likenoteitem)}>
                     <img src={likenoteitem.coverImage}/>
                     <h1>{likenoteitem.noteTitle}</h1>
-                    <h4>{likenoteitem.date}</h4>
+                    <h4>{handleTimeFormat(likenoteitem.createdTime)}</h4>
                 </div>)
         }
     )

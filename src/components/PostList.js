@@ -9,6 +9,7 @@ export default function PostList(){
     const path = window.location.pathname;
     const userID = path.substring(path.lastIndexOf('/') + 1);
     const [Posts,setPosts]=useState([]);
+    const [displayPosts,setDisplayPosts]=useState([]);
 
     useEffect(()=>{
         async function fetchData(){
@@ -34,6 +35,7 @@ export default function PostList(){
             console.log(requestBody)
             const response = await api_posts.delete('/users/' + userId + '/posts/' + postId);
             window.location.href = `/users/`+userId;
+
         } catch (error) {
             alert(`Something went wrong during deleting the post: \n${handleError(error)}`);
         }
@@ -48,8 +50,58 @@ export default function PostList(){
         )
     }
 
+    /*useEffect(()=>{
+        function handleScroll(){
+            if(
+                window.innerHeight+document.documentElement.scrollTop === document.documentElement.offsetHeight){
+                setDisplayPosts(displayPosts=>displayPosts+5);
+                console.log('loading posts');
+                console.log(displayPosts);
+            }
+        }
+        window.addEventListener('scroll',handleScroll);
+        return ()=>window.removeEventListener('scroll',handleScroll);
+    },[])
 
-    const postItems = Posts.map((post)=>
+    const displayPostsItems=Posts.slice(0,displayPosts);*/
+
+    useEffect(()=>{
+        setDisplayPosts(Posts.slice(0,5));
+    },[Posts])
+
+
+    function handleScroll(event){
+        const {scrollTop, clientHeight, scrollHeight} = event.target;
+        if(scrollTop + clientHeight >= scrollHeight){
+            const startIndex=displayPosts.length;
+            const endIndex = Math.min(Posts.length,startIndex+5);
+            setDisplayPosts((prevDisplayPosts)=>
+            prevDisplayPosts.concat(Posts.slice(startIndex,endIndex)));
+            console.log('handleScroll');
+        }
+    }
+
+    const displayPostsItems=displayPosts.map((post)=>
+        <div className="postContainer">
+            <div>
+                <div className="creationDate">
+                    <h2>
+                        {dateTransfer(post.createdTime)}
+                    </h2>
+                </div>
+            </div>
+            <div className="postTextContainer">
+                <div className="text">
+                    {post.content}
+                </div>
+                <div className="delete">
+                    <span className="post-delete" onClick={() => handleClick(post)}>delete</span>
+                </div>
+            </div>
+        </div>
+    );
+
+    const postItems = displayPostsItems.map((post)=>
             <div className="postContainer">
                 <div className="postTextContainer">
                     <div className="creationDate">
@@ -69,8 +121,8 @@ export default function PostList(){
 
 
     return(
-        <div className="postbody">
-            {postItems}
+        <div className="postbody" onScroll={handleScroll}>
+            {displayPostsItems}
         </div>
     )
 }
