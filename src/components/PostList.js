@@ -50,21 +50,6 @@ export default function PostList(){
         )
     }
 
-    /*useEffect(()=>{
-        function handleScroll(){
-            if(
-                window.innerHeight+document.documentElement.scrollTop === document.documentElement.offsetHeight){
-                setDisplayPosts(displayPosts=>displayPosts+5);
-                console.log('loading posts');
-                console.log(displayPosts);
-            }
-        }
-        window.addEventListener('scroll',handleScroll);
-        return ()=>window.removeEventListener('scroll',handleScroll);
-    },[])
-
-    const displayPostsItems=Posts.slice(0,displayPosts);*/
-
     useEffect(()=>{
         setDisplayPosts(Posts.slice(0,5));
     },[Posts])
