@@ -9,6 +9,7 @@ import postBackground from "../images/post-backgroud.jpg"
 import NaviBar from "./NaviBar";
 import logo from "../images/Logo.png";
 import {Header} from "antd/es/layout/layout";
+import PostList from "./PostList";
 export default function PostCreation() {
     const [content, setContent] = useState(null);
     const handleSubmit = async (e) => {
@@ -24,6 +25,7 @@ export default function PostCreation() {
             console.log(response);
             // Login successfully worked --> navigate to the route /home in the HomeRouter
             window.location.href = `/users/` + userId;
+
         } catch (error) {
             alert(`Something went wrong during the post creation: \n${handleError(error)}`);
         }
