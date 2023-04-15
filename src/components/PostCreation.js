@@ -23,7 +23,7 @@ export default function PostCreation() {
             const response = await api_posts.post('/posts', newPost);
             console.log(response);
             // Login successfully worked --> navigate to the route /home in the HomeRouter
-            window.location.href = `/home`;
+            window.location.href = `/users/` + userId;
         } catch (error) {
             alert(`Something went wrong during the post creation: \n${handleError(error)}`);
         }

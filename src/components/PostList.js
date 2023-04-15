@@ -11,18 +11,18 @@ export default function PostList(){
     const [Posts,setPosts]=useState([]);
     const [displayPosts,setDisplayPosts]=useState([]);
 
-    useEffect(()=>{
-        async function fetchData(){
-            try{
-                const response = await api_posts.get('/users/'+userID+'/posts');
-                console.log(response.data);
-                setPosts(response.data);
-            }catch (error) {
-                console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
-                console.error("Details:", error);
-                alert("Something went wrong while fetching the users! See the console for details.");
-            }
+    async function fetchData(){
+        try{
+            const response = await api_posts.get('/users/'+userID+'/posts');
+            console.log(response.data);
+            setPosts(response.data);
+        }catch (error) {
+            console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
+            console.error("Details:", error);
+            alert("Something went wrong while fetching the users! See the console for details.");
         }
+    }
+    useEffect(()=>{
         fetchData();
     },[]);
 
@@ -34,7 +34,7 @@ export default function PostList(){
             const requestBody = JSON.stringify({userId,postId});
             console.log(requestBody)
             const response = await api_posts.delete('/users/' + userId + '/posts/' + postId);
-            window.location.href = `/users/`+userId;
+            fetchData();
 
         } catch (error) {
             alert(`Something went wrong during deleting the post: \n${handleError(error)}`);
