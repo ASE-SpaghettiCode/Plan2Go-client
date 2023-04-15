@@ -33,7 +33,7 @@ const FollowingList = () => {
             <div className="wrapper">
                 <Button className="exitButton" icon={<CloseOutlined/>} href={'/users/'+userId}/>
                 <List className="list"
-                      itemLayout="horizontal"
+                      itemLayout="vertical"
                       dataSource={following}
                       renderItem={(item, userId) => (
                           <List.Item>

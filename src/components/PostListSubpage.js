@@ -34,6 +34,22 @@ const PostSubpage = () => {
             window.location.href = `/home`;
         }
 
+        const dateTransfer = (props) => {
+            const date = new Date(props);
+            const createdDate = date.toLocaleString('en-GB',
+                {
+                    month: 'long',
+                    year: 'numeric',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric'
+                }
+            );
+            return (
+                createdDate
+            )
+        }
 
         return (
             <div>
@@ -67,6 +83,13 @@ const PostSubpage = () => {
                                 title={<a href={'/users/' + item.post.authorId}>{item.authorName}</a>}
                             />
                             {item.post.content}
+                            <div style={{
+                                textAlign: "right",
+                                color: "gray",
+                                fontSize:"smaller"
+                            }}>
+                                {dateTransfer(item.post.createdTime)}
+                            </div>
                         </List.Item>
                     )}
                 />

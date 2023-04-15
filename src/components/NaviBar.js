@@ -1,13 +1,32 @@
 import '../styles/NaviBar.css'
 import React, { useState } from 'react';
 
-import { PlusCircleOutlined, TeamOutlined, SettingOutlined, UserOutlined, CompassOutlined } from '@ant-design/icons';
+import { PlusCircleOutlined, HomeOutlined, UserOutlined, CompassOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
+import {api, handleError} from "../helpers/api";
 
 const myUserId = localStorage.getItem('id');
 
+const doLogout = async () => {
+    try {
+        await api.put(`/users/checking/${myUserId}`);
+        localStorage.clear();
+    } catch (error) {
+        alert(`Something went wrong during the logout: \n${handleError(error)}`);
+    }
+};
+
 const items: MenuProps['items'] = [
+    {
+        label: (
+            <a href={`/home`}>
+                Map
+            </a>
+        ),
+        key: 'map',
+        icon: <HomeOutlined />,
+    },
     {
         label: 'Creation',
         key: 'creation',
@@ -84,7 +103,8 @@ const items: MenuProps['items'] = [
                     },
                     {
                         label: (
-                            <a href={`/landing`}>
+                            <a href={`/landing`}
+                            onClick={doLogout}>
                                 Logout
                             </a>
                         ),
