@@ -48,7 +48,7 @@ const items: MenuProps['items'] = [
                 children: [
                     {
                         label: (
-                            <a href={`/landing`}>
+                            <a href={`/following/posts/${myUserId}`}>
                                 Post
                             </a>
                         ),

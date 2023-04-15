@@ -9,6 +9,7 @@ import TravelNoteCreation from "./components/TravelNoteCreation"
 import AccountEdition from "./components/AccountEdition";
 import PostCreation from "./components/PostCreation";
 import FollowingTravelNotes from "./components/FollowingTravelNotes";
+import PostListSubpage from "./components/PostListSubpage";
 
 
 function App() {
@@ -35,6 +36,9 @@ function App() {
                     />
                     <Route exact path="/following/travel-notes/:id"
                            element={<FollowingTravelNotes/>}
+                    />
+                    <Route exact path="/following/posts/:id"
+                           element={<PostListSubpage/>}
                     />
                 </Routes>
             </BrowserRouter>

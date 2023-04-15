@@ -29,7 +29,7 @@ const FollowButton = () => {
         try {
             const response = await api.post(`/users/` + userId1 + `/follows/users/` + userId2);
             setFollowing(response.data);
-            console.log('do follow'+response.data)
+            console.log('do follow' + response.data)
         } catch (error) {
             alert(`Something went wrong during do like: \n${handleError(error)}`);
         }
@@ -53,7 +53,7 @@ const FollowButton = () => {
     }
 
     return (
-        <div>
+        <div style={{display: userId1 !== userId2 ? 'block' : 'none'}}>
             {followButton}
         </div>
     )

@@ -6,6 +6,7 @@ import logo from "../images/Logo.png";
 import NaviBar from "./NaviBar";
 import {Header} from "antd/es/layout/layout";
 import '../styles/PostListSubpage.css'
+import LikePostButton from "./LikePostButton";
 
 const PostSubpage = () => {
         const path = window.location.pathname;
@@ -15,8 +16,7 @@ const PostSubpage = () => {
         useEffect(() => {
             async function fetchData() {
                 try {
-                    // const response = await api_posts.get('/posts/following' + userID);
-                    const response = await api_posts.get('/posts/following/643968eef8dc5323a763e5bc');
+                    const response = await api_posts.get('/posts/following/' + userID);
                     console.log(response.data);
                     setPosts(response.data);
                 } catch (error) {

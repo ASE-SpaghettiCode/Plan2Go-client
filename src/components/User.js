@@ -8,17 +8,18 @@ import {CloudinaryImage} from '@cloudinary/url-gen';
 import cloudinary from 'cloudinary-core';
 import {AdvancedImage} from "@cloudinary/react";
 import {max} from "@cloudinary/url-gen/actions/roundCorners";
+import FollowButton from "./FollowButton";
 
 const myUserId = localStorage.getItem('id');
 
 
-const User=({match})=>{
-    const navigate=useNavigate();
-    const [user, setUsers]=useState({
-        userId:"",
-        username:"",
-        imageLink:"",
-        intro:"",
+const User = ({match}) => {
+    const navigate = useNavigate();
+    const [user, setUsers] = useState({
+        userId: "",
+        username: "",
+        imageLink: "",
+        intro: "",
     });
 
     function handleEditClick() {
@@ -52,9 +53,9 @@ const User=({match})=>{
         }
     }*/
 
-    const UserImage=()=>{
-        const imageUrl=user.imageLink;
-        return(
+    const UserImage = () => {
+        const imageUrl = user.imageLink;
+        return (
             <div>
                 <img src={imageUrl} alt="Avatar" className="avatarimage"/>
             </div>
@@ -80,12 +81,13 @@ const User=({match})=>{
     }, []);
 
 
-    return(
+    return (
         <div className="user">
             <div className="avatar">
                 <UserImage/>
             </div>
             <h2><UserUsername user={user}/></h2>
+            <FollowButton/>
             <p className="follow">Follower 20</p>
             <p className="follow">Following 35</p>
             <div className="information">
@@ -93,7 +95,7 @@ const User=({match})=>{
                     <UserInfo user={user}/>
                 </div>
             </div>
-            <div style={{display:myUserId==userID?'block':'none'}}>
+            <div style={{display: myUserId === userID ? 'block' : 'none'}}>
                 <button className="userbutton" onClick={handleEditClick}>Edit Profile</button>
             </div>
         </div>
@@ -102,7 +104,7 @@ const User=({match})=>{
 
 const UserUsername = ({user}) => {
     return (
-            <div>{user.username}</div>
+        <div>{user.username}</div>
     );
 };
 
@@ -111,9 +113,6 @@ const UserInfo = ({user}) => {
         <div>{user.intro}</div>
     );
 };
-
-
-
 
 
 export default User;
