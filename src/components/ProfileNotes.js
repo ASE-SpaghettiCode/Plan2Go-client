@@ -13,21 +13,19 @@ const ProfileNotes=()=>{
     const [showPosts,setShowPosts]=useState(false);
     const [showLikes,setShowLikes]=useState(false);
 
-
-
     function handleShowLikes(){
         setShowTravelNotes(false);
         setShowLikes(true);
         setShowPosts(false);
         console.log("my likes")
-    };
+    }
 
     function handleShowTravelNotes(){
         setShowLikes(false);
         setShowTravelNotes(true);
         setShowPosts(false);
         console.log("travel notes");
-    };
+    }
 
     function handleShowPosts(){
         setShowPosts(true);
@@ -35,6 +33,12 @@ const ProfileNotes=()=>{
         setShowTravelNotes(false);
         console.log("post");
     }
+
+    useEffect(() => ({
+        posts: handleShowPosts,
+        notes: handleShowTravelNotes,
+        likes: handleShowLikes
+    }[new URLSearchParams(window.location.search).get('tab')]()), []);
 
     useEffect(()=>{
         async function fetchData(){
