@@ -10,11 +10,14 @@ export default function PostList(){
     const userID = path.substring(path.lastIndexOf('/') + 1);
     const [Posts,setPosts]=useState([]);
     const [displayPosts,setDisplayPosts]=useState([]);
+    const [username,setUsername]=useState();
 
     async function fetchData(){
         try{
             const response = await api_posts.get('/users/'+userID+'/posts');
+            const response2 = await api.get('/users/'+userID);
             console.log(response.data);
+            setUsername(response2.data.username);
             setPosts(response.data);
         }catch (error) {
             console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
@@ -43,9 +46,14 @@ export default function PostList(){
     }
     const dateTransfer=(props)=>{
         const date=new Date(props);
-        const month=date.toLocaleString('en-GB',{month:'long'});
-        const day=date.getDate();
-        const createdDate=`${month}\n${day}`;
+        const createdDate=date.toLocaleString('en-GB',
+            {month:'long',
+                year:'numeric',
+                day:'numeric',
+                hour:'numeric',
+                minute:'numeric',
+                second:'numeric'}
+        );
         return(
             createdDate
         )
@@ -71,17 +79,15 @@ export default function PostList(){
         <div className="postContainer">
             <div>
                 <div className="creationDate">
-                    <h2>
-                        {dateTransfer(post.createdTime)}
-                    </h2>
+                    <h5>{username}</h5>&ensp; • &ensp;{dateTransfer(post.createdTime)}
                 </div>
-            </div>
-            <div className="postTextContainer">
-                <div className="text">
-                    {post.content}
-                </div>
-                <div className="delete">
-                    <span className="post-delete" onClick={() => handleClick(post)}>delete</span>
+                <div className="postTextContainer">
+                    <div className="text">
+                        {post.content}
+                    </div>
+                    <div className="delete">
+                        <span className="post-delete" onClick={() => handleClick(post)}>delete</span>
+                    </div>
                 </div>
             </div>
         </div>
