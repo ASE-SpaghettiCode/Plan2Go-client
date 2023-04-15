@@ -38,7 +38,7 @@ const ProfileNotes=()=>{
         posts: handleShowPosts,
         notes: handleShowTravelNotes,
         likes: handleShowLikes
-    }[new URLSearchParams(window.location.search).get('tab')]()), []);
+    }[new URLSearchParams(window.location.search).get('tab')]?.()), []);
 
     useEffect(()=>{
         async function fetchData(){
