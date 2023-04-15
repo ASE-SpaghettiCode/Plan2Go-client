@@ -10,6 +10,8 @@ import AccountEdition from "./components/AccountEdition";
 import PostCreation from "./components/PostCreation";
 import FollowingTravelNotes from "./components/FollowingTravelNotes";
 import PostListSubpage from "./components/PostListSubpage";
+import FollowingList from "./components/FollowingList";
+import FollowerList from "./components/FollwerList";
 
 
 function App() {
@@ -39,6 +41,12 @@ function App() {
                     />
                     <Route exact path="/following/posts/:id"
                            element={<PostListSubpage/>}
+                    />
+                    <Route exact path="/following/:id"
+                           element={<FollowingList/>}
+                    />
+                    <Route exact path="/follower/:id"
+                           element={<FollowerList/>}
                     />
                 </Routes>
             </BrowserRouter>

@@ -9,8 +9,9 @@ import '../styles/PostListSubpage.css'
 import LikePostButton from "./LikePostButton";
 
 const PostSubpage = () => {
-        const path = window.location.pathname;
-        const userID = path.substring(path.lastIndexOf('/') + 1);
+        // const path = window.location.pathname;
+        // const userID = path.substring(path.lastIndexOf('/') + 1);
+        const userID = localStorage.getItem('id');
         const [posts, setPosts] = useState([]);
 
         useEffect(() => {
@@ -29,9 +30,10 @@ const PostSubpage = () => {
             fetchData();
         }, []);
 
-    const goHome = () => {
-        window.location.href = `/home`;
-    }
+        const goHome = () => {
+            window.location.href = `/home`;
+        }
+
 
         return (
             <div>
@@ -52,17 +54,17 @@ const PostSubpage = () => {
                     dataSource={posts}
                     renderItem={(item) => (
                         <List.Item
-                            extra={
-                                <img
-                                    width={272}
-                                    alt="logo"
-                                    src={logo}
-                                />
-                            }
+                            // extra={
+                            //     <img
+                            //         width={272}
+                            //         alt="logo"
+                            //         src={logo}
+                            //     />
+                            // }
                         >
                             <List.Item.Meta
                                 avatar={<Avatar src={item.imagePath}/>}
-                                title={<a href={'/users/'+item.post.authorId}>{item.authorName}</a>}
+                                title={<a href={'/users/' + item.post.authorId}>{item.authorName}</a>}
                             />
                             {item.post.content}
                         </List.Item>

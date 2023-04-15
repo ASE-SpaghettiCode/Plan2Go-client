@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import '../styles/Profile.css';
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {api, handleError} from "../helpers/api";
 
 import {fill} from "@cloudinary/url-gen/actions/resize";
@@ -9,6 +9,7 @@ import cloudinary from 'cloudinary-core';
 import {AdvancedImage} from "@cloudinary/react";
 import {max} from "@cloudinary/url-gen/actions/roundCorners";
 import FollowButton from "./FollowButton";
+import {Button, Space} from 'antd';
 
 const myUserId = localStorage.getItem('id');
 
@@ -20,6 +21,8 @@ const User = ({match}) => {
         username: "",
         imageLink: "",
         intro: "",
+        followers: "",
+        followings: ""
     });
 
     function handleEditClick() {
@@ -80,6 +83,8 @@ const User = ({match}) => {
         fetchData();
     }, []);
 
+    let followerNum = user.followers.length;
+    let followingNum = user.followings.length;
 
     return (
         <div className="user">
@@ -88,8 +93,8 @@ const User = ({match}) => {
             </div>
             <h2><UserUsername user={user}/></h2>
             <FollowButton/>
-            <p className="follow">Follower 20</p>
-            <p className="follow">Following 35</p>
+            <Button type="text" href={`/follower/` + userID}>Follower: {followerNum}</Button>
+            <Button type="text" href={`/following/` + userID}>Following: {followingNum}</Button>
             <div className="information">
                 <div>
                     <UserInfo user={user}/>

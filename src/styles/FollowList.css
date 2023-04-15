@@ -16,8 +16,8 @@
     z-index: 1;
 }
 
-.backgroundImage {
-    background-image: url("../images/followBackground.png");
+.followBackgroundImage {
+    /*background-image: url("../images/followBackground.jpg");*/
     background-repeat: no-repeat;
     background-size: cover;
     width: 100vw;
