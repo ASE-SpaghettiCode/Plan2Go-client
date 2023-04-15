@@ -17,22 +17,23 @@ const ProfileNotes=()=>{
         setShowTravelNotes(false);
         setShowLikes(true);
         setShowPosts(false);
-        console.log("my likes")
-    }
+        console.log("my likes");
+    };
 
     function handleShowTravelNotes(){
         setShowLikes(false);
         setShowTravelNotes(true);
         setShowPosts(false);
         console.log("travel notes");
-    }
+    };
 
     function handleShowPosts(){
         setShowPosts(true);
         setShowLikes(false);
         setShowTravelNotes(false);
         console.log("post");
-    }
+    };
+
 
     useEffect(() => ({
         posts: handleShowPosts,

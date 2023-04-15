@@ -7,12 +7,13 @@ import Divider from "@mui/material/Divider";
 
 const FollowerList = () => {
     const [following, setFollowing] = useState([]);
-    const userId = localStorage.getItem("id");
+    const path = window.location.pathname;
+    const userId = path.substring(path.lastIndexOf('/') + 1);
 
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await api.get('/users/' + userId + 'followers');
+                const response = await api.get('/users/' + userId + '/followers');
                 // const response = await api.get('/users/followTest');
                 console.log(response.data);
                 setFollowing(response.data);
@@ -27,7 +28,7 @@ const FollowerList = () => {
     }, []);
 
     return (
-        <div className={"backgroundImage"}>
+        <div className={"followBackgroundImage"}>
             <Divider style={{marginTop: 50, fontWeight: "bold", fontSize: "larger"}}>Followers</Divider>
             <div className="wrapper">
                 <Button className="exitButton" icon={<CloseOutlined/>} href={'/users/'+userId}/>
