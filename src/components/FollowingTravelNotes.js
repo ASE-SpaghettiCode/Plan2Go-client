@@ -69,9 +69,14 @@ export default function FollowingTravelNotes(){
                 <NaviBar style={{ marginLeft: 'auto' }} />
             </Header>
             <div className="body">
-                <div className="notesContainer">
-                    {TravelNoteItems}
-                </div>
+                {travelNotes.length !== 0 ?
+                    <div className="notesContainer">
+                        {TravelNoteItems}
+                    </div>:
+                    <h6>Explore and follow some users now</h6>
+                }
+
+
             </div>
         </div>
     )
