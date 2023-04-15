@@ -1,4 +1,4 @@
-import {Avatar, Button, List} from 'antd';
+import {Avatar, Button, Divider, List} from 'antd';
 import {useState, useEffect} from "react";
 import React from "react";
 import {api_posts, handleError} from "../helpers/api";
@@ -89,6 +89,7 @@ const PostSubpage = () => {
                 <img src={logo} className={"naviLogo"} onClick={goHome}/>
                 <NaviBar style={{marginLeft: 'auto'}}/>
             </Header>
+            <Divider style={{fontWeight: "bold", fontSize: "larger"}}>Posts By Your Following</Divider>
             <List
                 className="list"
                 itemLayout="vertical"
