@@ -10,6 +10,10 @@ export default function FollowingTravelNotes(){
     const path=window.location.pathname;
     const userId=path.substring(path.lastIndexOf('/')+1);
     const [travelNotes,setTravelNotes]=useState([]);
+    const [currentPage,setCurrentPage]=useState(1);
+    const noteNumber=5;
+    const lastIndex=currentPage*noteNumber;
+    const displayTravelNotes=travelNotes.slice(0,lastIndex);
 
     useEffect(()=>{
         async function fetchData(){
@@ -42,7 +46,7 @@ export default function FollowingTravelNotes(){
         window.location.href=`/travel-notes/`+props.note.noteId;
     }
 
-    const TravelNoteItems=travelNotes.map((travelnote)=>
+    const TravelNoteItems=displayTravelNotes.map((travelnote)=>
         <div className="notesContainer">
             <div className="notesCard" onClick={()=>{handleClickTravelNotes(travelnote)}}>
                 <div className="imageContainer">
@@ -57,7 +61,6 @@ export default function FollowingTravelNotes(){
                         <h6>{handleTimeFormat(travelnote.note.createdTime)}</h6>
                     </div>
                 </div>
-
             </div>
         </div>
     );
@@ -72,11 +75,14 @@ export default function FollowingTravelNotes(){
                 {travelNotes.length !== 0 ?
                     <div className="notesContainer">
                         {TravelNoteItems}
+                        {displayTravelNotes.length!==travelNotes.length?
+                            <div className="note-load">
+                                <button className="note-loadButton" onClick={()=>setCurrentPage(currentPage+1)}>Load More</button>
+                            </div>:<div></div>
+                        }
                     </div>:
                     <h6>Explore and follow some users now</h6>
                 }
-
-
             </div>
         </div>
     )

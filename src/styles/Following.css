@@ -52,3 +52,22 @@
 h6{
     font-weight: lighter;
 }
+.note-load{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+.note-loadButton{
+    position: relative;
+    padding: 8px 16px;
+    background: rgba(202, 211, 204, 0.14);
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.04);
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.note-loadButton:hover{
+    background: rgba(203, 203, 203, 0.25);
+}

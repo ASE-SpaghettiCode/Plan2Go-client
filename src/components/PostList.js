@@ -9,8 +9,12 @@ export default function PostList(){
     const path = window.location.pathname;
     const userID = path.substring(path.lastIndexOf('/') + 1);
     const [Posts,setPosts]=useState([]);
-    const [displayPosts,setDisplayPosts]=useState([]);
     const [username,setUsername]=useState();
+
+    const [currentPage,setCurrentPage]=useState(1);
+    const itemsNumber=5;
+    const lastIndex=currentPage*itemsNumber;
+    const displayPosts=Posts.slice(0,lastIndex);
 
     async function fetchData(){
         try{
@@ -59,22 +63,6 @@ export default function PostList(){
         )
     }
 
-    useEffect(()=>{
-        setDisplayPosts(Posts.slice(0,5));
-    },[Posts])
-
-
-    function handleScroll(event){
-        const {scrollTop, clientHeight, scrollHeight} = event.target;
-        if(scrollTop + clientHeight >= scrollHeight){
-            const startIndex=displayPosts.length;
-            const endIndex = Math.min(Posts.length,startIndex+5);
-            setDisplayPosts((prevDisplayPosts)=>
-            prevDisplayPosts.concat(Posts.slice(startIndex,endIndex)));
-            console.log('handleScroll');
-        }
-    }
-
     const displayPostsItems=displayPosts.map((post)=>
         <div className="postContainer">
             <div>
@@ -93,28 +81,15 @@ export default function PostList(){
         </div>
     );
 
-    const postItems = displayPostsItems.map((post)=>
-            <div className="postContainer">
-                <div className="postTextContainer">
-                    <div className="creationDate">
-                        <h2>
-                            {dateTransfer(post.createdTime)}
-                        </h2>
-                    </div>
-                    <div className="text">
-                        {post.content}
-                    </div>
-                </div>
-                <div className="delete">
-                    <span className="post-delete" onClick={() => handleClick(post)}>delete</span>
-                </div>
-            </div>
-    );
-
-
     return(
-        <div className="postbody" onScroll={handleScroll}>
+        <div className="postbody">
             {displayPostsItems}
+            {displayPosts.length!==Posts.length?
+                <div className="load">
+                <button className="loadButton" onClick={()=>setCurrentPage(currentPage+1)}>Load More</button>
+                </div>:<div></div>
+            }
+
         </div>
     )
 }

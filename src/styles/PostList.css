@@ -1,8 +1,7 @@
 .postbody{
-    height: 75vh;
+    height: auto;
     margin-right: 20px;
     margin-left: 50px;
-    overflow-y: scroll;
 }
 ::-webkit-scrollbar{
     display: none;
@@ -69,4 +68,18 @@ h5{
     font-style: italic;
     cursor: pointer;
     padding-top: 10px;
+}
+.load{
+    display: flex;
+    padding-left: 40%;
+    margin: 20px 0;
+}
+.loadButton{
+    position: relative;
+    padding: 8px 16px;
+    background: #96caea;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
