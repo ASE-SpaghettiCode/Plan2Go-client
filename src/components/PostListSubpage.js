@@ -7,6 +7,7 @@ import NaviBar from "./NaviBar";
 import {Header} from "antd/es/layout/layout";
 import '../styles/PostListSubpage.css'
 import {LikeFilled, LikeOutlined} from "@ant-design/icons";
+import PostCommentForm from "./PostCommentForm";
 
 const PostSubpage = () => {
     const userID = localStorage.getItem('id');
@@ -110,6 +111,9 @@ const PostSubpage = () => {
                             <div style={{color: "gray", fontSize: "smaller"}}>
                                 {dateTransfer(item.post.createdTime)}
                             </div>
+                        </div>
+                        <div>
+                            <PostCommentForm/>
                         </div>
                     </List.Item>
                 )}
