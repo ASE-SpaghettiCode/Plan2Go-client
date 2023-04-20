@@ -77,9 +77,12 @@ h5{
 .loadButton{
     position: relative;
     padding: 8px 16px;
-    background: #96caea;
+    background: rgba(150, 202, 234, 0.42);
     border: none;
     outline: none;
     border-radius: 5px;
     cursor: pointer;
+}
+.loadButton:hover{
+    background: rgba(122, 164, 190, 0.42);
 }
