@@ -4,10 +4,8 @@ import {api, api_note, handleError} from "../helpers/api";
 import user from "./User";
 import {api_posts} from "../helpers/api";
 import Post from "../models/post";
-import NaviBar from "./NaviBar";
-import logo from "../images/Logo.png";
-import {Header} from "antd/es/layout/layout";
 import TextareaAutosize from '@mui/base/TextareaAutosize';
+import HeaderBar from "./HeaderBar";
 
 
 export default function PostCreation() {
@@ -60,21 +58,8 @@ export default function PostCreation() {
         window.location.href = `/home`;
     }
 
-    const goHome = () => {
-        window.location.href = `/home`;
-    }
-
     return <div>
-        <Header style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'flex-start',
-            backgroundColor: 'white',
-            width: '100%'
-        }}>
-            <img src={logo} className={"naviLogo"} onClick={goHome}/>
-            <NaviBar style={{marginLeft: 'auto'}}/>
-        </Header>
+        <HeaderBar/>
         <div className={"page-of-post-creation"}>
 
             <h1 className={"postCreationTitle"}>💡Share Your Moment: </h1>

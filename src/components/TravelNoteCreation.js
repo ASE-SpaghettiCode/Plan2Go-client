@@ -23,6 +23,7 @@ import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 import MyLocationOutlinedIcon from '@mui/icons-material/MyLocationOutlined';
 import TravelNoteComments from "./TravelNoteComments";
+import HeaderBar from "./HeaderBar";
 
 
 let DEFAULT_INITIAL_DATA = {
@@ -267,16 +268,7 @@ export default function TravelNoteCreation(props) {
 
     return (
         <div>
-            <Header style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'flex-start',
-                backgroundColor: 'white',
-                width: '100%'
-            }}>
-                <img src={logo} className={"naviLogo"} onClick={goHome}/>
-                <NaviBar style={{marginLeft: 'auto'}}/>
-            </Header>
+            <HeaderBar/>
             <div>
                 {!readOnly && !editMode && <div onClick={doSubmit} className="noteButtonContainer"> SUBMIT </div>}
 

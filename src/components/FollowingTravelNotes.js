@@ -1,9 +1,7 @@
-import logo from "../images/Logo.png";
-import NaviBar from "./NaviBar";
-import {Header} from "antd/es/layout/layout";
 import React, {useEffect, useState} from "react";
 import "../styles/Following.css";
 import {api_note, handleError} from "../helpers/api";
+import HeaderBar from "./HeaderBar";
 
 export default function FollowingTravelNotes(){
 
@@ -67,10 +65,7 @@ export default function FollowingTravelNotes(){
 
     return(
         <div>
-            <Header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', backgroundColor: 'white', width: '100%' }}>
-                <img src={logo} className={"naviLogo"} onClick={goHome}/>
-                <NaviBar style={{ marginLeft: 'auto' }} />
-            </Header>
+            <HeaderBar/>
             <div className="body">
                 {travelNotes.length !== 0 ?
                     <div className="notesContainer">

@@ -24,7 +24,7 @@ function App() {
                     <Route path="/register" element={<Register/>}/>
                     <Route path="/users/:id" element={<Profile/>}/>
                     <Route path="/home" element={<HomeMap/>}/>
-                    <Route exat path="/profile/editing" element={<AccountEdition/>}/>
+                    <Route exat path="/profile/editing/:id" element={<AccountEdition/>}/>
                     <Route path="/post-creation" element={<PostCreation/>} />
                     <Route path="/map" element={<HomeMap/>}/>
                     <Route exact path="/travel-note-creation"

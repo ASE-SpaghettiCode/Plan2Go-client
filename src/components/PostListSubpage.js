@@ -2,11 +2,9 @@ import {Avatar, Button, Divider, List} from 'antd';
 import {useState, useEffect} from "react";
 import React from "react";
 import {api_posts, handleError} from "../helpers/api";
-import logo from "../images/Logo.png";
-import NaviBar from "./NaviBar";
-import {Header} from "antd/es/layout/layout";
 import '../styles/PostListSubpage.css'
 import {LikeFilled, LikeOutlined} from "@ant-design/icons";
+import HeaderBar from "./HeaderBar";
 
 const PostSubpage = () => {
     const userID = localStorage.getItem('id');
@@ -79,16 +77,7 @@ const PostSubpage = () => {
 
     return (
         <div>
-            <Header style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'flex-start',
-                backgroundColor: 'white',
-                width: '100%'
-            }}>
-                <img src={logo} className={"naviLogo"} onClick={goHome}/>
-                <NaviBar style={{marginLeft: 'auto'}}/>
-            </Header>
+            <HeaderBar/>
             <Divider style={{fontWeight: "bold", fontSize: "larger"}}>Posts By Your Following</Divider>
             <List
                 className="list"

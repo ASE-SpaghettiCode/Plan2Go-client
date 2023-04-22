@@ -26,7 +26,7 @@ const User = ({match}) => {
     });
 
     function handleEditClick() {
-        navigate('/profile/editing');
+        navigate('/profile/editing/'+myUserId);
     }
 
     const path = window.location.pathname;
