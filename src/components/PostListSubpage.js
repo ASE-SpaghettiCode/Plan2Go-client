@@ -6,6 +6,7 @@ import '../styles/PostListSubpage.css'
 import {LikeFilled, LikeOutlined} from "@ant-design/icons";
 import PostCommentForm from "./PostCommentForm";
 import HeaderBar from "./HeaderBar";
+import PostCommentList from "./PostCommentList";
 
 const PostSubpage = () => {
     const userID = localStorage.getItem('id');
@@ -128,6 +129,9 @@ const PostSubpage = () => {
                                 <PostCommentForm postId={item.post.postId}/>
                             </div>
                         }
+                        <div>
+                            <PostCommentList postId={item.post.postId}/>
+                        </div>
                     </List.Item>
                 )}
             />

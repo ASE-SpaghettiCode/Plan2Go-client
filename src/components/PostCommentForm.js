@@ -9,6 +9,7 @@ export default function PostCommentForm(props){
     const userId=localStorage.getItem('id');
     const [createdTime,setCreatedTime]=useState();
     const [comment,setComment]=useState("");
+    const [commentsList, setCommentsList]=useState([]);
     const [user, setUsers] = useState({
         userId: "",
         username: "",
@@ -22,7 +23,6 @@ export default function PostCommentForm(props){
         async function fetchData() {
             try {
                 const response = await api.get('/users/' + userId);
-                console.log(response.data);
                 setUsers(response.data);
             } catch (error) {
                 console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
@@ -47,13 +47,12 @@ export default function PostCommentForm(props){
         console.log(comment);
         try{
             const response = await api_posts.post('/posts/'+postId+'/comments',requestBody);
-            console.log(response)}
+        }
         catch (error) {
             alert(`Something went wrong during the post comment: \n${handleError(error)}`);
         };
         setCommentCompleted(true);
     }
-
     return(
         <div>
             {commentCompleted === false &&

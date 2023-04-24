@@ -21,6 +21,7 @@
     border-color: rgba(150, 202, 234, 0.13);
 }
 .postTextContainer{
+    margin-left: 10px;
     display: flex;
     flex-direction: column;
     width: 100%;
