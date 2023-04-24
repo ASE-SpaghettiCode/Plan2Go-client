@@ -5,7 +5,6 @@ import React from "react";
 
 export default function PostCommentForm(props){
     const postId=props.postId;
-    console.log(postId);
     const [commentCompleted,setCommentCompleted]=useState(false);
     const userId=localStorage.getItem('id');
     const [createdTime,setCreatedTime]=useState();
@@ -59,7 +58,6 @@ export default function PostCommentForm(props){
         <div>
             {commentCompleted === false &&
             <div className="post-comment">
-
                 <input type="text" className="post-comment" value={comment} onChange={(e)=>setComment(e.target.value)}>
                 </input>
                 <div className="post-submit-container">

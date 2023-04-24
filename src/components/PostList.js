@@ -42,8 +42,6 @@ export default function PostList(){
             console.log(requestBody)
             const response = await api_posts.delete('/users/' + userId + '/posts/' + postId);
             fetchData();
-
-
         } catch (error) {
             alert(`Something went wrong during deleting the post: \n${handleError(error)}`);
         }
