@@ -1,5 +1,5 @@
 import {Avatar, Button, Divider, List, Space} from 'antd';
-import {useState, useEffect} from "react";
+import {useState, useEffect, useRef} from "react";
 import React from "react";
 import {api_posts, handleError} from "../helpers/api";
 import '../styles/PostListSubpage.css'
@@ -12,7 +12,8 @@ const PostSubpage = () => {
     const [posts, setPosts] = useState([]);
     const [buttonStates, setButtonStates] = useState({});
     const [ReplyBoxStates, setReplyBoxStates] =useState({});
-    const [initialReplyBoxStates, setInitialReplyBoxStates]=useState({});
+    const initialReplyBoxStatesRef=useRef({});
+    const [initialReplyBoxStates,setInitialReplyBoxStates]=useState({});
 
 
     useEffect(() => {
@@ -23,10 +24,12 @@ const PostSubpage = () => {
                 setPosts(response.data);
                 response.data.forEach((item) => {
                     buttonStates[item.post.postId] = {liked: isLiked(item.post)};
-                    setButtonStates(buttonStates);
                     initialReplyBoxStates[item.post.postId]={shown:false};
-                    setInitialReplyBoxStates(initialReplyBoxStates);
+                    initialReplyBoxStatesRef.current[item.post.postId]={shown:false};
                 });
+                setButtonStates(buttonStates);
+                setInitialReplyBoxStates(initialReplyBoxStates);
+                //setReplyBoxStates(initialReplyBoxStatesRef.current);
             } catch (error) {
                 console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
                 console.error("Details:", error);
@@ -36,11 +39,6 @@ const PostSubpage = () => {
 
         fetchData();
     }, [isLiked, buttonStates,userID]);
-
-    const InitialReplyBox=()=>{
-        setReplyBoxStates(initialReplyBoxStates);
-    }
-
 
     const goHome = () => {
         window.location.href = `/home`;
@@ -70,9 +68,19 @@ const PostSubpage = () => {
     }
 
     function handleReplyButtonClick(postId){
-        setReplyBoxStates(initialReplyBoxStates);
-        ReplyBoxStates[postId].shown=!ReplyBoxStates[postId].shown;
-        setReplyBoxStates(ReplyBoxStates);
+        setReplyBoxStates(initialReplyBoxStatesRef.current);
+        setReplyBoxStates(
+            (prevState =>
+                {
+                    const newState={...prevState};
+                    newState[postId]={
+                        ...prevState[postId],
+                        shown:!prevState[postId].shown
+                    };
+                    return newState;
+                }
+            )
+        )
         console.log(ReplyBoxStates);
     }
 
