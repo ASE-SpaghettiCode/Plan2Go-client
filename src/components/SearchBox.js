@@ -1,25 +1,57 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {BookOutlined, DownOutlined, UserOutlined} from '@ant-design/icons';
 import type {MenuProps} from 'antd';
-import {Button, Dropdown, Input, Space} from 'antd';
+import {Button, Dropdown, Select, Space} from 'antd';
 import {useState} from "react";
-import {api, api_note} from "../helpers/api";
+import {api, api_note, handleError} from "../helpers/api";
+import {object} from "prop-types";
+import {set} from "@cloudinary/url-gen/actions/variable";
 
 const SearchBox: React.FC = () => {
     const [current, setCurrent] = useState('User');
     const [requestServer, setRequestServer] = useState(api);
+    const [userSearchTerm, setUserSearchTerm] =useState(null);
+    const [selectedId, setSelectedId] = useState(null);
+    const [options, setOptions] = useState([])
+    async function fetchResults() {
+        if (current === 'User') {
+            try {
+                const response = await api.get('/users/');
+                const results = response.data.map(d => ({label: d.username, value: d.userId}))
+                setOptions(results)
+            } catch (error) {
+                console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
+                console.error("Details:", error);
+                alert("Something went wrong while fetching the users! See the console for details.");
+            }
+        } else {
+            try {
+                const response = await api_note.get('/notes/');
+                console.log(response.data)
+            } catch (error) {
+                console.error(`Something went wrong while fetching the notes: \n${handleError(error)}`);
+                console.error("Details:", error);
+                alert("Something went wrong while fetching the notes! See the console for details.");
+            }
+        }
+    }
+    fetchResults();
 
-    const {Search} = Input;
-
-    function doClickUser() {
+    const handleSelection = (value: string) => {
+        window.location.href = `/users/` + value;
+    }
+    async function doClickUser() {
         setCurrent('User');
         setRequestServer(api);
+        fetchResults();
     }
 
-    function doClickNote() {
+    async function doClickNote() {
         setCurrent('Note');
         setRequestServer(api_note);
+        fetchResults();
     }
+
 
     const items: MenuProps['items'] = [
         {
@@ -50,12 +82,16 @@ const SearchBox: React.FC = () => {
                         </Space>
                     </Button>
                 </Dropdown>
-                <Search
-                    placeholder="input search text"
-                    // onSearch={onSearch}
-                    style={{
-                        width: 200,
-                    }}
+                <Select
+                    showSearch
+                    placeholder="search user"
+                    optionFilterProp="children"
+                    onSelect={handleSelection}
+                    filterOption={(input, option) =>
+                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                    }
+                    options={options}
+                    style={{width: 200}}
                 />
             </div>
         </div>
