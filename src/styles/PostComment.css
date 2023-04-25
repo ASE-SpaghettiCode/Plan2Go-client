@@ -36,10 +36,9 @@
     box-shadow: 1px 1px 1px 1px rgba(126, 125, 125, 0.1);
 }
 .post-comment-list{
-    border-top: solid  rgba(150, 202, 234, 0.13);
+    /*border-top: solid  rgba(150, 202, 234, 0.13);*/
     background-color: rgba(238, 237, 237, 0.32);
-    margin-top: 5px;
-    padding-bottom: 5px;
+    margin:2px 0;
 }
 .comment-avatar{
     width: 20px;
@@ -49,4 +48,10 @@
 }
 .comment-content{
     margin: 0 10px;
+}
+.comment-info{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-right: 10px;
 }
