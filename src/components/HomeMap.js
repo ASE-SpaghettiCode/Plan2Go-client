@@ -14,6 +14,8 @@ import NaviBar from "./NaviBar";
 import {Header} from "antd/es/layout/layout";
 import logo from "../images/Logo.png";
 
+
+
 const myMarker = new Icon({
     iconUrl: '/myMarker.svg',
     iconSize: [100,100]
@@ -22,7 +24,9 @@ const myMarker = new Icon({
 
 export default function HomeMap() {
     // e,g., http://localhost:3000/home?lat=47.37&lng=8.56
+
     const queryParameters = new URLSearchParams(window.location.search)
+    const userId = localStorage.getItem('id');
     const lat_str = queryParameters.get("lat")
     const lng_str = queryParameters.get("lng")
     const lat = Number(lat_str)
@@ -31,6 +35,8 @@ export default function HomeMap() {
     const [notes, setNotes] = useState(myFakeData)
     const [activeNote, setActiveNote] = useState(null)
     const [style, setStyle] = useState("mapColumn")
+
+
     let centerPosition = [47.37, 8.55]; // UZH [47.37430028227907, 8.550981197860574]
     if(lat_str && lng_str && !isNaN(lat) && !isNaN(lng)){ // need to check all str and number because of Number()
         centerPosition = [lat, lng]
@@ -49,6 +55,8 @@ export default function HomeMap() {
         fetchData()
     },[])
 
+
+
     function handleClickDetails(){
         window.location.href = `/travel-notes/${activeNote.noteId}`
     }
@@ -61,6 +69,7 @@ export default function HomeMap() {
     const goHome = () => {
         window.location.href = `/home`;
     }
+
 
     return (
         <div>
