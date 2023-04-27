@@ -11,7 +11,7 @@ export default function PostCommentList(props){
     async function fetchData() {
         try {
             const response = await api_posts.get('/posts/' + postId + '/comments');
-            console.log(response.data);
+            //console.log(response.data);
             setComments(response.data);
         } catch (error) {
             console.error(`Something went wrong while fetching the comments: \n${handleError(error)}`);
