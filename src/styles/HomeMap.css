@@ -89,3 +89,18 @@
     background-color: #bcfdfd;
 }
 
+.map-search-box {
+    right: 10px;
+    position: absolute;
+    z-index: 99999999 !important;
+}
+.map-search-edit-field{
+    background-color: #f8f5eb;
+}
+
+.map-search-icon {
+    cursor: pointer;
+    display: inline-block;
+    margin: 10px 10px -5px 0 !important;
+}
+
