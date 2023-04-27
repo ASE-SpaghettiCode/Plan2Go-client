@@ -4,7 +4,7 @@ import React from "react";
 
 export default function PostCommentList(props){
     const postId=props.postId;
-    console.log(postId);
+    // console.log(postId);
     const [comments, setComments]=useState([]);
     const userId = localStorage.getItem("id");
 

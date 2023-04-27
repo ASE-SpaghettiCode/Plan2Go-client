@@ -6,6 +6,7 @@ import {api_posts} from "../helpers/api";
 import Post from "../models/post";
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 import HeaderBar from "./HeaderBar";
+import SharingThumbnail from "./SharingThumbnail";
 
 
 export default function PostCreation() {
@@ -73,12 +74,7 @@ export default function PostCreation() {
                     onChange={(e) => setContent(e.target.value)}
                 />
                 {noteId &&
-                    <div className="sharing-container-in-post-creation">
-                        <div className="cover-image-container-in-post-creation">
-                            <img className="cover-image-in-post-creation" src={noteCoverImage}/>
-                        </div>
-                        <div className="note-title-in-post-creation">{noteTitle}</div>
-                    </div>
+                    <SharingThumbnail noteCoverImage={noteCoverImage} noteTitle={noteTitle} />
                 }
             </div>
             <button type={"submit"} className={"postSubmit"} onClick={(e) => handleSubmit(e)}>Submit</button>

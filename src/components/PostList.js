@@ -16,6 +16,7 @@ export default function PostList(){
     const itemsNumber=5;
     const lastIndex=currentPage*itemsNumber;
     const displayPosts=Posts.slice(0,lastIndex);
+    console.log("Posts:", Posts)
 
 
     async function fetchData(){
@@ -81,12 +82,14 @@ export default function PostList(){
                         <div className="text">
                             {post.content}
                         </div>
+                        <div> HI </div>
                         <div className="delete">
                             <span className="post-reply-button" onClick={handleClickReply}>Reply</span>
                             {myUserId===userID &&
                                 <span className="post-delete" onClick={() => handleClick(post)}>Delete</span>}
                         </div>
                     </div>
+
                 </div>
                 {showCommentInput === true &&
                     <div>
