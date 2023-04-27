@@ -74,7 +74,12 @@ export default function PostCreation() {
                     onChange={(e) => setContent(e.target.value)}
                 />
                 {noteId &&
-                    <SharingThumbnail noteCoverImage={noteCoverImage} noteTitle={noteTitle} />
+                    <SharingThumbnail
+                        sharedNoteId={noteId}
+                        noteCoverImage={noteCoverImage}
+                        noteTitle={noteTitle}
+                        usage="creation"
+                    />
                 }
             </div>
             <button type={"submit"} className={"postSubmit"} onClick={(e) => handleSubmit(e)}>Submit</button>

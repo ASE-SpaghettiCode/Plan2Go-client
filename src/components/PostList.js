@@ -4,6 +4,7 @@ import {useState,useEffect} from "react";
 import React from "react";
 import PostCommentForm from "./PostCommentForm";
 import PostCommentList from "./PostCommentList";
+import SharingThumbnail from "./SharingThumbnail";
 
 export default function PostList(){
     const path = window.location.pathname;
@@ -71,6 +72,7 @@ export default function PostList(){
             setShowCommentInput(!showCommentInput);
             console.log(showCommentInput);
         }
+        console.log(post)
         return(
             <div className="postContainer">
                 <div>
@@ -82,7 +84,13 @@ export default function PostList(){
                         <div className="text">
                             {post.content}
                         </div>
-                        <div> HI </div>
+                        { post.sharedNoteId &&
+                            <SharingThumbnail sharedNoteId={post.sharedNoteId}
+                                              noteCoverImage={post.sharedNoteCoverImage}
+                                              noteTitle={post.sharedNoteTitle}
+                                              usage="profile"
+                            />
+                        }
                         <div className="delete">
                             <span className="post-reply-button" onClick={handleClickReply}>Reply</span>
                             {myUserId===userID &&
