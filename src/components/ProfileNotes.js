@@ -84,9 +84,9 @@ const ProfileNotes=()=>{
             {showTravelNotes &&
                 <div>
                     <div className="postnav">
-                        <a className="active" onClick={handleShowTravelNotes}>My Travel Notes</a>
-                        <a onClick={handleShowPosts}>My Posts</a>
-                        <a onClick={handleShowLikes}>My Likes</a>
+                        <a className="active" onClick={handleShowTravelNotes}>Travel Notes</a>
+                        <a onClick={handleShowPosts}>Posts</a>
+                        <a onClick={handleShowLikes}>Likes</a>
                     </div>
                     <div className="postcontainer">
                         {listItems}
@@ -97,9 +97,9 @@ const ProfileNotes=()=>{
             {showLikes &&
                 <div>
                     <div className="postnav">
-                        <a onClick={handleShowTravelNotes}>My Travel Notes</a>
-                        <a onClick={handleShowPosts}>My Posts</a>
-                        <a className="active" onClick={handleShowLikes}>My Likes</a>
+                        <a onClick={handleShowTravelNotes}>Travel Notes</a>
+                        <a onClick={handleShowPosts}>Posts</a>
+                        <a className="active" onClick={handleShowLikes}>Likes</a>
                     </div>
                     <MyLikeList/>
                 </div>
@@ -107,14 +107,13 @@ const ProfileNotes=()=>{
             {showPosts &&
                 <div>
                     <div className="postnav">
-                        <a onClick={handleShowTravelNotes}>My Travel Notes</a>
-                        <a className="active" onClick={handleShowPosts}>My Posts</a>
-                        <a onClick={handleShowLikes}>My Likes</a>
+                        <a onClick={handleShowTravelNotes}>Travel Notes</a>
+                        <a className="active" onClick={handleShowPosts}>Posts</a>
+                        <a onClick={handleShowLikes}>Likes</a>
                     </div>
                 <PostList/>
                 </div>
             }
-
         </div>
     )
 }

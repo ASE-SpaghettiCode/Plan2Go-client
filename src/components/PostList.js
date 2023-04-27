@@ -2,19 +2,21 @@ import '../styles/PostList.css'
 import {api, api_posts, handleError} from "../helpers/api";
 import {useState,useEffect} from "react";
 import React from "react";
-import User from "../models/user";
-import user from "./User";
+import PostCommentForm from "./PostCommentForm";
+import PostCommentList from "./PostCommentList";
 
 export default function PostList(){
     const path = window.location.pathname;
     const userID = path.substring(path.lastIndexOf('/') + 1);
+    const myUserId=localStorage.getItem('id');
     const [Posts,setPosts]=useState([]);
     const [username,setUsername]=useState();
-
+    const [userImage,setUserImage]=useState();
     const [currentPage,setCurrentPage]=useState(1);
     const itemsNumber=5;
     const lastIndex=currentPage*itemsNumber;
     const displayPosts=Posts.slice(0,lastIndex);
+
 
     async function fetchData(){
         try{
@@ -22,6 +24,7 @@ export default function PostList(){
             const response2 = await api.get('/users/'+userID);
             console.log(response.data);
             setUsername(response2.data.username);
+            setUserImage(response2.data.imageLink);
             setPosts(response.data);
         }catch (error) {
             console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
@@ -42,8 +45,6 @@ export default function PostList(){
             console.log(requestBody)
             const response = await api_posts.delete('/users/' + userId + '/posts/' + postId);
             fetchData();
-
-
         } catch (error) {
             alert(`Something went wrong during deleting the post: \n${handleError(error)}`);
         }
@@ -63,22 +64,48 @@ export default function PostList(){
         )
     }
 
-    const displayPostsItems=displayPosts.map((post)=>
-        <div className="postContainer">
-            <div>
-                <div className="creationDate">
-                    <h5>{username}</h5>&ensp; • &ensp;{dateTransfer(post.createdTime)}
+    function ShowPostList({post}){
+        const [showCommentInput, setShowCommentInput]=useState(false);
+        const handleClickReply=()=>{
+            setShowCommentInput(!showCommentInput);
+            console.log(showCommentInput);
+        }
+        return(
+            <div className="postContainer">
+                <div>
+                    <div className="creationDate">
+                        <img src={userImage} className="comment-avatar"/>
+                        <h5>{username}</h5>&ensp; • &ensp;{dateTransfer(post.createdTime)}
+                    </div>
+                    <div className="postTextContainer">
+                        <div className="text">
+                            {post.content}
+                        </div>
+                        <div className="delete">
+                            <span className="post-reply-button" onClick={handleClickReply}>Reply</span>
+                            {myUserId===userID &&
+                                <span className="post-delete" onClick={() => handleClick(post)}>Delete</span>}
+                        </div>
+                    </div>
                 </div>
-                <div className="postTextContainer">
-                    <div className="text">
-                        {post.content}
+                {showCommentInput === true &&
+                    <div>
+                        <PostCommentForm postId={post.postId}/>
                     </div>
-                    <div className="delete">
-                        <span className="post-delete" onClick={() => handleClick(post)}>delete</span>
-                    </div>
+                }
+                <div>
+                    <PostCommentList postId={post.postId}/>
                 </div>
             </div>
-        </div>
+
+        )
+    }
+
+    const displayPostsItems=displayPosts.map((post)=>{
+        return(
+            <ShowPostList post={post}/>
+            )
+        }
     );
 
     return(

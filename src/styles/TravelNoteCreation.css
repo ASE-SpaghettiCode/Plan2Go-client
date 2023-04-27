@@ -25,38 +25,45 @@
     position: absolute;
     top: 64px;
 }
-.like-note-container{
-    width: 100%;
-    margin: 50px auto;
+.left-fixed-buttons-in-notes{
+    position: fixed;
+    width: 50px;
+    left: 30px;
+    bottom: 50px;
 }
-.like-note-icon {
+.left-fixed-button-container{
+    width: 100%;
+    margin: 20px auto 0 auto;
+}
+.left-fixed-button-icon {
     background-color: #f8f5eb;
+    transition: background-color 0.3s linear 0s, width 0.3s linear 0s, height 0.3s linear 0s;
     padding: 5px;
     margin: 0 auto;
     border-radius: 50%;
-    border: rgba(159, 159, 159, 0.6) solid 1px;
-    box-shadow: 1px 1px 5px 1px rgba(255, 0, 0, 0.31);
+    border: rgba(232, 232, 232, 0.6) solid 1px;
+    box-shadow: 2px 2px 3px 1px rgba(154, 154, 154, 0.31);
     cursor: pointer;
-    width: 50px;
-    height: 50px;
-    top: 100px;
-    left: 100px;
+    width: 40px;
+    height: 40px;
     z-index: 9999999999;
 }
-.thumb-like-off{
+.left-fixed-button-icon:hover {
+    background-color: #ff9cea;
+    width: 45px;
+    height: 45px;
+}
+
+.left-fixed-button-svg{
     width: 100% !important;
     height: 100% !important;
+}
+
+.thumb-like-off{
     color: #0a1238;
 }
 .thumb-like-on{
-    width: 100% !important;
-    height: 100% !important;
     color: #ff2e5e;
-}
-.like-note-prompt{
-    text-align: center;
-    width: 100px;
-    margin: 5px auto;
 }
 
 

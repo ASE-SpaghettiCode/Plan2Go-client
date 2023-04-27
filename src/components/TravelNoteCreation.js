@@ -20,7 +20,10 @@ import {Header} from "antd/es/layout/layout";
 
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
+import MyLocationOutlinedIcon from '@mui/icons-material/MyLocationOutlined';
 import TravelNoteComments from "./TravelNoteComments";
+import HeaderBar from "./HeaderBar";
 
 
 let DEFAULT_INITIAL_DATA = {
@@ -164,7 +167,7 @@ export default function TravelNoteCreation(props) {
             coordinates,
             editorData,
         };
-        api_note.put(`/users/${localUserId}/delete/notes/${noteId}`,requestBody)
+        api_note.put(`/users/${localUserId}/editing/notes/${noteId}`,requestBody)
             .then(() => {
                 window.location.href = `/travel-notes/${noteId}`
             }).catch((err) => console.log("Save edit error:", err))
@@ -256,19 +259,16 @@ export default function TravelNoteCreation(props) {
         }
         setLiked(!liked);
     }
+    function handleShareClick() {
+        window.location.href = `/post-creation?sharing=${noteId}`;
+    }
+    function handleLocateClick() {
+        console.log("locate click")
+    }
 
     return (
         <div>
-            <Header style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'flex-start',
-                backgroundColor: 'white',
-                width: '100%'
-            }}>
-                <img src={logo} className={"naviLogo"} onClick={goHome}/>
-                <NaviBar style={{marginLeft: 'auto'}}/>
-            </Header>
+            <HeaderBar/>
             <div>
                 {!readOnly && !editMode && <div onClick={doSubmit} className="noteButtonContainer"> SUBMIT </div>}
 
@@ -434,13 +434,28 @@ export default function TravelNoteCreation(props) {
                         </div>
                     </div>
                     {readOnly &&
-                        <div className="like-note-container">
-                            <div className="like-note-icon" onClick={handleLikeClick}>
-                                {liked?
-                                    <ThumbUpAltIcon className="thumb-like-on"/>
-                                    : <ThumbUpOffAltIcon className="thumb-like-off" />}
+                        <div className="left-fixed-buttons-in-notes">
+                            <div className="like-note-container left-fixed-button-container">
+                                <div className="like-note-icon left-fixed-button-icon" onClick={handleLikeClick}>
+                                    {liked?
+                                        <ThumbUpAltIcon className="thumb-like-on left-fixed-button-svg"/>
+                                        : <ThumbUpOffAltIcon className="thumb-like-off left-fixed-button-svg" />}
+                                </div>
                             </div>
-                            <div className="like-note-prompt"> Like it?</div>
+
+                            <div className="share-note-container left-fixed-button-container">
+                                <div className="share-note-icon left-fixed-button-icon" onClick={handleShareClick}>
+                                    <ReplyOutlinedIcon className="left-fixed-button-svg"/>
+                                </div>
+                            </div>
+                            {coordinates.length !== 0 &&
+                                <div className="locate-note-container left-fixed-button-container">
+                                    <div className="locate-note-icon left-fixed-button-icon" onClick={handleLocateClick}>
+                                        <MyLocationOutlinedIcon className="left-fixed-button-svg"/>
+                                    </div>
+                                </div>
+                            }
+
                         </div>
                     }
                     {readOnly &&

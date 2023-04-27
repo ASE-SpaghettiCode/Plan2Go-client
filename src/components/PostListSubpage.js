@@ -1,21 +1,21 @@
-import {Avatar, Button, Divider, List} from 'antd';
-import {useState, useEffect} from "react";
+import {Avatar, Button, Divider, List, Space} from 'antd';
+import {useState, useEffect, useRef} from "react";
 import React from "react";
 import {api_posts, handleError} from "../helpers/api";
-import logo from "../images/Logo.png";
-import NaviBar from "./NaviBar";
-import {Header} from "antd/es/layout/layout";
 import '../styles/PostListSubpage.css'
 import {LikeFilled, LikeOutlined} from "@ant-design/icons";
+import PostCommentForm from "./PostCommentForm";
+import HeaderBar from "./HeaderBar";
+import PostCommentList from "./PostCommentList";
 
 const PostSubpage = () => {
     const userID = localStorage.getItem('id');
     const [posts, setPosts] = useState([]);
-    const [like, setLike] = useState({
-        postLikeNum: "",
-        whetherLikePost: ""
-    });
     const [buttonStates, setButtonStates] = useState({});
+    const [ReplyBoxStates, setReplyBoxStates] =useState({});
+    const initialReplyBoxStatesRef=useRef({});
+    const [initialReplyBoxStates,setInitialReplyBoxStates]=useState({});
+
 
     useEffect(() => {
         async function fetchData() {
@@ -25,8 +25,12 @@ const PostSubpage = () => {
                 setPosts(response.data);
                 response.data.forEach((item) => {
                     buttonStates[item.post.postId] = {liked: isLiked(item.post)};
-                    setButtonStates(buttonStates);
+                    initialReplyBoxStates[item.post.postId]={shown:false};
+                    initialReplyBoxStatesRef.current[item.post.postId]={shown:false};
                 });
+                setButtonStates(buttonStates);
+                setInitialReplyBoxStates(initialReplyBoxStates);
+                //setReplyBoxStates(initialReplyBoxStatesRef.current);
             } catch (error) {
                 console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
                 console.error("Details:", error);
@@ -35,7 +39,7 @@ const PostSubpage = () => {
         }
 
         fetchData();
-    }, [isLiked, buttonStates, userID]);
+    }, [isLiked, buttonStates,userID]);
 
     const goHome = () => {
         window.location.href = `/home`;
@@ -64,6 +68,23 @@ const PostSubpage = () => {
         return likeList.indexOf(userID) !== -1;
     }
 
+    function handleReplyButtonClick(postId){
+        setReplyBoxStates(initialReplyBoxStatesRef.current);
+        setReplyBoxStates(
+            (prevState =>
+                {
+                    const newState={...prevState};
+                    newState[postId]={
+                        ...prevState[postId],
+                        shown:!prevState[postId].shown
+                    };
+                    return newState;
+                }
+            )
+        )
+        console.log(ReplyBoxStates);
+    }
+
     function handleButtonClick(postId) {
         if (buttonStates[postId].liked) {
             api_posts.delete(`/users/` + userID + `/likes/posts/` + postId)
@@ -77,18 +98,10 @@ const PostSubpage = () => {
         console.log(buttonStates);
     }
 
+
     return (
         <div>
-            <Header style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'flex-start',
-                backgroundColor: 'white',
-                width: '100%'
-            }}>
-                <img src={logo} className={"naviLogo"} onClick={goHome}/>
-                <NaviBar style={{marginLeft: 'auto'}}/>
-            </Header>
+            <HeaderBar/>
             <Divider style={{fontWeight: "bold", fontSize: "larger"}}>Posts By Your Following</Divider>
             <List
                 className="list"
@@ -100,6 +113,7 @@ const PostSubpage = () => {
                         <List.Item.Meta
                             avatar={<Avatar src={item.imagePath}/>}
                             title={<a href={'/users/' + item.post.authorId}>{item.authorName}</a>}
+                            description={dateTransfer(item.post.createdTime)}
                         />
                         {item.post.content}
                         <div style={{display: "flex", justifyContent: "space-between", alignItems: "center",marginTop:'15px'}}>
@@ -107,9 +121,16 @@ const PostSubpage = () => {
                                 icon={
                                     buttonStates[item.post.postId].liked ? (<LikeFilled style={{color: 'hotpink'}}/>) : (<LikeOutlined/>)
                                 } onClick={() => handleButtonClick(item.post.postId)}/>
-                            <div style={{color: "gray", fontSize: "smaller"}}>
-                                {dateTransfer(item.post.createdTime)}
+                            <span className="post-reply-button" onClick={()=>handleReplyButtonClick(item.post.postId)}>Reply</span>
+                        </div>
+                        {
+                            ReplyBoxStates[item.post.postId]?.shown &&
+                            <div>
+                                <PostCommentForm postId={item.post.postId}/>
                             </div>
+                        }
+                        <div>
+                            <PostCommentList postId={item.post.postId}/>
                         </div>
                     </List.Item>
                 )}

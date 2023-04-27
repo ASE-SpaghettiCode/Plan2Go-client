@@ -2,12 +2,6 @@ import React, {useEffect, useState} from 'react';
 import '../styles/Profile.css';
 import {Link, useNavigate} from "react-router-dom";
 import {api, handleError} from "../helpers/api";
-
-import {fill} from "@cloudinary/url-gen/actions/resize";
-import {CloudinaryImage} from '@cloudinary/url-gen';
-import cloudinary from 'cloudinary-core';
-import {AdvancedImage} from "@cloudinary/react";
-import {max} from "@cloudinary/url-gen/actions/roundCorners";
 import FollowButton from "./FollowButton";
 import {Button, Space} from 'antd';
 
@@ -26,35 +20,11 @@ const User = ({match}) => {
     });
 
     function handleEditClick() {
-        navigate('/profile/editing');
+        navigate('/profile/editing/'+myUserId);
     }
 
     const path = window.location.pathname;
     const userID = path.substring(path.lastIndexOf('/') + 1);
-
-    /*const UserImage=()=>{
-        const imageUrl=user.imageLink;
-        if(imageUrl!=null){
-            const rawimage=imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
-            const userImage = new CloudinaryImage(rawimage,{cloudName:"dgnzmridn"});
-            userImage.resize(fill().height(200).width(200)).roundCorners(max())
-            return(
-                <div>
-                    <AdvancedImage cldImg={userImage}/>
-                </div>
-            )
-        }else{
-            const fakeimageUrl="https://res.cloudinary.com/dgnzmridn/image/upload/v1653055086/n9miv50ifxgpwgshy09w.jpg"
-            const rawimage=fakeimageUrl.substring(fakeimageUrl.lastIndexOf('/') + 1);
-            const userImage = new CloudinaryImage(rawimage,{cloudName:"dgnzmridn"});
-            userImage.resize(fill().height(200).width(200)).roundCorners(max())
-            return(
-                <div>
-                    <AdvancedImage cldImg={userImage}/>
-                </div>
-            )
-        }
-    }*/
 
     const UserImage = () => {
         const imageUrl = user.imageLink;

@@ -1,7 +1,8 @@
 class Post {
     constructor(data = {}) {
-        this.authoreId = null;
+        this.authorId = null;
         this.content = null;
+        this.sharedNoteId = null
         Object.assign(this, data);
     }
 }

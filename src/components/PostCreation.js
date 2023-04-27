@@ -1,28 +1,50 @@
 import "../styles/PostCreation.css"
-import React, {useState} from "react";
-import {api, handleError} from "../helpers/api";
-import User from "../models/user";
+import React, {useState, useEffect} from "react";
+import {api, api_note, handleError} from "../helpers/api";
 import user from "./User";
 import {api_posts} from "../helpers/api";
 import Post from "../models/post";
-import postBackground from "../images/post-backgroud.jpg"
-import NaviBar from "./NaviBar";
-import logo from "../images/Logo.png";
-import {Header} from "antd/es/layout/layout";
-import PostList from "./PostList";
+import TextareaAutosize from '@mui/base/TextareaAutosize';
+import HeaderBar from "./HeaderBar";
+
+
 export default function PostCreation() {
+    const userId = localStorage.getItem('id',user.userId);
+    const queryParameters = new URLSearchParams(window.location.search)
+    const sharingNoteId = queryParameters.get("sharing")
+    const [noteId, setNoteId] = useState(null)
+    const [noteCoverImage, setNoteCoverImage] = useState('')
+    const [noteTitle, setNoteTitle] = useState('')
+
+    useEffect(() => {
+        async function fetchData() {
+            if (sharingNoteId){
+                api_note.get(`/notes/${sharingNoteId}`).then((response) => {
+                    const responseData = response.data
+                    setNoteId(responseData.noteId)
+                    setNoteCoverImage(responseData.coverImage)
+                    setNoteTitle(responseData.noteTitle)
+                }).catch((err) => {
+                    // change the url: without params
+                    window.history.pushState({}, "", window.location.pathname);
+                    console.log("Wrong sharing note id:", err)
+                })
+            }
+        }
+        fetchData()
+    }, [])
+
+
     const [content, setContent] = useState(null);
     const handleSubmit = async (e) => {
         e.preventDefault();
         const newPost = new Post();
-        const userId = localStorage.getItem('id',user.userId);
-        if (userId != null) {
-            newPost.authorId = userId;
-        }
+        newPost.authorId = userId;
         newPost.content = content;
+        newPost.sharedNoteId = noteId;
+        console.log(newPost)
         try {
             const response = await api_posts.post('/posts', newPost);
-            console.log(response);
             // Login successfully worked --> navigate to the route /home in the HomeRouter
             window.location.href = `/users/${userId}?tab=posts`;
 
@@ -36,25 +58,29 @@ export default function PostCreation() {
         window.location.href = `/home`;
     }
 
-    const goHome = () => {
-        window.location.href = `/home`;
-    }
-
     return <div>
-        <Header style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'flex-start',
-            backgroundColor: 'white',
-            width: '100%'
-        }}>
-            <img src={logo} className={"naviLogo"} onClick={goHome}/>
-            <NaviBar style={{marginLeft: 'auto'}}/>
-        </Header>
-        <div className={"page"}>
+        <HeaderBar/>
+        <div className={"page-of-post-creation"}>
 
             <h1 className={"postCreationTitle"}>💡Share Your Moment: </h1>
-            <textarea type={"text"} name={"post-content"} placeholder={"Write down the moment you want to share with your friends"} className={"creationBox"} onChange={(e) => setContent(e.target.value)}></textarea>
+            <div className="post-creation-body-container">
+                <TextareaAutosize
+                    type={"text"}
+                    name={"post-content"}
+                    minRows={4}
+                    placeholder={"Write down the moment you want to share with your friends ..."}
+                    className={"creationTextBox"}
+                    onChange={(e) => setContent(e.target.value)}
+                />
+                {noteId &&
+                    <div className="sharing-container-in-post-creation">
+                        <div className="cover-image-container-in-post-creation">
+                            <img className="cover-image-in-post-creation" src={noteCoverImage}/>
+                        </div>
+                        <div className="note-title-in-post-creation">{noteTitle}</div>
+                    </div>
+                }
+            </div>
             <button type={"submit"} className={"postSubmit"} onClick={(e) => handleSubmit(e)}>Submit</button>
             <button type={"submit"} className={"postCancel"} onClick={(e) => handleCancel(e)}>Cancel</button>
         </div>
