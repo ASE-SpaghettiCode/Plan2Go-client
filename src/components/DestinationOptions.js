@@ -8,7 +8,7 @@ import Divider from "@mui/material/Divider";
 import React from "react";
 
 export default function DestinationOptions(
-    {isInMap, setDestination, setCoordinates, destinationOptions, setDestinationOptions, mapObject}
+    {isInMap, setDestination, setCoordinates, destinationOptions, setDestinationOptions, mapObject, className}
 ) {
 
     function handleClickOption(item){
@@ -26,7 +26,7 @@ export default function DestinationOptions(
 
 
     return (
-        <nav className='optionList'>
+        <nav className={className}>
             <List>
                 {destinationOptions.map((item) => {
                     return (
@@ -34,9 +34,7 @@ export default function DestinationOptions(
                             <ListItem disablePadding
                                       onClick={() => handleClickOption(item)}>
                                 <ListItemButton>
-                                    <ListItemIcon>
-                                        📍
-                                    </ListItemIcon>
+                                    {!isInMap && <ListItemIcon> 📍 </ListItemIcon>}
                                     <ListItemText primary={getDisplayName(item)}/>
                                 </ListItemButton>
                             </ListItem>

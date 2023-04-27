@@ -226,7 +226,7 @@ export default function TravelNoteCreation(props) {
         window.location.href = `/post-creation?sharing=${noteId}`;
     }
     function handleLocateClick() {
-        console.log("locate click")
+        window.location.href = `/home?lat=${coordinates[1]}&lng=${coordinates[0]}`
     }
 
     return (
@@ -368,6 +368,7 @@ export default function TravelNoteCreation(props) {
                                 setCoordinates = {setCoordinates}
                                 destinationOptions = {destinationOptions}
                                 setDestinationOptions = {setDestinationOptions}
+                                className="optionList"
                             />
 
                             }

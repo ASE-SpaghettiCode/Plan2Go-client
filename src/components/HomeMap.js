@@ -72,21 +72,15 @@ export default function HomeMap() {
         window.location.href = `/travel-notes/${activeNote.noteId}`
     }
 
-    function handleClick(e){
-        const { lat, lng } = e.latlng;
-        console.log(lat, lng);
-    }
 
     useEffect(() => {
         if (!mapObject.current) return;
 
-        L.easyButton("fa-map-marker", () => {
+        L.easyButton("fa-location-arrow", () => {
             mapObject.current.locate().on("locationfound", function (e) {
-                // setPosition(e.latlng);
                 mapObject.current.flyTo(e.latlng, mapObject.current.getZoom());
             });
         }).addTo(mapObject.current);
-        // mapObject.current.addControl(L.control.search())
     }, [mapObject.current]);
 
     useEffect(() => {
@@ -95,12 +89,24 @@ export default function HomeMap() {
 
     function handleSearchClick(){
         mapObject.current.flyTo([1,1])
-        console.log("YES")
     }
     return (
         <div>
             <HeaderBar/>
             <div className={style}>
+                <div className="map-search-box" >
+                    <EditFormField
+                        readOnly={false}
+                        placeholder="Search location..."
+                        className="map-search-edit-field"
+                        value={destination}
+                        onChange={un => setDestination(un)}
+                    />
+                    <div className="map-search-icon-box">
+                        <TravelExploreIcon className="map-search-icon"/>
+                    </div>
+                </div>
+
                 <MapContainer center={centerPosition}
                               zoom={15}
                               scrollWheelZoom={true}
@@ -117,7 +123,6 @@ export default function HomeMap() {
                                     position={[note.coordinates[1], note.coordinates[0]]}
                                     eventHandlers={{
                                         click: () => {
-                                            console.log("marker clicked");
                                             setActiveNote(note);
                                             setStyle("mapColumnHalf");
                                             // just change the url without refreshing page
@@ -130,17 +135,7 @@ export default function HomeMap() {
                             />
                         ))}
                     </MarkerClusterGroup>
-                    {/*TODO*/}
-                    <div className="map-search-box" >
-                        <EditFormField
-                            readOnly={false}
-                            placeholder="Search..."
-                            className="map-search-edit-field"
-                            value={destination}
-                            onChange={un => setDestination(un)}
-                        />
-                        <TravelExploreIcon className="map-search-icon"/>
-                    </div>
+
                     {destinationOptions.length > 0 && <DestinationOptions
                         isInMap = {true}
                         setDestination = {setDestination}
@@ -148,6 +143,7 @@ export default function HomeMap() {
                         destinationOptions = {destinationOptions}
                         setDestinationOptions = {setDestinationOptions}
                         mapObject={mapObject}
+                        className="map-search-options"
                     />}
 
                 </MapContainer>
