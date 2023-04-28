@@ -12,44 +12,55 @@ import FollowingTravelNotes from "./components/FollowingTravelNotes";
 import PostListSubpage from "./components/PostListSubpage";
 import FollowingList from "./components/FollowingList";
 import FollowerList from "./components/FollwerList";
+import {StompSessionProvider} from "react-stomp-hooks";
+
 
 
 function App() {
+
+
     return (
         <div className="App">
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/landing" element={<Landing/>}/>
-                    <Route path="/login" element={<Login/>}/>
-                    <Route path="/register" element={<Register/>}/>
-                    <Route path="/users/:id" element={<Profile/>}/>
-                    <Route path="/home" element={<HomeMap/>}/>
-                    <Route exat path="/profile/editing/:id" element={<AccountEdition/>}/>
-                    <Route path="/post-creation" element={<PostCreation/>} />
-                    <Route path="/map" element={<HomeMap/>}/>
-                    <Route exact path="/travel-note-creation"
-                           element={<TravelNoteCreation readOnly={false} editMode={false} creationMode={true}/>}
-                    />
-                    <Route exact path="/travel-notes/:id"
-                           element={<TravelNoteCreation readOnly={true} editMode={false} creationMode={false}/> }
-                    />
-                    <Route exact path="/travel-notes/edit/:id"
-                           element={<TravelNoteCreation readOnly={false} editMode={true} creationMode={false}/>}
-                    />
-                    <Route exact path="/following/travel-notes/:id"
-                           element={<FollowingTravelNotes/>}
-                    />
-                    <Route exact path="/following/posts/:id"
-                           element={<PostListSubpage/>}
-                    />
-                    <Route exact path="/following/:id"
-                           element={<FollowingList/>}
-                    />
-                    <Route exact path="/follower/:id"
-                           element={<FollowerList/>}
-                    />
-                </Routes>
-            </BrowserRouter>
+            {/*StompSessionProvider : Once a user open the App, he will be connected via WS*/}
+            <StompSessionProvider
+                brokerURL={`ws://localhost:8081/websocket`}
+                debug={STOMP => console.log({STOMP})}
+                onConnect={() => console.log({STOMP_CONNECT: 'TCP connection successfully established'})}
+            >
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="/landing" element={<Landing/>}/>
+                        <Route path="/login" element={<Login/>}/>
+                        <Route path="/register" element={<Register/>}/>
+                        <Route path="/users/:id" element={<Profile/>}/>
+                        <Route path="/home" element={<HomeMap/>}/>
+                        <Route exat path="/profile/editing/:id" element={<AccountEdition/>}/>
+                        <Route path="/post-creation" element={<PostCreation/>} />
+                        <Route path="/map" element={<HomeMap/>}/>
+                        <Route exact path="/travel-note-creation"
+                               element={<TravelNoteCreation readOnly={false} editMode={false} creationMode={true}/>}
+                        />
+                        <Route exact path="/travel-notes/:id"
+                               element={<TravelNoteCreation readOnly={true} editMode={false} creationMode={false}/> }
+                        />
+                        <Route exact path="/travel-notes/edit/:id"
+                               element={<TravelNoteCreation readOnly={false} editMode={true} creationMode={false}/>}
+                        />
+                        <Route exact path="/following/travel-notes/:id"
+                               element={<FollowingTravelNotes/>}
+                        />
+                        <Route exact path="/following/posts/:id"
+                               element={<PostListSubpage/>}
+                        />
+                        <Route exact path="/following/:id"
+                               element={<FollowingList/>}
+                        />
+                        <Route exact path="/follower/:id"
+                               element={<FollowerList/>}
+                        />
+                    </Routes>
+                </BrowserRouter>
+            </StompSessionProvider>
         </div>
     );
 }

@@ -3,6 +3,8 @@ import {api, api_posts, handleError} from "../helpers/api";
 import {useState,useEffect} from "react";
 import React from "react";
 import PostCommentForm from "./PostCommentForm";
+import PostCommentList from "./PostCommentList";
+import SharingThumbnail from "./SharingThumbnail";
 
 export default function PostList(){
     const path = window.location.pathname;
@@ -10,10 +12,12 @@ export default function PostList(){
     const myUserId=localStorage.getItem('id');
     const [Posts,setPosts]=useState([]);
     const [username,setUsername]=useState();
+    const [userImage,setUserImage]=useState();
     const [currentPage,setCurrentPage]=useState(1);
     const itemsNumber=5;
     const lastIndex=currentPage*itemsNumber;
     const displayPosts=Posts.slice(0,lastIndex);
+    console.log("Posts:", Posts)
 
 
     async function fetchData(){
@@ -22,6 +26,7 @@ export default function PostList(){
             const response2 = await api.get('/users/'+userID);
             console.log(response.data);
             setUsername(response2.data.username);
+            setUserImage(response2.data.imageLink);
             setPosts(response.data);
         }catch (error) {
             console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
@@ -67,29 +72,41 @@ export default function PostList(){
             setShowCommentInput(!showCommentInput);
             console.log(showCommentInput);
         }
-
+        console.log(post)
         return(
             <div className="postContainer">
                 <div>
                     <div className="creationDate">
+                        <img src={userImage} className="comment-avatar"/>
                         <h5>{username}</h5>&ensp; • &ensp;{dateTransfer(post.createdTime)}
                     </div>
                     <div className="postTextContainer">
                         <div className="text">
                             {post.content}
                         </div>
+                        { post.sharedNoteId &&
+                            <SharingThumbnail sharedNoteId={post.sharedNoteId}
+                                              noteCoverImage={post.sharedNoteCoverImage}
+                                              noteTitle={post.sharedNoteTitle}
+                                              usage="profile"
+                            />
+                        }
                         <div className="delete">
                             <span className="post-reply-button" onClick={handleClickReply}>Reply</span>
                             {myUserId===userID &&
                                 <span className="post-delete" onClick={() => handleClick(post)}>Delete</span>}
                         </div>
                     </div>
+
                 </div>
                 {showCommentInput === true &&
                     <div>
                         <PostCommentForm postId={post.postId}/>
                     </div>
                 }
+                <div>
+                    <PostCommentList postId={post.postId}/>
+                </div>
             </div>
 
         )

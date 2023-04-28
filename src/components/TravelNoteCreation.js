@@ -24,6 +24,9 @@ import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 import MyLocationOutlinedIcon from '@mui/icons-material/MyLocationOutlined';
 import TravelNoteComments from "./TravelNoteComments";
 import HeaderBar from "./HeaderBar";
+import getDisplayName from "./utils/getDisplayName";
+import autoCompleteDestinationOptions from "./utils/autoCompleteDestinationOptions";
+import DestinationOptions from "./DestinationOptions";
 
 
 let DEFAULT_INITIAL_DATA = {
@@ -177,53 +180,13 @@ export default function TravelNoteCreation(props) {
     }
 
 
-
-
-
     // const NOMINATIM_BASE_URI = 'https://nominatim.openstreetmap.org/search?'
-    const NOMINATIM_BASE_URI = 'https://photon.komoot.io/api/?' // must have "https:"
 
-    function getDisplayName(item) {
-        let display_name = ''
-        const proper_list = ['name', 'street', 'housenumber', 'locality', 'postcode', 'city', 'country']
-        {
-            proper_list.map((proper) => {
-                if (item.properties[proper]) {
-                    display_name += item.properties[proper] + ', '
-                }
-
-            })
-        }
-        return display_name.trim();
-    }
 
     // search the coordinates when user typing (set time out 1s)
     useEffect(() => {
         if (!readOnly) {
-            const delayDebounceFn = setTimeout(() => {
-                // Send Axios request here
-                const params = {
-                    q: destination,
-                    limit: 5
-                };
-                const queryString = new URLSearchParams(params).toString();
-                const requestOptions = {
-                    method: 'GET',
-                    redirect: 'follow'
-                }
-                fetch(`${NOMINATIM_BASE_URI}${queryString}`, requestOptions)
-                    .then((response) => {
-                        return response.text()
-                    })
-                    .then((result) => {
-                        const result_json = JSON.parse(result)
-                        if(getDisplayName(result_json.features[0]) !== destination){
-                            setDestinationOptions(result_json.features)
-                        }
-                    })
-                    .catch((err) => console.log("getting coordinates err:", err))
-            }, 1000)
-            return () => clearTimeout(delayDebounceFn)
+            autoCompleteDestinationOptions(destination, setDestinationOptions)
         }
     }, [destination])
 
@@ -263,7 +226,7 @@ export default function TravelNoteCreation(props) {
         window.location.href = `/post-creation?sharing=${noteId}`;
     }
     function handleLocateClick() {
-        console.log("locate click")
+        window.location.href = `/home?lat=${coordinates[1]}&lng=${coordinates[0]}`
     }
 
     return (
@@ -398,32 +361,17 @@ export default function TravelNoteCreation(props) {
                             />
                             {!readOnly && <TravelExploreIcon className="search-icon"/>}
                         </div>
+                        {destinationOptions.length>0 && !readOnly &&
+                            <DestinationOptions
+                                isInMap = {false}
+                                setDestination = {setDestination}
+                                setCoordinates = {setCoordinates}
+                                destinationOptions = {destinationOptions}
+                                setDestinationOptions = {setDestinationOptions}
+                                className="optionList"
+                            />
 
-                        {destinationOptions.length>0 && !readOnly && <nav className='optionList'>
-                            <List>
-                                {destinationOptions.map((item) => {
-                                    const display_name = getDisplayName(item)
-                                    return (
-                                        <div key={item?.properties.osm_id}>
-                                            <ListItem disablePadding
-                                                      onClick={() => {
-                                                          setDestination(display_name)
-                                                          setCoordinates(item?.geometry.coordinates)
-                                                          setDestinationOptions([])
-                                                      }}>
-                                                <ListItemButton>
-                                                    <ListItemIcon>
-                                                        📍
-                                                    </ListItemIcon>
-                                                    <ListItemText primary={display_name}/>
-                                                </ListItemButton>
-                                            </ListItem>
-                                            < Divider/>
-                                        </div>
-                                    )
-                                })}
-                            </List>
-                        </nav>}
+                            }
                     </div>
                     <div className='DetailsContainer'>
                         <div className='editorContainer'>

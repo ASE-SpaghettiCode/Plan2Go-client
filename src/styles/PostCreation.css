@@ -52,33 +52,6 @@
     font-size: 20px;
 }
 
-.sharing-container-in-post-creation{
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-    background: linear-gradient(70deg, rgba(200,0,0,0.05), rgba(0,0,200,0.05));
-    box-shadow: 1px 1px 3px 1px rgba(154, 154, 154, 0.31);
-    width: 100%;
-    height: 80px;
-    border-radius: 10px;
-}
-.cover-image-container-in-post-creation{
-    display: inline-block;
-    margin-left: 10px;
-    margin-right: 15px;
-    height: 65px;
-    width: 65px;
-
-}
-.cover-image-in-post-creation{
-    border-radius: 10px;
-    width: 100%;
-    height: 100%;
-}
-.note-title-in-post-creation{
-    line-height: 1.5em;
-    font-size: 20px;
-}
 
 .postSubmit {
     margin-top: 100px;

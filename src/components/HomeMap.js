@@ -1,6 +1,6 @@
 import '../styles/HomeMap.css'
-import React, {useState, useEffect} from "react";
-import { MapContainer, Marker, Popup, TileLayer, useMapEvents, ZoomControl } from "react-leaflet";
+import React, {useState, useEffect, useRef} from "react";
+import { MapContainer, Marker, TileLayer, LayersControl} from "react-leaflet";
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import { Icon } from "leaflet";
 import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
@@ -12,15 +12,27 @@ import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import {api, api_note} from "../helpers/api";
 import HeaderBar from "./HeaderBar";
 
-const myMarker = new Icon({
-    iconUrl: '/myMarker.svg',
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+import "leaflet-easybutton/src/easy-button.js";
+import "leaflet-easybutton/src/easy-button.css";
+import "font-awesome/css/font-awesome.min.css";
+import autoCompleteDestinationOptions from "./utils/autoCompleteDestinationOptions";
+import DestinationOptions from "./DestinationOptions";
+
+
+const { BaseLayer } = LayersControl;
+const noteMarker = new Icon({
+    iconUrl: '/noteMarker.svg',
     iconSize: [100,100]
 })
 
 
 export default function HomeMap() {
     // e,g., http://localhost:3000/home?lat=47.37&lng=8.56
+
     const queryParameters = new URLSearchParams(window.location.search)
+    const userId = localStorage.getItem('id');
     const lat_str = queryParameters.get("lat")
     const lng_str = queryParameters.get("lng")
     const lat = Number(lat_str)
@@ -29,6 +41,13 @@ export default function HomeMap() {
     const [notes, setNotes] = useState(myFakeData)
     const [activeNote, setActiveNote] = useState(null)
     const [style, setStyle] = useState("mapColumn")
+
+    const [coordinates, setCoordinates] = useState([])
+    const [destination, setDestination] = useState("")
+    const [destinationOptions, setDestinationOptions] = useState([])
+
+    const mapObject = useRef(null)
+
     let centerPosition = [47.37, 8.55]; // UZH [47.37430028227907, 8.550981197860574]
     if(lat_str && lng_str && !isNaN(lat) && !isNaN(lng)){ // need to check all str and number because of Number()
         centerPosition = [lat, lng]
@@ -47,20 +66,53 @@ export default function HomeMap() {
         fetchData()
     },[])
 
+
+
     function handleClickDetails(){
         window.location.href = `/travel-notes/${activeNote.noteId}`
     }
 
-    function handleClick(e){
-        const { lat, lng } = e.latlng;
-        console.log(lat, lng);
-    }
 
+    useEffect(() => {
+        if (!mapObject.current) return;
+
+        L.easyButton("fa-location-arrow", () => {
+            mapObject.current.locate().on("locationfound", function (e) {
+                mapObject.current.flyTo(e.latlng, mapObject.current.getZoom());
+            });
+        }).addTo(mapObject.current);
+    }, [mapObject.current]);
+
+    useEffect(() => {
+        autoCompleteDestinationOptions(destination, setDestinationOptions)
+    }, [destination])
+
+    function handleSearchClick(){
+        mapObject.current.flyTo([1,1])
+    }
     return (
         <div>
             <HeaderBar/>
             <div className={style}>
-                <MapContainer center={centerPosition} zoom={15} scrollWheelZoom={true} >
+                <div className="map-search-box" >
+                    <EditFormField
+                        readOnly={false}
+                        placeholder="Search location..."
+                        className="map-search-edit-field"
+                        value={destination}
+                        onChange={un => setDestination(un)}
+                    />
+                    <div className="map-search-icon-box">
+                        <TravelExploreIcon className="map-search-icon"/>
+                    </div>
+                </div>
+
+                <MapContainer center={centerPosition}
+                              zoom={15}
+                              scrollWheelZoom={true}
+                              ref={mapObject}
+                >
+
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -71,7 +123,6 @@ export default function HomeMap() {
                                     position={[note.coordinates[1], note.coordinates[0]]}
                                     eventHandlers={{
                                         click: () => {
-                                            console.log("marker clicked");
                                             setActiveNote(note);
                                             setStyle("mapColumnHalf");
                                             // just change the url without refreshing page
@@ -80,10 +131,21 @@ export default function HomeMap() {
                                             );
                                         },
                                     }}
-                                    icon={myMarker}
+                                    icon={noteMarker}
                             />
                         ))}
                     </MarkerClusterGroup>
+
+                    {destinationOptions.length > 0 && <DestinationOptions
+                        isInMap = {true}
+                        setDestination = {setDestination}
+                        setCoordinates = {setCoordinates}
+                        destinationOptions = {destinationOptions}
+                        setDestinationOptions = {setDestinationOptions}
+                        mapObject={mapObject}
+                        className="map-search-options"
+                    />}
+
                 </MapContainer>
             </div>
             {activeNote &&

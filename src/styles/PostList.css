@@ -21,6 +21,7 @@
     border-color: rgba(150, 202, 234, 0.13);
 }
 .postTextContainer{
+    margin-left: 10px;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -101,3 +102,4 @@ h5{
 .loadButton:hover{
     background: rgba(122, 164, 190, 0.42);
 }
+

@@ -6,6 +6,8 @@ import '../styles/PostListSubpage.css'
 import {LikeFilled, LikeOutlined} from "@ant-design/icons";
 import PostCommentForm from "./PostCommentForm";
 import HeaderBar from "./HeaderBar";
+import PostCommentList from "./PostCommentList";
+import SharingThumbnail from "./SharingThumbnail";
 
 const PostSubpage = () => {
     const userID = localStorage.getItem('id');
@@ -115,6 +117,14 @@ const PostSubpage = () => {
                             description={dateTransfer(item.post.createdTime)}
                         />
                         {item.post.content}
+                        {item.post.sharedNoteId &&
+                            <SharingThumbnail
+                                sharedNoteId={item.post.sharedNoteId}
+                                noteCoverImage={item.post.sharedNoteCoverImage}
+                                noteTitle={item.post.sharedNoteTitle}
+                                usage="subpage"
+                            />
+                        }
                         <div style={{display: "flex", justifyContent: "space-between", alignItems: "center",marginTop:'15px'}}>
                             <Button
                                 icon={
@@ -122,12 +132,16 @@ const PostSubpage = () => {
                                 } onClick={() => handleButtonClick(item.post.postId)}/>
                             <span className="post-reply-button" onClick={()=>handleReplyButtonClick(item.post.postId)}>Reply</span>
                         </div>
+
                         {
                             ReplyBoxStates[item.post.postId]?.shown &&
                             <div>
                                 <PostCommentForm postId={item.post.postId}/>
                             </div>
                         }
+                        <div>
+                            <PostCommentList postId={item.post.postId}/>
+                        </div>
                     </List.Item>
                 )}
             />
