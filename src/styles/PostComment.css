@@ -48,6 +48,7 @@
 }
 .comment-content{
     margin: 0 10px;
+    padding-bottom: 10px;
 }
 .comment-info{
     display: flex;

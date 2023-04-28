@@ -4,14 +4,12 @@ import React from "react";
 
 export default function PostCommentList(props){
     const postId=props.postId;
-    // console.log(postId);
     const [comments, setComments]=useState([]);
     const userId = localStorage.getItem("id");
 
     async function fetchData() {
         try {
             const response = await api_posts.get('/posts/' + postId + '/comments');
-            //console.log(response.data);
             setComments(response.data);
         } catch (error) {
             console.error(`Something went wrong while fetching the comments: \n${handleError(error)}`);

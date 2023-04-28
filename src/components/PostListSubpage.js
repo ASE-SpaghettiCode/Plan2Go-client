@@ -22,7 +22,6 @@ const PostSubpage = () => {
         async function fetchData() {
             try {
                 const response = await api_posts.get('/posts/following/' + userID);
-                // console.log(response.data);
                 setPosts(response.data);
                 response.data.forEach((item) => {
                     buttonStates[item.post.postId] = {liked: isLiked(item.post)};
@@ -31,16 +30,18 @@ const PostSubpage = () => {
                 });
                 setButtonStates(buttonStates);
                 setInitialReplyBoxStates(initialReplyBoxStates);
-                //setReplyBoxStates(initialReplyBoxStatesRef.current);
             } catch (error) {
                 console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
                 console.error("Details:", error);
                 alert("Something went wrong while fetching the users! See the console for details.");
             }
         }
-
         fetchData();
     }, [isLiked, buttonStates,userID]);
+
+    useEffect(()=>{
+        setReplyBoxStates(initialReplyBoxStatesRef.current);
+    },[initialReplyBoxStatesRef.current]);
 
     const goHome = () => {
         window.location.href = `/home`;
@@ -65,12 +66,11 @@ const PostSubpage = () => {
 
     function isLiked(post) {
         const likeList = post.likedUsers;
-        // console.log(result);
         return likeList.indexOf(userID) !== -1;
     }
 
     function handleReplyButtonClick(postId){
-        setReplyBoxStates(initialReplyBoxStatesRef.current);
+        //setReplyBoxStates(initialReplyBoxStatesRef.current);
         setReplyBoxStates(
             (prevState =>
                 {
