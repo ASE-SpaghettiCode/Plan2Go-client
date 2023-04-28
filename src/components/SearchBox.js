@@ -4,22 +4,15 @@ import type {MenuProps} from 'antd';
 import {Button, Dropdown, Select, Space} from 'antd';
 import {useState} from "react";
 import {api, api_note, handleError} from "../helpers/api";
-import {object} from "prop-types";
-import {set} from "@cloudinary/url-gen/actions/variable";
-import autoCompleteDestinationOptions from "./utils/autoCompleteDestinationOptions";
 
 const SearchBox: React.FC = () => {
     const [current, setCurrent] = useState('User');
-    const [requestServer, setRequestServer] = useState(api);
-    const [userSearchTerm, setUserSearchTerm] =useState(null);
-    const [selectedId, setSelectedId] = useState(null);
     const [options, setOptions] = useState([])
     async function fetchResults() {
         if (current === 'User') {
             try {
                 const response = await api.get('/users/');
                 const results = response.data.map(d => ({label: d.username, value: d.userId}))
-                console.log("Fetching Users")
                 setOptions(results)
             } catch (error) {
                 console.error(`Something went wrong while fetching the users for search box: \n${handleError(error)}`);
@@ -47,13 +40,11 @@ const SearchBox: React.FC = () => {
     }
     async function doClickUser() {
         setCurrent('User');
-        setRequestServer(api);
         fetchResults();
     }
 
     async function doClickNote() {
         setCurrent('Note');
-        setRequestServer(api_note);
         fetchResults();
     }
 
