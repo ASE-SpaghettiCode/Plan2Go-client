@@ -1,8 +1,9 @@
 import React from 'react'
-import '../styles/Mailbox.css';
+import '../../styles/Mailbox.css';
 import {List} from 'antd';
 import {Header} from "antd/es/layout/layout";
 import Item from "antd/es/list/Item";
+import {api} from "../../helpers/api";
 
 function Mailbox(props){
 
@@ -19,7 +20,7 @@ function Mailbox(props){
             case 'comment':
                 return (
                     <div className="notificationItem">
-                        <a>{actorName}</a> comments on your <a>{targetType}</a>
+                        <a>{actorName}</a> comments on your <a>{targetType}</a>: {context}
                     </div>
                 );
             case 'follow':
@@ -53,12 +54,14 @@ function Mailbox(props){
                       dataSource={notificationsList}
                       renderItem={(item) => <List.Item>{item}</List.Item>}
                 />
+
                 <div className="close-btn">
-                    <button onClick={()=>props.deleteAll}>Delete All</button>
+                    <button onClick={props.deleteAll}>Delete All</button>
                 </div>
                 <div className="close-btn">
                     <button onClick={()=>props.setMailbox(false)}>close</button>
                 </div>
+
             </div>
         </div>
     )

@@ -5,7 +5,7 @@ import { MailOutlined, PlusCircleOutlined, HomeOutlined, UserOutlined, CompassOu
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import {api, handleError} from "../helpers/api";
-import Mailbox from "./Mailbox"
+import Mailbox from "./Mailbox/Mailbox"
 
 import {useStompClient, useSubscription} from "react-stomp-hooks";
 import fakeNotifications from '../fakeData/notifications.json';
@@ -51,7 +51,7 @@ const NaviBar: React.FC = () => {
 
 
 
-    const initItems: MenuProps['items'] = (unreadNotificationsNum) => [
+    const initItems: MenuProps['items'] = (unreadNotificationNum) => [
         {
             label: (
                 <a href={`/home`}>
@@ -121,7 +121,7 @@ const NaviBar: React.FC = () => {
         },
         {
             label: (
-                <Badge count={unreadNotificationsNum}>
+                <Badge count={unreadNotificationNum}>
                     <a>
                         Mailbox
                     </a>
@@ -174,10 +174,10 @@ const NaviBar: React.FC = () => {
         setCurrent(e.key);
     };
 
-    const onDeleteAll=()=> {
-        api.delete(`/notifications/${myUserId}`);
+    const onDeleteAll = async (e) => {
+        const notificationsResponse = await api.delete(`/notifications/${myUserId}`);
+        setItems(initItems(0))
         setNotifications([]);
-
     };
 
     useEffect(() => {

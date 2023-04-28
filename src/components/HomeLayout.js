@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import NaviBar from "./NaviBar";
 
 import {Layout} from 'antd';
-import Mailbox from "./Mailbox";
+import Mailbox from "./Mailbox/Mailbox";
 
 const { Header, Content, Footer } = Layout;
 
