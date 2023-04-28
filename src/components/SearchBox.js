@@ -6,6 +6,7 @@ import {useState} from "react";
 import {api, api_note, handleError} from "../helpers/api";
 import {object} from "prop-types";
 import {set} from "@cloudinary/url-gen/actions/variable";
+import autoCompleteDestinationOptions from "./utils/autoCompleteDestinationOptions";
 
 const SearchBox: React.FC = () => {
     const [current, setCurrent] = useState('User');
@@ -18,11 +19,12 @@ const SearchBox: React.FC = () => {
             try {
                 const response = await api.get('/users/');
                 const results = response.data.map(d => ({label: d.username, value: d.userId}))
+                console.log("Fetching Users")
                 setOptions(results)
             } catch (error) {
-                console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
+                console.error(`Something went wrong while fetching the users for search box: \n${handleError(error)}`);
                 console.error("Details:", error);
-                alert("Something went wrong while fetching the users! See the console for details.");
+                alert("Something went wrong while fetching the users for search box! See the console for details.");
             }
         } else {
             try {
@@ -35,7 +37,10 @@ const SearchBox: React.FC = () => {
             }
         }
     }
-    fetchResults();
+    useEffect(() => {
+        fetchResults();
+    }, [])
+
 
     const handleSelection = (value: string) => {
         window.location.href = `/users/` + value;
