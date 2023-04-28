@@ -16,7 +16,7 @@ export const api_posts = axios.create({
     headers: { 'Content-Type': 'application/json' }
 });
 
-console.log(getDomain("note"))
+// console.log(getDomain("note"))
 
 export const handleError = error => {
     const response = error.response;
