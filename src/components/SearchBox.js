@@ -83,6 +83,7 @@ const SearchBox: React.FC = () => {
                     </Button>
                 </Dropdown>
                 <Select
+                    listHeight={160}
                     showSearch
                     placeholder="search user"
                     optionFilterProp="children"
