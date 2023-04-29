@@ -1,6 +1,6 @@
 import React from 'react'
 import '../../styles/Mailbox.css';
-import {List} from 'antd';
+import {List,Button} from 'antd';
 import {Header} from "antd/es/layout/layout";
 import Item from "antd/es/list/Item";
 import {api} from "../../helpers/api";
@@ -8,25 +8,25 @@ import {api} from "../../helpers/api";
 function Mailbox(props){
 
     const getNotificationItem = (notification) => {
-        const { actorName, targetType, method, context } = notification;
+        const { actorId, actorName, targetType, method, context,ownerId } = notification;
 
         switch (method) {
             case 'like':
                 return (
-                    <div className="notificationItem">
-                        <a>{actorName}</a> likes your <a>{targetType}</a>
-                    </div>
+                    <a className="notificationItem">
+                        <a href={`/users/${actorId}`}>{actorName}</a> likes your <a href={`/users/${ownerId}`}>{targetType}</a>
+                    </a>
                 );
             case 'comment':
                 return (
                     <div className="notificationItem">
-                        <a>{actorName}</a> comments on your <a>{targetType}</a>: {context}
+                        <a href={`/users/${actorId}`}>{actorName}</a> comments on your <a href={`/users/${ownerId}`}>{targetType}</a>: {context}
                     </div>
                 );
             case 'follow':
                 return (
                     <div className="notificationItem">
-                        <a>{actorName}</a> follows you
+                        <a  href={`/users/${actorId}`}>{actorName}</a> follows you
                     </div>
                 );
             default:
@@ -54,14 +54,10 @@ function Mailbox(props){
                       dataSource={notificationsList}
                       renderItem={(item) => <List.Item>{item}</List.Item>}
                 />
-
-                <div className="close-btn">
-                    <button onClick={props.deleteAll}>Delete All</button>
+                <div className="button-panel">
+                    <Button type="text" onClick={props.deleteAll}>delete all</Button>
+                    <Button type="text" onClick={()=>props.setMailbox(false)}>close</Button>
                 </div>
-                <div className="close-btn">
-                    <button onClick={()=>props.setMailbox(false)}>close</button>
-                </div>
-
             </div>
         </div>
     )
