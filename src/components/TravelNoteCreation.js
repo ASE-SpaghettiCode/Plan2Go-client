@@ -361,16 +361,15 @@ export default function TravelNoteCreation(props) {
                             />
                             {!readOnly && <TravelExploreIcon className="search-icon"/>}
                         </div>
-                        {destinationOptions.length>0 && !readOnly &&
-                            <DestinationOptions
-                                isInMap = {false}
-                                setDestination = {setDestination}
-                                setCoordinates = {setCoordinates}
-                                destinationOptions = {destinationOptions}
-                                setDestinationOptions = {setDestinationOptions}
-                                className="optionList"
-                            />
-
+                        {destinationOptions.length>0 && !readOnly && destination &&
+                                <DestinationOptions
+                                    isInMap = {false}
+                                    setDestination = {setDestination}
+                                    setCoordinates = {setCoordinates}
+                                    destinationOptions = {destinationOptions}
+                                    setDestinationOptions = {setDestinationOptions}
+                                    className="optionList"
+                                />
                             }
                     </div>
                     <div className='DetailsContainer'>

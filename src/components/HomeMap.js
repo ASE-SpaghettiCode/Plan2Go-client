@@ -136,7 +136,7 @@ export default function HomeMap() {
                         ))}
                     </MarkerClusterGroup>
 
-                    {destinationOptions.length > 0 && <DestinationOptions
+                    {destinationOptions.length > 0 && destination && <DestinationOptions
                         isInMap = {true}
                         setDestination = {setDestination}
                         setCoordinates = {setCoordinates}
