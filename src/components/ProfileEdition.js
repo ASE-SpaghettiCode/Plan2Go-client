@@ -83,8 +83,7 @@ const ProfileEdition: React.FC = () => {
             await api.put(`/users/${userId}`, requestBody);
 
             // submit successfully worked --> navigate to his/her own profile
-            let path = `/users/${userId}`;
-            window.location.href = path;
+            window.location.href = `/users/${userId}`;
 
         } catch (error) {
             alert(`Something went wrong during the edit: \n${handleError(error)}`);
