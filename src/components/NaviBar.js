@@ -11,10 +11,6 @@ import {useStompClient, useSubscription} from "react-stomp-hooks";
 import fakeNotifications from '../fakeData/notifications.json';
 import { Avatar, Badge, Space } from 'antd';
 
-
-
-
-
 const myUserId = localStorage.getItem('id');
 
 const doLogout = async () => {
@@ -26,14 +22,7 @@ const doLogout = async () => {
     }
 };
 
-
 type MenuItem = Required<MenuProps>['items'][number];
-
-
-
-
-
-
 
 type NaviBarProps = {
     openMailbox: () => void;
@@ -48,8 +37,6 @@ const NaviBar: React.FC = () => {
     const myUserId = localStorage.getItem('id');
     const [fetchTrigger, setFetchTrigger] = useState(false);
     const [notifications, setNotifications] = useState([])
-
-
 
     const initItems: MenuProps['items'] = (unreadNotificationNum) => [
         {
@@ -200,8 +187,6 @@ const NaviBar: React.FC = () => {
     useSubscription(`/mailbox/${myUserId}/fetch`, () => {
         setFetchTrigger(!fetchTrigger);
     });
-
-
 
     return (
         <div>

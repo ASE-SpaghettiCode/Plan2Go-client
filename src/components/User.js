@@ -7,7 +7,6 @@ import {Button, Space} from 'antd';
 
 const myUserId = localStorage.getItem('id');
 
-
 const User = ({match}) => {
     const navigate = useNavigate();
     const [user, setUsers] = useState({
@@ -34,7 +33,6 @@ const User = ({match}) => {
             </div>
         )
     }
-
 
     useEffect(() => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
