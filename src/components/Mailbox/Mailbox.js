@@ -1,9 +1,6 @@
 import React from 'react'
 import '../../styles/Mailbox.css';
 import {List,Button} from 'antd';
-import {Header} from "antd/es/layout/layout";
-import Item from "antd/es/list/Item";
-import {api} from "../../helpers/api";
 
 function Mailbox(props){
 
@@ -38,7 +35,6 @@ function Mailbox(props){
         }
     };
 
-
     const notificationsList = props.notifications.map((notification)=>
         <div>
             {getNotificationItem(notification)}
@@ -62,6 +58,5 @@ function Mailbox(props){
         </div>
     )
 }
-
 
 export default Mailbox;
