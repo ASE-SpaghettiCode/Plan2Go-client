@@ -1,36 +1,119 @@
-import React from 'react';
-import {Button} from "@mui/material";
-import '../Profile.css'
+import React, {useEffect, useState} from 'react';
+import '../styles/Profile.css';
+import {api, api_note, handleError} from "../helpers/api";
+import MyLikeList from "./LikeList";
+import PostList from "./PostList";
 
 const ProfileNotes=()=>{
+    const [TravelNotes,setTravelNotes]=useState([]);
+    const [LikedNotes,setLikedNotes]=useState([]);
+    const path = window.location.pathname;
+    const userID = path.substring(path.lastIndexOf('/') + 1);
+    const [showTravelNotes,setShowTravelNotes]=useState(true);
+    const [showPosts,setShowPosts]=useState(false);
+    const [showLikes,setShowLikes]=useState(false);
+
+    function handleShowLikes(){
+        setShowTravelNotes(false);
+        setShowLikes(true);
+        setShowPosts(false);
+        console.log("my likes");
+    };
+
+    function handleShowTravelNotes(){
+        setShowLikes(false);
+        setShowTravelNotes(true);
+        setShowPosts(false);
+        console.log("travel notes");
+    };
+
+    function handleShowPosts(){
+        setShowPosts(true);
+        setShowLikes(false);
+        setShowTravelNotes(false);
+        console.log("post");
+    };
+
+
+    useEffect(() => ({
+        posts: handleShowPosts,
+        notes: handleShowTravelNotes,
+        likes: handleShowLikes
+    }[new URLSearchParams(window.location.search).get('tab')]?.()), []);
+
+    useEffect(()=>{
+        async function fetchData(){
+            try{
+                const response = await api_note.get('/users/'+userID+'/notes');
+                console.log(response.data);
+                setTravelNotes(response.data);
+            }catch (error) {
+                console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
+                console.error("Details:", error);
+                alert("Something went wrong while fetching the users! See the console for details.");
+            }
+        }
+        fetchData();
+    },[]);
+
+    const handleClickNotes=(props)=>{
+        window.location.href=`/travel-notes/`+props.noteId;
+    }
+
+    const handleTimeFormat=(props)=>{
+        const date=new Date(props);
+        const createdDate=date.toLocaleString('en-GB',{year: 'numeric', month: 'long', day: 'numeric'});
+        return(
+            createdDate
+        )
+    }
+
+    const listItems = TravelNotes.map((travelnote)=>
+        <div className="postcard" key={travelnote.createdTime} onClick={()=>handleClickNotes(travelnote)}>
+            <img src={travelnote.coverImage}/>
+            <h1>{travelnote.noteTitle}</h1>
+            <h4>{handleTimeFormat(travelnote.createdTime)}</h4>
+        </div>
+    );
+
+
+
+
     return(
         <div>
-            <div className="postnav">
-                <a>My Travel Notes</a>
-                <a>My Posts</a>
-            </div>
-            <div className="postcontainer">
-                <div className="postcard">
-                    <img src="https://cdn.mos.cms.futurecdn.net/pD3bsKPrjsqNiFDGRL5oq6-1920-80.jpg.webp"/>
-                    <h1>One night in Paris</h1>
-                    <h4>28.12.2022</h4>
+            {showTravelNotes &&
+                <div>
+                    <div className="postnav">
+                        <a className="active" onClick={handleShowTravelNotes}>Travel Notes</a>
+                        <a onClick={handleShowPosts}>Posts</a>
+                        <a onClick={handleShowLikes}>Likes</a>
+                    </div>
+                    <div className="postcontainer">
+                        {listItems}
+                    </div>
                 </div>
-                <div className="postcard">
-                    <img src="https://www.history.com/.image/ar_215:100%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_2560/MTkyNDQ5NzY0ODY2OTI1OTgw/gettyimages-1395722285.webp"/>
-                    <h1>New York Story</h1>
-                    <h4>12.07.2022</h4>
+            }
+
+            {showLikes &&
+                <div>
+                    <div className="postnav">
+                        <a onClick={handleShowTravelNotes}>Travel Notes</a>
+                        <a onClick={handleShowPosts}>Posts</a>
+                        <a className="active" onClick={handleShowLikes}>Likes</a>
+                    </div>
+                    <MyLikeList/>
                 </div>
-                <div className="postcard">
-                    <img src="https://static.scientificamerican.com/sciam/cache/file/874F5357-9EEC-496B-AFC68A6ED21476EE_source.jpg?w=590&h=800&B07AB5BC-FD4C-4B00-9C9B2608422E5559"/>
-                    <h1>summer hiking</h1>
-                    <h4>13.04.2021</h4>
+            }
+            {showPosts &&
+                <div>
+                    <div className="postnav">
+                        <a onClick={handleShowTravelNotes}>Travel Notes</a>
+                        <a className="active" onClick={handleShowPosts}>Posts</a>
+                        <a onClick={handleShowLikes}>Likes</a>
+                    </div>
+                <PostList/>
                 </div>
-                <div className="postcard">
-                    <img src="https://www.history.com/.image/ar_215:100%2Cc_fill%2Ccs_srgb%2Cg_faces:center%2Cq_auto:good%2Cw_2560/MTkyNDQ5NzY0ODY2OTI1OTgw/gettyimages-1395722285.webp"/>
-                    <h1>New York Story again</h1>
-                    <h4>08.03.2019</h4>
-                </div>
-            </div>
+            }
         </div>
     )
 }

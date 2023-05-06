@@ -1,0 +1,73 @@
+.body{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+.notesContainer{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.notesCard{
+    width: 80%;
+    height: 200px;
+    margin:10px;
+    font-size: 12px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    cursor: pointer;
+}
+.imageContainer{
+    width: 100%;
+    height: 65%;
+}
+.noteImage{
+    background-color: aliceblue;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    object-fit: cover;
+}
+.notetitle{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-right:10px;
+}
+.noteInfo{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+.author{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    padding-right: 10px;
+}
+h6{
+    font-weight: lighter;
+}
+.note-load{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+.note-loadButton{
+    position: relative;
+    padding: 8px 16px;
+    background: rgba(202, 211, 204, 0.14);
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.04);
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.note-loadButton:hover{
+    background: rgba(203, 203, 203, 0.25);
+}

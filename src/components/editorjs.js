@@ -4,15 +4,15 @@ import EditorJS from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 import ImageTool from '@editorjs/image'
 import Axios from "axios";
+import {api_note} from "../helpers/api";
 
 
 
 const EDITOR_HOLDER_ID = 'editorjs';
 
 const EditorJs = (props) => {
+    const {readOnly, editMode, noteId, editorData, setEditorData} = props
     const ejInstance = useRef();
-    const {editorData, setEditorData} = props
-
 
     // This will run only once
     useEffect(() => {
@@ -24,11 +24,11 @@ const EditorJs = (props) => {
         }
     }, [])
 
-    const initEditor = () => {
+    function handleEditorConfig(data){
         const editor = new EditorJS({
             holder: EDITOR_HOLDER_ID,
             logLevel: "ERROR",
-            data: editorData,
+            data: data,
             onReady: () => {
                 ejInstance.current = editor;
             },
@@ -37,8 +37,10 @@ const EditorJs = (props) => {
                 let content = await ejInstance.current.save()
                 // Put your logic here to save this data to your DB
                 setEditorData(content);
+                console.log(editorData)
+                console.log(content)
             },
-            readOnly: props.readOnly,
+            readOnly: readOnly,
             autofocus: true,
             tools: {
                 header:Header,
@@ -81,6 +83,22 @@ const EditorJs = (props) => {
                 }
             }
         });
+        return editor;
+    }
+
+    const initEditor = () => {
+        if(readOnly || editMode){
+            api_note.get(`/notes/${noteId}`)
+                .then((response) => response.data.editorData)
+                .then((fakeData) => {
+                    handleEditorConfig(fakeData)
+                }
+            )
+        }else{
+            handleEditorConfig(editorData)
+        }
+
+
     };
 
     return (

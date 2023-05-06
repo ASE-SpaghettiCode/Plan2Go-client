@@ -1,23 +1,38 @@
 import React, {useEffect, useState} from 'react';
-import {Button} from "@mui/material";
-import '../Profile.css'
-import {useNavigate} from "react-router-dom";
+import '../styles/Profile.css';
+import {Link, useNavigate} from "react-router-dom";
 import {api, handleError} from "../helpers/api";
+import FollowButton from "./FollowButton";
+import {Button, Space} from 'antd';
 
-const User=({match})=>{
-    const navigate=useNavigate();
-    const [user, setUsers]=useState({
-        userId:"",
-        username:"",
+const myUserId = localStorage.getItem('id');
+
+const User = ({match}) => {
+    const navigate = useNavigate();
+    const [user, setUsers] = useState({
+        userId: "",
+        username: "",
+        imageLink: "",
+        intro: "",
+        followers: "",
+        followings: ""
     });
 
     function handleEditClick() {
-        navigate('/profile/editing');
+        navigate('/profile/editing/'+myUserId);
     }
 
     const path = window.location.pathname;
     const userID = path.substring(path.lastIndexOf('/') + 1);
 
+    const UserImage = () => {
+        const imageUrl = user.imageLink;
+        return (
+            <div>
+                <img src={imageUrl} alt="Avatar" className="avatarimage"/>
+            </div>
+        )
+    }
 
     useEffect(() => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
@@ -26,7 +41,6 @@ const User=({match})=>{
                 const response = await api.get('/users/' + userID);
                 console.log(response.data);
                 setUsers(response.data);
-
             } catch (error) {
                 console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
                 console.error("Details:", error);
@@ -37,38 +51,39 @@ const User=({match})=>{
         fetchData();
     }, []);
 
+    let followerNum = user.followers.length;
+    let followingNum = user.followings.length;
 
-    return(
+    return (
         <div className="user">
             <div className="avatar">
-                       <img src="https://images.pexels.com/photos/15652565/pexels-photo-15652565.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" />
+                <UserImage/>
             </div>
             <h2><UserUsername user={user}/></h2>
-            <p className="follow">Follower 20</p>
-            <p className="follow">Following 35</p>
+            <FollowButton/>
+            <Button type="text" href={`/follower/` + userID}>Follower: {followerNum}</Button>
+            <Button type="text" href={`/following/` + userID}>Following: {followingNum}</Button>
             <div className="information">
                 <div>
                     <UserInfo user={user}/>
                 </div>
-                <div>We were good, we were gold
-                    Kinda dream that can't be sold
-                    We were right 'til we weren't
-                    Built a home and watched it burn</div>
             </div>
-            <Button variant="contained" color='secondary' onClick={handleEditClick}>Edit</Button>
+            <div style={{display: myUserId === userID ? 'block' : 'none'}}>
+                <button className="userbutton" onClick={handleEditClick}>Edit Profile</button>
+            </div>
         </div>
     )
 }
 
 const UserUsername = ({user}) => {
     return (
-            <div>{user.username}</div>
+        <div>{user.username}</div>
     );
 };
 
 const UserInfo = ({user}) => {
     return (
-        <div>{user.info}</div>
+        <div>{user.intro}</div>
     );
 };
 

@@ -13,28 +13,47 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import EditorJs from "./editorjs";
 import Axios from "axios";
+import {api, api_note} from "../helpers/api";
+import logo from "../images/Logo.png";
+import NaviBar from "./NaviBar";
+import {Header} from "antd/es/layout/layout";
+
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
+import MyLocationOutlinedIcon from '@mui/icons-material/MyLocationOutlined';
+import TravelNoteComments from "./TravelNoteComments";
+import HeaderBar from "./HeaderBar";
+import getDisplayName from "./utils/getDisplayName";
+import autoCompleteDestinationOptions from "./utils/autoCompleteDestinationOptions";
+import DestinationOptions from "./DestinationOptions";
 
 
-const DEFAULT_INITIAL_DATA = () => {
-    return {
-        "time": new Date().getTime(),
-        "blocks": [
-            {
-                "type": "header",
-                "data": {
-                    "text": "Write what you'd like to share here!",
-                    "level": 1
-                }
-            },
-        ]
-    }
+let DEFAULT_INITIAL_DATA = {
+    "time": new Date().getTime(),
+    "blocks": [
+        {
+            "type": "header",
+            "data": {
+                "text": "Write what you'd like to share here!",
+                "level": 1
+            }
+        },
+    ]
 }
 
 
-export default function TravelNoteCreation(props){
-    const [authorId, setAuthorId] = useState("fake_author_id")
-    const [authorProfileImage,setAuthorProfileImage] = useState('https://res.cloudinary.com/drlkip0yc/image/upload/v1679279539/fake-profile-photo_qess5v.jpg')
-    const [noteTitle, setNoteTitle] =  useState("Give your travel note a name here.")
+export default function TravelNoteCreation(props) {
+    const {readOnly, editMode} = props;
+    const localUserId = localStorage.getItem('id')
+    const localUserName = localStorage.getItem('username')
+
+    const [authorId, setAuthorId] = useState(localUserId)
+    const [authorName, setAuthorName] = useState(localUserName)
+
+    const [authorProfileImage, setAuthorProfileImage] = useState('https://res.cloudinary.com/drlkip0yc/image/upload/v1679279539/fake-profile-photo_qess5v.jpg')
+    // const [authorProfileImage, setAuthorProfileImage] = useState("")
+    const [noteTitle, setNoteTitle] = useState("Give your travel note a name here.")
     const [coverImage, setCoverImage] = useState("https://res.cloudinary.com/drlkip0yc/image/upload/v1679311004/cover-landscape_w1fbtf.jpg")
 
     const [date, setDate] = useState("");
@@ -47,227 +66,353 @@ export default function TravelNoteCreation(props){
 
     const [destinationOptions, setDestinationOptions] = useState([]);
     const [coordinates, setCoordinates] = useState([]);
-    const [showOptions, setShowOptions] = useState(false);
 
     const [editorData, setEditorData] = useState(DEFAULT_INITIAL_DATA);
-    // console.log(editorData)
+    const [liked, setLiked] = useState(false);
 
-    const [readOnly, setReadOnly] = useState(props.readOnly);
+    const path = window.location.pathname
+    const noteId = path.substring(path.lastIndexOf('/') + 1)
 
 
-    // TODO POST data; return note_id
-    const requestBody = {
-        authorId,
-        noteTitle,
-        coverImage,
-        date,
-        duration,
-        rating,
-        expense:expense,
-        numTravelers,
-        targetGroup,
-        destination,
-        coordinates,
-        editorData,
-    };
-    console.log(requestBody)
+    useEffect(() => {
+        async function fetchData() {
+            if (readOnly || editMode) {
+                api_note.get(`/notes/${noteId}`).then((response) => {
+                    const responseData = response.data
+                    setAuthorId(responseData.authorId)
+                    setNoteTitle(responseData.noteTitle)
+                    setCoverImage(responseData.coverImage)
+                    setDate(responseData.date)
+                    setDuration(responseData.duration)
+                    setRating(responseData.rating)
+                    setExpense(responseData.expense)
+                    setNumTravelers(responseData.numTravelers)
+                    setTargetGroup(responseData.targetGroup)
+                    setDestination(responseData.destination)
+                    setCoordinates(responseData.coordinates)
+                    console.log("likedUsers:",responseData.likedUsers)
+                    console.log("editorData:",responseData.editorData)
+
+                    if (responseData.likedUsers.includes(localUserId)){
+                        setLiked(true)
+                    }
+                    return responseData.authorId
+                }).then((newAuthorId) =>
+                    api.get(`/users/${newAuthorId}`).then((response) => {
+                        setAuthorName(response.data.username)
+                        const userImageURL = response.data.imageLink
+                        console.log("userImageURL:", userImageURL)
+                        if (userImageURL) {
+                            setAuthorProfileImage(userImageURL)
+                        }
+                    })
+                )
+
+            } else { // creation mode
+                api.get(`/users/${authorId}`).then((response) => {
+                    setAuthorName(response.data.username)
+                    const userImageURL = response.data.imageLink
+                    console.log("userImageURL:", userImageURL)
+                    if (userImageURL) {
+                        setAuthorProfileImage(userImageURL)
+                    }
+                })
+
+            }
+        }
+
+        fetchData()
+    }, [])
+
+    function doSubmit() {
+        const requestBody = {
+            authorId,
+            noteTitle,
+            coverImage,
+            date,
+            duration,
+            rating,
+            expense: expense,
+            numTravelers,
+            targetGroup,
+            destination,
+            coordinates,
+            editorData,
+        };
+        api_note.post('/notes', requestBody)
+            .then((response) => {
+                const responseNoteId = response.data.noteId
+                window.location.href = `/travel-notes/${responseNoteId}`
+            }).catch((err) => console.log("submit error:", err))
+    }
+    function doDelete() {
+        api_note.delete(`/users/${localUserId}/delete/notes/${noteId}`)
+            .then(() => {
+                window.location.href = `/users/${localUserId}`
+            }).catch((err) => console.log("Delete error:", err))
+    }
+
+    function goToEdit() {
+        window.location.href = `/travel-notes/edit/${noteId}`
+    }
+    function doSaveEdit() {
+        const requestBody = {
+            authorId,
+            noteTitle,
+            coverImage,
+            date,
+            duration,
+            rating,
+            expense: expense,
+            numTravelers,
+            targetGroup,
+            destination,
+            coordinates,
+            editorData,
+        };
+        api_note.put(`/users/${localUserId}/editing/notes/${noteId}`,requestBody)
+            .then(() => {
+                window.location.href = `/travel-notes/${noteId}`
+            }).catch((err) => console.log("Save edit error:", err))
+    }
+    function doCancelEdit() {
+        window.location.href = `/travel-notes/${noteId}`
+    }
+
 
     // const NOMINATIM_BASE_URI = 'https://nominatim.openstreetmap.org/search?'
-    const NOMINATIM_BASE_URI = 'https://photon.komoot.io/api/?' // must have "https:"
 
-    function getDisplayName(item){
-        let display_name = ''
-        const proper_list = ['name', 'street', 'housenumber', 'locality', 'postcode', 'city', 'country']
-        {proper_list.map((proper) => {
-            if (item.properties[proper]){
-                display_name += item.properties[proper] + ', '
-            }
-
-        })}
-        return display_name.trim();
-    }
 
     // search the coordinates when user typing (set time out 1s)
     useEffect(() => {
-        if (!readOnly){
-            const delayDebounceFn = setTimeout(() => {
-                // Send Axios request here
-                const params = {
-                    q: destination,
-                    limit: 5
-                };
-                const queryString = new URLSearchParams(params).toString();
-                const requestOptions = {
-                    method: 'GET',
-                    redirect: 'follow'
-                }
-                fetch(`${NOMINATIM_BASE_URI}${queryString}`, requestOptions)
-                    .then((response) => {
-                        return response.text()
-                    })
-                    .then((result) => {
-                        const result_json = JSON.parse(result)
-                        setDestinationOptions(result_json.features)
-                        setShowOptions(true)
-                    })
-                    .catch((err) => console.log("getting coordinates err:", err))
-            }, 1000)
-            return () => clearTimeout(delayDebounceFn)
+        if (!readOnly) {
+            autoCompleteDestinationOptions(destination, setDestinationOptions)
         }
     }, [destination])
 
-    function handleCoverImageChange(e){
+    function handleCoverImageChange(e) {
         let file = e.target.files[0];
         const formData = new FormData;
-        formData.append("file",file);
-        formData.append("upload_preset","ml_default");
-        Axios.post("https://api.cloudinary.com/v1_1/drlkip0yc/image/upload",formData
-        ).then((response)=>{
+        formData.append("file", file);
+        formData.append("upload_preset", "ml_default");
+        Axios.post("https://api.cloudinary.com/v1_1/drlkip0yc/image/upload", formData
+        ).then((response) => {
             let newImageUrl = response.data['secure_url'].toString();
             setCoverImage(newImageUrl)
         }).catch((err) => console.log("Upload image err:", err))
     }
 
+    function handleClickAuthorName() {
+        window.location.href = `/users/${authorId}`;
+    }
 
-    return <div>
-        {!readOnly && <div className="submitContainer"> SUBMIT </div> }
-        <div className='CoverContainer'>
-            {/*TODO: Should upload custom cover image*/}
-            {!readOnly &&
-                <label className="coverImageChange">
-                    <input id="inputCoverImage" type="file" onChange={e => handleCoverImageChange(e)}/>
-                    💡 Click here to change your cover image
-                </label>
-            }
-            <img id='cover-landscape' src={coverImage} />
-        </div>
-        <div className='CreationContainer'>
-            <div className='AuthorContainer'>
-                <img id='authorPhoto' src={authorProfileImage}/>
-                <p id='authorName'> By: <span id="authorNameSpan">Fake Duan Huiran </span> </p>
-            </div>
-            <div className='TitleContainer'>
-                {readOnly?
-                    <div className="noteTitle">{noteTitle}</div>
-                    :
-                    <input
-                        type="text"
-                        className="noteTitle"
-                        value={noteTitle}
-                        maxLength="55"
-                        onChange={e => setNoteTitle(e.target.value)}
-                    />
+    const goHome = () => {
+        window.location.href = `/home`;
+    }
+
+    function handleLikeClick() {
+        console.log("localUserId:", localUserId)
+        console.log("noteId:", noteId)
+        if(liked){
+            api_note.delete(`/users/${localUserId}/likes/notes/${noteId}`)
+                .catch((err) => console.log("unlike error:", err))
+        }else{
+            api_note.post(`/users/${localUserId}/likes/notes/${noteId}`)
+                .catch((err) => console.log("like error:", err))
+        }
+        setLiked(!liked);
+    }
+    function handleShareClick() {
+        window.location.href = `/post-creation?sharing=${noteId}`;
+    }
+    function handleLocateClick() {
+        window.location.href = `/home?lat=${coordinates[1]}&lng=${coordinates[0]}`
+    }
+
+    return (
+        <div>
+            <HeaderBar/>
+            <div>
+                {!readOnly && !editMode && <div onClick={doSubmit} className="noteButtonContainer"> SUBMIT </div>}
+
+                {readOnly && !editMode && localUserId === authorId &&
+                    <div onClick={goToEdit} className="noteButtonContainer noteEditButton">
+                        EDIT
+                    </div>
                 }
-            </div>
+                {readOnly && !editMode && localUserId === authorId &&
+                    <div onClick={doDelete} className="noteButtonContainer noteDeleteButton">
+                        DELETE
+                    </div>
+                }
+                {localUserId === authorId && editMode &&
+                    <div onClick={doSaveEdit} className="noteButtonContainer noteSaveEditButton">
+                        SAVE
+                    </div>
+                }
+                {localUserId === authorId && editMode &&
+                    <div onClick={doCancelEdit} className="noteButtonContainer noteCancelButton">
+                        CANCEL
+                    </div>
+                }
+                {!readOnly &&
+                    <label className="coverImageChange">
+                        <input id="inputCoverImage" type="file" onChange={e => handleCoverImageChange(e)}/>
+                        💡 Click here to change your cover image
+                    </label>
+                }
+                <div className='CoverContainer'>
+                    <img id='cover-landscape' src={coverImage}/>
+                </div>
+                <div className='CreationContainer'>
+                    <div className='AuthorContainer'>
+                        <img id='authorPhoto' src={authorProfileImage}/>
+                        <p id='authorName'> By: <span onClick={handleClickAuthorName} id="authorNameSpan">{authorName} </span></p>
+                    </div>
+                    <div className='TitleContainer'>
+                        {readOnly ?
+                            <div className="noteTitle">{noteTitle}</div>
+                            :
+                            <input
+                                type="text"
+                                className="noteTitle"
+                                value={noteTitle}
+                                maxLength="55"
+                                onChange={e => setNoteTitle(e.target.value)}
+                            />
+                        }
+                    </div>
 
-            <div className='IndicatorContainer'>
-                <div id='indicator1' className="indicatorItem">
-                    <div className="indicatorLabel"> 🗓 Travel Date: </div>
-                    <EditFormField
-                        readOnly={readOnly}
-                        value={date}
-                        placeholder="dd.MM.yyyy"
-                        className="edit-field"
-                        onChange={un => setDate(un)}
-                    />
-                </div>
-                <div id='indicator2' className="indicatorItem">
-                    <div className="indicatorLabel"> 🔢 Duration: </div>
-                    <EditFormField
-                        readOnly={readOnly}
-                        value={duration}
-                        placeholder=""
-                        endAdornment={<InputAdornment position="end">(days)</InputAdornment>}
-                        type='number'
-                        className="edit-field"
-                        onChange={un => setDuration(un)}
-                    />
-                </div>
-                <div id='indicator3' className="indicatorItem">
-                    <div className="ratingLabel indicatorLabel"> 💯 Rating: </div>
-                    <RatingField
-                        readOnly={readOnly}
-                        value={rating}
-                        className="rating-field"
-                        onChange={un => setRating(un)}
-                    />
-                </div>
+                    <div className='IndicatorContainer'>
+                        <div id='indicator1' className="indicatorItem">
+                            <div className="indicatorLabel"> 🗓 Travel Date:</div>
+                            <EditFormField
+                                readOnly={readOnly}
+                                value={date}
+                                placeholder="dd.MM.yyyy"
+                                className="edit-field"
+                                onChange={un => setDate(un)}
+                            />
+                        </div>
+                        <div id='indicator2' className="indicatorItem">
+                            <div className="indicatorLabel"> 🔢 Duration:</div>
+                            <EditFormField
+                                readOnly={readOnly}
+                                value={duration}
+                                placeholder=""
+                                endAdornment={<InputAdornment position="end">(days)</InputAdornment>}
+                                type='number'
+                                className="edit-field"
+                                onChange={un => setDuration(un)}
+                            />
+                        </div>
+                        <div id='indicator3' className="indicatorItem">
+                            <div className="ratingLabel indicatorLabel"> 💯 Rating:</div>
+                            <RatingField
+                                readOnly={readOnly}
+                                disabled={readOnly}
+                                value={rating}
+                                className="rating-field"
+                                onChange={un => setRating(un)}
+                            />
+                        </div>
 
-                <div id='indicator4' className="indicatorItem">
-                    <div className="indicatorLabel"> 💰 Expense: </div>
-                    <EditFormField
-                        readOnly={readOnly}
-                        value={expense}
-                        placeholder="how much ..."
-                        type='number'
-                        endAdornment={<InputAdornment position="end">(CHF)</InputAdornment>}
-                        className="edit-field"
-                        onChange={un => setExpense(un)}
-                    />
-                </div>
-                <div id='indicator5' className="indicatorItem">
-                    <div className="indicatorLabel"> 👬 No. of Travelers: </div>
-                    <EditFormField
-                        readOnly={readOnly}
-                        value={numTravelers}
-                        placeholder="how many ..."
-                        type='number'
-                        className="edit-field"
-                        onChange={un => setNumTravelers(un)}
-                    />
-                </div>
-                <div id='indicator6' className="indicatorItem">
-                    <div className="indicatorLabel"> 🎯 Target Group: </div>
-                    <EditFormField
-                        readOnly={readOnly}
-                        value={targetGroup}
-                        placeholder="suitable for ..."
-                        className="edit-field"
-                        onChange={un => setTargetGroup(un)}
-                    />
-                </div>
-                <div id='indicator7' className="indicatorItem locationItem">
-                    <div className="locationLabel"> 📍 Destination: </div>
-                    <EditFormField
-                        readOnly={readOnly}
-                        value={destination}
-                        placeholder="Search and select the exact address to be displayed on the map..."
-                        className="location-edit-field"
-                        onChange={un => setDestination(un)}
-                    />
-                    {!readOnly && <TravelExploreIcon className="search-icon" />}
-                </div>
+                        <div id='indicator4' className="indicatorItem">
+                            <div className="indicatorLabel"> 💰 Expense:</div>
+                            <EditFormField
+                                readOnly={readOnly}
+                                value={expense}
+                                placeholder="how much ..."
+                                type='number'
+                                endAdornment={<InputAdornment position="end">(CHF)</InputAdornment>}
+                                className="edit-field"
+                                onChange={un => setExpense(un)}
+                            />
+                        </div>
+                        <div id='indicator5' className="indicatorItem">
+                            <div className="indicatorLabel"> 👬 No. of Travelers:</div>
+                            <EditFormField
+                                readOnly={readOnly}
+                                value={numTravelers}
+                                placeholder="how many ..."
+                                type='number'
+                                className="edit-field"
+                                onChange={un => setNumTravelers(un)}
+                            />
+                        </div>
+                        <div id='indicator6' className="indicatorItem">
+                            <div className="indicatorLabel"> 🎯 Target Group:</div>
+                            <EditFormField
+                                readOnly={readOnly}
+                                value={targetGroup}
+                                placeholder="suitable for ..."
+                                className="edit-field"
+                                onChange={un => setTargetGroup(un)}
+                            />
+                        </div>
+                        <div id='indicator7' className="indicatorItem locationItem">
+                            <div className="locationLabel"> 📍 Destination:</div>
+                            <EditFormField
+                                readOnly={readOnly}
+                                value={destination}
+                                placeholder="Search and select the exact address to be displayed on the map..."
+                                className="location-edit-field"
+                                onChange={un => setDestination(un)}
+                            />
+                            {!readOnly && <TravelExploreIcon className="search-icon"/>}
+                        </div>
+                        {destinationOptions.length>0 && !readOnly && destination &&
+                                <DestinationOptions
+                                    isInMap = {false}
+                                    setDestination = {setDestination}
+                                    setCoordinates = {setCoordinates}
+                                    destinationOptions = {destinationOptions}
+                                    setDestinationOptions = {setDestinationOptions}
+                                    className="optionList"
+                                />
+                            }
+                    </div>
+                    <div className='DetailsContainer'>
+                        <div className='editorContainer'>
 
-                {showOptions && !readOnly && <nav className='optionList'>
-                    <List >
-                        {destinationOptions.map((item) => {
-                            const display_name = getDisplayName(item)
-                            return (
-                                <div key={item?.properties.osm_id}>
-                                    <ListItem disablePadding
-                                              onClick={() => {
-                                                  setDestination(display_name)
-                                                  setCoordinates(item?.geometry.coordinates)
-                                                  setShowOptions(false)
-                                              }}>
-                                        <ListItemButton>
-                                            <ListItemIcon>
-                                                📍
-                                            </ListItemIcon>
-                                            <ListItemText primary={display_name} />
-                                        </ListItemButton>
-                                    </ListItem>
-                                    < Divider/>
+                            <EditorJs readOnly={readOnly} editMode={editMode} noteId={noteId} editorData={editorData}
+                                      setEditorData={setEditorData}/>
+
+                        </div>
+                    </div>
+                    {readOnly &&
+                        <div className="left-fixed-buttons-in-notes">
+                            <div className="like-note-container left-fixed-button-container">
+                                <div className="like-note-icon left-fixed-button-icon" onClick={handleLikeClick}>
+                                    {liked?
+                                        <ThumbUpAltIcon className="thumb-like-on left-fixed-button-svg"/>
+                                        : <ThumbUpOffAltIcon className="thumb-like-off left-fixed-button-svg" />}
                                 </div>
-                        )})}
-                    </List>
-                </nav>}
-            </div>
-            <div className='DetailsContainer'>
-                <div className='editorContainer'>
-                    <EditorJs readOnly={readOnly} editorData={editorData} setEditorData={setEditorData}/>
+                            </div>
+
+                            <div className="share-note-container left-fixed-button-container">
+                                <div className="share-note-icon left-fixed-button-icon" onClick={handleShareClick}>
+                                    <ReplyOutlinedIcon className="left-fixed-button-svg"/>
+                                </div>
+                            </div>
+                            {coordinates.length !== 0 &&
+                                <div className="locate-note-container left-fixed-button-container">
+                                    <div className="locate-note-icon left-fixed-button-icon" onClick={handleLocateClick}>
+                                        <MyLocationOutlinedIcon className="left-fixed-button-svg"/>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    }
+                    {readOnly &&
+                        <TravelNoteComments
+                            localUserId={localUserId}
+                            noteId={noteId}
+                            // comments={comments}
+                        />
+                    }
                 </div>
             </div>
-        </div>
-    </div>
+        </div>)
 }

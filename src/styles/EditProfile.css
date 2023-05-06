@@ -59,7 +59,7 @@ body {
     height: 100px;
 }
 
-.loginButtonLogin {
+.summitButton {
     background-color: #5977E3;
     color: white;
     font-family: 'Poppins', sans-serif;
@@ -85,4 +85,36 @@ body {
 
 .loginButtonLogin:hover{
     background-color: #4862BE;
+}
+
+.avatarUploadContainer{
+    height: 300px;
+    width: 100%;
+    border-color: black;
+    border-style: dotted;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 5px;
+}
+
+.avatarChange{
+    background-color: #ffffff;
+    color: black;
+    position: center;
+    padding: 2px;
+    border: solid black 1px;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+.profileImage{
+    max-height: 200px;
+    width: auto;
+    padding: 20px;
+    max-width: 100%;
+}
+input[type="file"] {
+    display: none;
 }

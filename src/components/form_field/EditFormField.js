@@ -11,12 +11,14 @@ const EditFormField = props => {
                 readOnly: props.readOnly
             }}
             id="my_edit_form"
-            variant="standard"
+            variant={props.variant ? props.variant : "standard"}
             className={props.className}
             label={props.label}
             type={props.type}
             placeholder={props.placeholder}
             value={props.value}
+            multiline={props.multiline}
+            minRows={props.minRows}
             onChange={e => {
                 if (props.type === 'number'){
                     console.log("yes")

@@ -4,8 +4,14 @@
  * Otherwise, the link localhost:8080 will be returned (Spring server default port).
  * @returns {string}
  */
-export const getDomain = () => {
-    return 'http://localhost:8081';
+export const getDomain = (serverName) => {
+    if (serverName === "user"){
+        return 'http://localhost:8081';
+    }else if (serverName === "note"){
+        return 'http://localhost:8082';
+    }else if (serverName === "post"){
+        return 'http://localhost:8083';
+    }
 };
 
 // export const getWebsocketDomain = () => {

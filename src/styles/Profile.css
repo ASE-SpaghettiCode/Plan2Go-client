@@ -1,6 +1,6 @@
 .main{
-    min-height: 100vh;
-    background-color: #ffffff;
+    height: 100%;
+    background-color: white;
     font-family: Inter;
     color: black;
 }
@@ -11,16 +11,24 @@
     padding: 15px;
 }
 .container{
+    height: 100%;
     display: grid;
     grid-template-columns: 20% 80%;
 }
 .user{
     text-align: center;
-    margin: 20px;
+    margin: 40px 20px;
+    min-height: 80vh;
     align-items: center;
-    border-right-style: solid;
-    border-right-color: white;
-    border-right-width: 1px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    border-radius: 20px;
+}
+.avatarimage{
+    vertical-align: middle;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
 }
 .avatar{
     width: 80%;
@@ -59,8 +67,11 @@ h2{
     height: 100px;
     overflow: hidden;
 }
+.active{
+    background-color: #effaff;
+}
 .postnav a{
-    border: solid rgba(10, 10, 10, 0.65);
+    border: solid #96caea;
     border-radius: 20px;
     padding: 10px 20px;
     margin-left: 35px;
@@ -69,6 +80,7 @@ h2{
     display: block;
     color: black;
     float: left;
+    cursor: pointer;
 }
 .postnav a:hover{
     opacity: 0.7;
@@ -83,13 +95,13 @@ h2{
 .postcard{
     overflow: hidden;
     text-align: left;
-    font-family:"Times New Roman";
     color: rgba(10, 10, 10, 0.65);
     margin:20px;
     height: 200px;
     width: 280px;
     background-color: #E0E0CF;
     border-radius: 15px;
+    cursor: pointer;
 }
 .postcard:hover{
     opacity: 0.7;
@@ -113,4 +125,18 @@ h2{
     padding-top: 0;
     font-style: normal;
     font-weight: normal;
+}
+.userbutton{
+    width: 100px;
+    height: 30px;
+    color: black;
+    cursor: pointer;
+    background-color: white;
+    border: solid rgba(10, 10, 10, 0.65);
+    border-radius: 20px;
+    margin: 20px;
+}
+.userbutton:hover{
+    background-color: #E0E0CF;
+    opacity: 0.7;
 }

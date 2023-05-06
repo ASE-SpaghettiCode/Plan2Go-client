@@ -1,11 +1,14 @@
 import React from 'react';
-import '../Profile.css';
+import '../styles/Profile.css';
 import User from "./User";
 import ProfileNotes from "./ProfileNotes";
+import HeaderBar from "./HeaderBar";
 
 export default function Profile() {
+
     return(
         <div className="main">
+            <HeaderBar/>
             <div className="container">
                 <div>
                     <User/>

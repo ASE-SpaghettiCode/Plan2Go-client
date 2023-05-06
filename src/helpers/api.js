@@ -2,9 +2,21 @@ import axios from 'axios';
 import { getDomain } from './getDomain';
 
 export const api = axios.create({
-    baseURL: getDomain(),
+    baseURL: getDomain("user"),
     headers: { 'Content-Type': 'application/json' }
 });
+
+export const api_note = axios.create({
+    baseURL: getDomain("note"),
+    headers: { 'Content-Type': 'application/json' }
+});
+
+export const api_posts = axios.create({
+    baseURL: getDomain("post"),
+    headers: { 'Content-Type': 'application/json' }
+});
+
+// console.log(getDomain("note"))
 
 export const handleError = error => {
     const response = error.response;
@@ -23,7 +35,6 @@ export const handleError = error => {
         }
 
         console.log('The request was made and answered but was unsuccessful.', error.response);
-        window.location.href = `/home`;
         return info;
     } else {
         if (error.message.match(/Network Error/)) {
