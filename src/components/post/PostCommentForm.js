@@ -1,7 +1,6 @@
 import '../../styles/PostComment.css';
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {api, api_posts, handleError} from "../../helpers/api";
-import React from "react";
 
 export default function PostCommentForm(props){
     const postId=props.postId;

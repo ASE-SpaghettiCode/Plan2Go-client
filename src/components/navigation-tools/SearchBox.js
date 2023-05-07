@@ -1,8 +1,6 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {BookOutlined, DownOutlined, UserOutlined} from '@ant-design/icons';
-import type {MenuProps} from 'antd';
-import {Button, Dropdown, Select, Space} from 'antd';
-import {useState} from "react";
+import {Button, Dropdown, Select, Space, MenuProps} from 'antd';
 import {api, api_note, handleError} from "../../helpers/api";
 
 const SearchBox: React.FC = () => {
@@ -21,7 +19,7 @@ const SearchBox: React.FC = () => {
             }
         } else {
             try {
-                const response = await api_note.get('/notes/');
+                await api_note.get('/notes/');
             } catch (error) {
                 console.error(`Something went wrong while fetching the notes: \n${handleError(error)}`);
                 console.error("Details:", error);

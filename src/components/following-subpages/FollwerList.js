@@ -14,7 +14,6 @@ const FollowerList = () => {
         async function fetchData() {
             try {
                 const response = await api.get('/users/' + userId + '/followers');
-                // const response = await api.get('/users/followTest');
                 setFollowing(response.data);
             } catch (error) {
                 console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);

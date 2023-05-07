@@ -36,7 +36,6 @@ const EditorJs = (props) => {
                 ejInstance.current = editor;
             },
             onChange: async () => {
-                // let content = await this.editorjs.saver.save();
                 let content = await ejInstance.current.save()
                 // Put your logic here to save this data to your DB
                 setEditorData(content);

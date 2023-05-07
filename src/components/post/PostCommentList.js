@@ -1,6 +1,5 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {api_posts, handleError} from "../../helpers/api";
-import React from "react";
 
 export default function PostCommentList(props){
     const postId=props.postId;

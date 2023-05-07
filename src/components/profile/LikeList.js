@@ -1,5 +1,4 @@
-import React, {useState} from "react";
-import {useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import {api,api_note, handleError} from "../../helpers/api";
 import '../../styles/Profile.css';
 import {useNavigate} from "react-router-dom";
@@ -17,7 +16,6 @@ export default function MyLikeList(){
         async function fetchData(){
             try{
                 const response = await api.get(`/users/`+userID+`/likes`);
-                //console.log(response.data);
                 setLikedNotesId(response.data);
             }catch (error) {
                 console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
@@ -40,7 +38,6 @@ export default function MyLikeList(){
     },[likedNotesId]);
 
     const handleClickNotes=(props)=>{
-        //window.location.href=`/travel-notes/`+props.noteId;
         navigate('/travel-notes/'+props.noteId);
     }
 

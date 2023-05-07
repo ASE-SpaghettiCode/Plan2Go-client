@@ -2,13 +2,11 @@ import '../../styles/NaviBar.css'
 import React, { useState,useEffect } from 'react';
 
 import { MailOutlined, PlusCircleOutlined, HomeOutlined, UserOutlined, CompassOutlined } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
-import { Menu } from 'antd';
+import { Menu, Badge, MenuProps  } from 'antd';
 import { api, handleError } from "../../helpers/api";
 import Mailbox from "./Mailbox"
 
 import { useSubscription } from "react-stomp-hooks";
-import { Badge } from 'antd';
 
 const myUserId = localStorage.getItem('id');
 

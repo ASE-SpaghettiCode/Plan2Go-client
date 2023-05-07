@@ -2,7 +2,7 @@ import '../../styles/HomeMap.css'
 import React, {useState, useEffect, useRef} from "react";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import MarkerClusterGroup from 'react-leaflet-cluster'
-import { Icon } from "leaflet";
+import L, { Icon } from "leaflet";
 import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
 import myFakeData from '../../fake-data/travelNotes.json';
 import EditFormField from "../form-field/EditFormField";
@@ -13,7 +13,6 @@ import {api_note} from "../../helpers/api";
 import HeaderBar from "../navigation-tools/HeaderBar";
 
 import "leaflet/dist/leaflet.css";
-import L from "leaflet";
 import "leaflet-easybutton/src/easy-button.js";
 import "leaflet-easybutton/src/easy-button.css";
 import "font-awesome/css/font-awesome.min.css";

@@ -1,7 +1,6 @@
 import '../../styles/PostList.css'
 import {api, api_posts, handleError} from "../../helpers/api";
-import {useState,useEffect} from "react";
-import React from "react";
+import React, {useState,useEffect} from "react";
 import PostCommentForm from "../post/PostCommentForm";
 import PostCommentList from "../post/PostCommentList";
 import SharingThumbnail from "../travel-note/SharingThumbnail";
@@ -42,7 +41,6 @@ export default function PostList(){
         const userId = localStorage.getItem("id");
         const postId = post.postId;
         try {
-            const requestBody = JSON.stringify({userId,postId});
             await api_posts.delete('/users/' + userId + '/posts/' + postId);
             fetchData().then().catch((err) => console.log(err))
         } catch (error) {

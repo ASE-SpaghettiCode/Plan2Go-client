@@ -6,7 +6,7 @@ function Mailbox(props){
 
     const getNotificationItem = (notification) => {
         const { actorId, actorName, targetType, method, context, ownerId } = notification;
-        let naviUrl : String
+        let naviUrl : string
 
 
         switch (method) {
@@ -38,7 +38,7 @@ function Mailbox(props){
     };
 
     const notificationsList = props.notifications.map((notification)=>
-        <div>
+        <div key={notification.key}>
             {getNotificationItem(notification)}
         </div>
     );
