@@ -101,7 +101,6 @@ export default function TravelNoteCreation(props) {
                 api.get(`/users/${authorId}`).then((response) => {
                     setAuthorName(response.data.username)
                     const userImageURL = response.data.imageLink
-                    console.log("userImageURL:", userImageURL)
                     if (userImageURL) {
                         setAuthorProfileImage(userImageURL)
                     }

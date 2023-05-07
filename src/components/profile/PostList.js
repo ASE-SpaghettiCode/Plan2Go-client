@@ -25,7 +25,6 @@ export default function PostList(){
             setUsername(response2.data.username);
             setUserImage(response2.data.imageLink);
             setPosts(response.data);
-            console.log("fetch")
         }catch (error) {
             console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
             console.error("Details:", error);

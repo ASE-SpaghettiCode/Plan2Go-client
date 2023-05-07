@@ -21,6 +21,15 @@ const doLogout = async () => {
 
 
 const NaviBar: React.FC = () => {
+    // Due to an unresolved issue in a third-party library (AntD), we have disabled warnings about it.
+    // see https://github.com/ant-design/ant-design/issues/26136
+    const myError = console.error // copy the original function
+    console.error = (msg) => { // override the original function
+        if (!msg.includes("deprecated in StrictMode.")){
+            myError(msg)
+        }
+    }
+
     const [current, setCurrent] = useState('');
 
     const [mailbox,setMailbox] = useState(false)
@@ -34,7 +43,6 @@ const NaviBar: React.FC = () => {
                 <a href={`/home`}>
                     Map
                 </a>
-                // "Map"
             ),
             key: 'map',
             icon: <HomeOutlined />,
@@ -53,7 +61,6 @@ const NaviBar: React.FC = () => {
                                 <a href={`/post-creation`}>
                                     Post
                                 </a>
-                                // "Post"
                             ),
                             key: 'post',
                         },

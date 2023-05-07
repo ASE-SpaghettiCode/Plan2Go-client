@@ -7,7 +7,6 @@ import Axios from "axios";
 import {api_note} from "../../helpers/api";
 import Marker from "@editorjs/marker";
 import CheckList from "@editorjs/checklist";
-import InlineCode from "@editorjs/inline-code";
 
 
 
@@ -46,7 +45,6 @@ const EditorJs = (props) => {
                 header:Header,
                 marker: Marker,
                 checklist: CheckList,
-                inlineCode: InlineCode,
                 image: {
                     class: ImageTool,
                     config: {

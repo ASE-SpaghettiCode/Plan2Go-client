@@ -18,7 +18,6 @@ import {StompSessionProvider} from "react-stomp-hooks";
 
 function App() {
 
-
     return (
         <div className="App">
             {/*StompSessionProvider : Once a user open the App, he will be connected via WS*/}
