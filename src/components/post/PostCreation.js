@@ -31,7 +31,7 @@ export default function PostCreation() {
                 })
             }
         }
-        fetchData().then()
+        fetchData().then().catch((err) => console.log(err))
     }, [])
 
 

@@ -19,7 +19,7 @@ const FollowButton = () => {
             }
         }
 
-        fetchData().then()
+        fetchData().then().catch((err) => console.log(err))
     }, []);
 
     const doFollow = async () => {

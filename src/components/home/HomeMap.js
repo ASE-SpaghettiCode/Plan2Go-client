@@ -61,7 +61,7 @@ export default function HomeMap() {
                 setNotes(notesWithCoordinates)
             })
         }
-        fetchData().then()
+        fetchData().then().catch((err) => console.log(err))
     },[])
 
 

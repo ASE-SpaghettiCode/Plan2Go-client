@@ -174,7 +174,7 @@ const NaviBar: React.FC = () => {
 
             setItems(initItems(unreadNotificationNum))
         }
-        fetchNotification().then()
+        fetchNotification().then().catch((err) => console.log(err))
     },[fetchTrigger])
 
     useSubscription(`/mailbox/${myUserId}/fetch`, () => {

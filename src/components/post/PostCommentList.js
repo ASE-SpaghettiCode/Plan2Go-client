@@ -18,7 +18,7 @@ export default function PostCommentList(props){
         }
     }
     useEffect(() => {
-        fetchData().then()
+        fetchData().then().catch((err) => console.log(err))
         const interval = setInterval(fetchData, 1000);
         return ()=>clearInterval(interval);
     }, []);
@@ -27,7 +27,7 @@ export default function PostCommentList(props){
         const commentId = comment.commentId;
         try {
             await api_posts.delete('/users/' + userId + '/comments/' + commentId);
-            fetchData().then()
+            fetchData().then().catch((err) => console.log(err))
         } catch (error) {
             alert(`Something went wrong during deleting the post: \n${handleError(error)}`);
         }

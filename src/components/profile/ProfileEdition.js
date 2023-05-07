@@ -33,7 +33,7 @@ const ProfileEdition: React.FC = () => {
             }
         }
 
-        fetchData().then()
+        fetchData().then().catch((err) => console.log(err))
     }, []);
 
     function AvatarUpload() {
@@ -76,7 +76,7 @@ const ProfileEdition: React.FC = () => {
         try {
             e.preventDefault();
             const requestBody = JSON.stringify({userId, username, intro, imageLink});
-            api.put(`/users/${userId}`, requestBody).then()
+            api.put(`/users/${userId}`, requestBody).then().catch((err) => console.log(err))
 
             // submit successfully worked --> navigate to his/her own profile
             window.location.href = `/users/${userId}`;

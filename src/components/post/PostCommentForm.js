@@ -30,7 +30,7 @@ export default function PostCommentForm(props){
             }
         }
 
-        fetchData().then()
+        fetchData().then().catch((err) => console.log(err))
     }, []);
 
     const handleComment=async(e)=>{

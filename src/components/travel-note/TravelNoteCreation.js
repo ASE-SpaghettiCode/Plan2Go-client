@@ -110,7 +110,7 @@ export default function TravelNoteCreation(props) {
             }
         }
 
-        fetchData().then()
+        fetchData().then().catch((err) => console.log(err))
     }, [])
 
     function doSubmit() {

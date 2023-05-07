@@ -41,7 +41,7 @@ export default function TravelNoteComments(props) {
                     setCommentList(response.data)
                 })
         }
-        fetchData().then()
+        fetchData().then().catch((err) => console.log(err))
     }, [refreshTrigger])
 
     return (

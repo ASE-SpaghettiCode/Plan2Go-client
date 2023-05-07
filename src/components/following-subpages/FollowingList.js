@@ -23,7 +23,7 @@ const FollowingList = () => {
             }
         }
 
-        fetchData().then();
+        fetchData().then().catch((err) => console.log(err))
     }, []);
 
     return (

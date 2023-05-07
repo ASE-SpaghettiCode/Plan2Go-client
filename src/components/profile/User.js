@@ -47,7 +47,7 @@ const User = () => {
             }
         }
 
-        fetchData().then()
+        fetchData().then().catch((err) => console.log(err))
     }, []);
 
     let followerNum = user.followers.length;

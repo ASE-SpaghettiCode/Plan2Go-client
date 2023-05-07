@@ -1,5 +1,5 @@
 import {Avatar, Button, Divider, List} from 'antd';
-import {useState, useEffect, useRef} from "react";
+import {useState, useEffect} from "react";
 import React from "react";
 import {api_posts, handleError} from "../../helpers/api";
 import '../../styles/PostListSubpage.css'
@@ -13,9 +13,9 @@ const FollowingPosts = () => {
     const userID = localStorage.getItem('id');
     const [posts, setPosts] = useState([]);
     const [buttonStates, setButtonStates] = useState({});
-    const [ReplyBoxStates, setReplyBoxStates] =useState({});
-    const initialReplyBoxStatesRef=useRef({});
-    const [initialReplyBoxStates,setInitialReplyBoxStates]=useState({});
+    const [ReplyBoxStates, setReplyBoxStates] = useState({});
+    const [likeTrigger, setLikeTrigger] = useState(true);
+    const [replyTrigger, setReplyTrigger] = useState(true);
 
 
     useEffect(() => {
@@ -24,24 +24,28 @@ const FollowingPosts = () => {
                 const response = await api_posts.get('/posts/following/' + userID);
                 setPosts(response.data);
                 response.data.forEach((item) => {
-                    buttonStates[item.post.postId] = {liked: isLiked(item.post)};
-                    initialReplyBoxStates[item.post.postId]={shown:false};
-                    initialReplyBoxStatesRef.current[item.post.postId]={shown:false};
+                    setButtonStates(
+                        (prevState =>
+                            {
+                                const newState={...prevState};
+                                newState[item.post.postId]={
+                                    ...prevState[item.post.postId],
+                                    liked: isLiked(item.post)
+                                };
+                                return newState;
+                            }
+                        )
+                    )
                 });
-                setButtonStates(buttonStates);
-                setInitialReplyBoxStates(initialReplyBoxStates);
             } catch (error) {
                 console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
                 console.error("Details:", error);
                 alert("Something went wrong while fetching the users! See the console for details.");
             }
         }
-        fetchData().then()
-    }, [isLiked, buttonStates, userID]);
+        fetchData().then().catch((err) => console.log(err))
+    }, [likeTrigger, replyTrigger]);
 
-    useEffect(()=>{
-        setReplyBoxStates(initialReplyBoxStatesRef.current);
-    },[initialReplyBoxStatesRef.current]);
 
 
     const dateTransfer = (props) => {
@@ -67,20 +71,19 @@ const FollowingPosts = () => {
     }
 
     function handleReplyButtonClick(postId){
-        //setReplyBoxStates(initialReplyBoxStatesRef.current);
         setReplyBoxStates(
             (prevState =>
                 {
                     const newState={...prevState};
                     newState[postId]={
                         ...prevState[postId],
-                        shown:!prevState[postId].shown
+                        shown: prevState[postId]?.shown ? !prevState[postId]?.shown: true
                     };
                     return newState;
                 }
             )
         )
-        // console.log(ReplyBoxStates);
+        setReplyTrigger(!replyTrigger)
     }
 
     function handleButtonClick(postId) {
@@ -91,9 +94,7 @@ const FollowingPosts = () => {
             api_posts.post(`/users/` + userID + `/likes/posts/` + postId)
                 .catch((err) => console.log("like error: ", err))
         }
-        buttonStates[postId].liked = !buttonStates[postId].liked;
-        setButtonStates(buttonStates);
-        // console.log(buttonStates);
+        setLikeTrigger(!likeTrigger)
     }
 
 
@@ -125,7 +126,7 @@ const FollowingPosts = () => {
                         <div style={{display: "flex", justifyContent: "space-between", alignItems: "center",marginTop:'15px'}}>
                             <Button
                                 icon={
-                                    buttonStates[item.post.postId].liked ? (<LikeFilled style={{color: 'hotpink'}}/>) : (<LikeOutlined/>)
+                                    buttonStates[item.post.postId]?.liked ? (<LikeFilled style={{color: 'hotpink'}}/>) : (<LikeOutlined/>)
                                 } onClick={() => handleButtonClick(item.post.postId)}/>
                             <span className="post-reply-button" onClick={()=>handleReplyButtonClick(item.post.postId)}>Reply</span>
                         </div>

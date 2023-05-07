@@ -30,7 +30,7 @@ const SearchBox: React.FC = () => {
         }
     }
     useEffect(() => {
-        fetchResults().then()
+        fetchResults().then().catch((err) => console.log(err))
     }, [])
 
 
@@ -39,12 +39,12 @@ const SearchBox: React.FC = () => {
     }
     async function doClickUser() {
         setCurrent('User');
-        fetchResults().then()
+        fetchResults().then().catch((err) => console.log(err))
     }
 
     async function doClickNote() {
         setCurrent('Note');
-        fetchResults().then()
+        fetchResults().then().catch((err) => console.log(err))
     }
 
 

@@ -25,7 +25,7 @@ export default function MyLikeList(){
                 alert("Something went wrong while fetching the users! See the console for details.");
             }
         }
-        fetchData().then()
+        fetchData().then().catch((err) => console.log(err))
     },[]);
 
     useEffect(()=>{
@@ -36,7 +36,7 @@ export default function MyLikeList(){
 
             setLikedNotesList(likednotes);
         }
-        fetchData().then()
+        fetchData().then().catch((err) => console.log(err))
     },[likedNotesId]);
 
     const handleClickNotes=(props)=>{

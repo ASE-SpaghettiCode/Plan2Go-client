@@ -26,6 +26,7 @@ export default function PostList(){
             setUsername(response2.data.username);
             setUserImage(response2.data.imageLink);
             setPosts(response.data);
+            console.log("fetch")
         }catch (error) {
             console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
             console.error("Details:", error);
@@ -33,7 +34,7 @@ export default function PostList(){
         }
     }
     useEffect(()=>{
-        fetchData().then()
+        fetchData().then().catch((err) => console.log(err))
     },[]);
 
 
@@ -43,7 +44,7 @@ export default function PostList(){
         try {
             const requestBody = JSON.stringify({userId,postId});
             await api_posts.delete('/users/' + userId + '/posts/' + postId);
-            fetchData().then()
+            fetchData().then().catch((err) => console.log(err))
         } catch (error) {
             alert(`Something went wrong during deleting the post: \n${handleError(error)}`);
         }

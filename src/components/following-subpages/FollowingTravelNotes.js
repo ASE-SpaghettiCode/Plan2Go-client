@@ -24,7 +24,7 @@ export default function FollowingTravelNotes(){
                 alert("Something went wrong while fetching the users! See the console for details.");
             }
         }
-        fetchData().then()
+        fetchData().then().catch((err) => console.log(err))
     },[]);
 
 
