@@ -1,5 +1,6 @@
 import './App.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import {BrowserRouter,Route, Routes} from 'react-router-dom';
+import {Navigate} from "react-router-dom";
 import Profile from "./components/profile/Profile";
 import Landing from "./components/landing/Landing";
 import Login from "./components/login-register/Login";
@@ -13,6 +14,7 @@ import FollowingPosts from "./components/following-subpages/FollowingPosts";
 import FollowingList from "./components/following-subpages/FollowingList";
 import FollowerList from "./components/following-subpages/FollwerList";
 import {StompSessionProvider} from "react-stomp-hooks";
+import LoginGuard from "./components/Route/LoginGuard";
 
 
 
@@ -28,6 +30,7 @@ function App() {
             >
                 <BrowserRouter>
                     <Routes>
+                        <Route path="/" element={<Navigate to="/landing"/>}></Route>
                         <Route path="/landing" element={<Landing/>}/>
                         <Route path="/login" element={<Login/>}/>
                         <Route path="/register" element={<Register/>}/>
