@@ -107,7 +107,7 @@ const NaviBar: React.FC = () => {
         },
         {
             label: (
-                <Badge count={unreadNotificationNum}>
+                <Badge count={unreadNotificationNum} offset={[9,-2]}>
                     <a href="#" >
                         Mailbox
                     </a>

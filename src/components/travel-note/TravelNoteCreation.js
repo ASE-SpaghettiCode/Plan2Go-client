@@ -16,6 +16,7 @@ import TravelNoteComments from "./TravelNoteComments";
 import HeaderBar from "../navigation-tools/HeaderBar";
 import autoCompleteDestinationOptions from "../utils/autoCompleteDestinationOptions";
 import DestinationOptions from "../utils/DestinationOptions";
+import {Badge} from "antd";
 
 
 let DEFAULT_INITIAL_DATA = {
@@ -58,10 +59,11 @@ export default function TravelNoteCreation(props) {
 
     const [editorData, setEditorData] = useState(DEFAULT_INITIAL_DATA);
     const [liked, setLiked] = useState(false);
+    const [likedUsers, setLikedUsers] = useState([])
 
     const path = window.location.pathname
     const noteId = path.substring(path.lastIndexOf('/') + 1)
-
+    console.log("likedUsers:",likedUsers)
 
     useEffect(() => {
         async function fetchData() {
@@ -79,8 +81,7 @@ export default function TravelNoteCreation(props) {
                     setTargetGroup(responseData.targetGroup)
                     setDestination(responseData.destination)
                     setCoordinates(responseData.coordinates)
-                    console.log("likedUsers:",responseData.likedUsers)
-                    console.log("editorData:",responseData.editorData)
+                    setLikedUsers(responseData.likedUsers)
 
                     if (responseData.likedUsers.includes(localUserId)){
                         setLiked(true)
@@ -110,7 +111,7 @@ export default function TravelNoteCreation(props) {
         }
 
         fetchData().then().catch((err) => console.log(err))
-    }, [])
+    }, [liked])
 
     function doSubmit() {
         const requestBody = {
@@ -368,9 +369,12 @@ export default function TravelNoteCreation(props) {
                         <div className="left-fixed-buttons-in-notes">
                             <div className="like-note-container left-fixed-button-container">
                                 <div className="like-note-icon left-fixed-button-icon" onClick={handleLikeClick}>
-                                    {liked?
-                                        <ThumbUpAltIcon className="thumb-like-on left-fixed-button-svg"/>
-                                        : <ThumbUpOffAltIcon className="thumb-like-off left-fixed-button-svg" />}
+                                    <Badge count={likedUsers.length} size="middle" offset={[1,-1]}>
+                                        {liked?
+                                        <ThumbUpAltIcon className="thumb-like-on left-fixed-button-svg"/> :
+                                            <ThumbUpOffAltIcon className="thumb-like-off left-fixed-button-svg" />
+                                        }
+                                    </Badge>
                                 </div>
                             </div>
 
