@@ -19,9 +19,11 @@ const SearchBox: React.FC = () => {
             }
         } else {
             try {
-                await api_note.get('/notes/');
+                const response = await api_note.get('/notes/');
+                const results = response.data.map(d => ({label: d.noteTitle, value: d.noteId}))
+                setOptions(results)
             } catch (error) {
-                console.error(`Something went wrong while fetching the notes: \n${handleError(error)}`);
+                console.error(`Something went wrong while fetching the notes for search box: \n${handleError(error)}`);
                 console.error("Details:", error);
                 alert("Something went wrong while fetching the notes! See the console for details.");
             }
@@ -29,18 +31,18 @@ const SearchBox: React.FC = () => {
     }
     useEffect(() => {
         fetchResults().then().catch((err) => console.log(err))
-    }, [])
+    }, [current])
 
 
-    const handleSelection = (value: string) => {
+    const handleUserSelection = (value: string) => {
         window.location.href = `/users/` + value;
     }
-    async function doClickUser() {
+    function doClickUser() {
         setCurrent('User');
         fetchResults().then().catch((err) => console.log(err))
     }
 
-    async function doClickNote() {
+    function doClickNote() {
         setCurrent('Note');
         fetchResults().then().catch((err) => console.log(err))
     }
@@ -78,9 +80,9 @@ const SearchBox: React.FC = () => {
                 <Select
                     listHeight={160}
                     showSearch
-                    placeholder="search user"
+                    placeholder="search"
                     optionFilterProp="children"
-                    onSelect={handleSelection}
+                    onSelect={handleUserSelection}
                     filterOption={(input, option) =>
                         (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                     }
