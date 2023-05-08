@@ -13,8 +13,3 @@ export const getDomain = (serverName) => {
         return 'http://localhost:8083';
     }
 };
-
-// export const getWebsocketDomain = () => {
-//     return 'ws://localhost:8081';
-    // return devUrl;
-// }

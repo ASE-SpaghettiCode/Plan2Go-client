@@ -1,30 +1,29 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Profile from "./components/Profile";
-import Landing from "./components/Landing";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import HomeMap from "./components/HomeMap";
-import TravelNoteCreation from "./components/TravelNoteCreation"
-import AccountEdition from "./components/AccountEdition";
-import PostCreation from "./components/PostCreation";
-import FollowingTravelNotes from "./components/FollowingTravelNotes";
-import PostListSubpage from "./components/PostListSubpage";
-import FollowingList from "./components/FollowingList";
-import FollowerList from "./components/FollwerList";
+import Profile from "./components/profile/Profile";
+import Landing from "./components/landing/Landing";
+import Login from "./components/login-register/Login";
+import Register from "./components/login-register/Register";
+import HomeMap from "./components/home/HomeMap";
+import TravelNoteCreation from "./components/travel-note/TravelNoteCreation"
+import AccountEdition from "./components/profile/AccountEdition";
+import PostCreation from "./components/post/PostCreation";
+import FollowingTravelNotes from "./components/following-subpages/FollowingTravelNotes";
+import FollowingPosts from "./components/following-subpages/FollowingPosts";
+import FollowingList from "./components/following-subpages/FollowingList";
+import FollowerList from "./components/following-subpages/FollwerList";
 import {StompSessionProvider} from "react-stomp-hooks";
 
 
 
 function App() {
 
-
     return (
         <div className="App">
             {/*StompSessionProvider : Once a user open the App, he will be connected via WS*/}
             <StompSessionProvider
                 brokerURL={`ws://localhost:8081/websocket`}
-                debug={STOMP => console.log({STOMP})}
+                // debug={STOMP => console.log({STOMP})}
                 onConnect={() => console.log({STOMP_CONNECT: 'TCP connection successfully established'})}
             >
                 <BrowserRouter>
@@ -50,7 +49,7 @@ function App() {
                                element={<FollowingTravelNotes/>}
                         />
                         <Route exact path="/following/posts/:id"
-                               element={<PostListSubpage/>}
+                               element={<FollowingPosts/>}
                         />
                         <Route exact path="/following/:id"
                                element={<FollowingList/>}
