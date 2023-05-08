@@ -15,6 +15,7 @@ import FollowingList from "./components/following-subpages/FollowingList";
 import FollowerList from "./components/following-subpages/FollwerList";
 import {StompSessionProvider} from "react-stomp-hooks";
 import LoginGuard from "./components/Route/LoginGuard";
+import HomeGuard from "./components/Route/HomeGuard";
 
 
 
@@ -30,35 +31,35 @@ function App() {
             >
                 <BrowserRouter>
                     <Routes>
-                        <Route path="/" element={<Navigate to="/landing"/>}></Route>
-                        <Route path="/landing" element={<Landing/>}/>
-                        <Route path="/login" element={<Login/>}/>
-                        <Route path="/register" element={<Register/>}/>
-                        <Route path="/users/:id" element={<Profile/>}/>
-                        <Route path="/home" element={<HomeMap/>}/>
-                        <Route exat path="/profile/editing/:id" element={<AccountEdition/>}/>
-                        <Route path="/post-creation" element={<PostCreation/>} />
-                        <Route path="/map" element={<HomeMap/>}/>
+                        <Route path="/" element={<HomeGuard><Navigate to="/landing"/></HomeGuard>}></Route>
+                        <Route path="/landing" element={<HomeGuard><Landing/></HomeGuard>}/>
+                        <Route path="/login" element={<HomeGuard><Login/></HomeGuard>}/>
+                        <Route path="/register" element={<HomeGuard><Register/></HomeGuard>}/>
+                        <Route path="/users/:id" element={<LoginGuard><Profile/></LoginGuard>}/>
+                        <Route path="/home" element={<LoginGuard><HomeMap/></LoginGuard>}/>
+                        <Route exat path="/profile/editing/:id" element={<LoginGuard><AccountEdition/></LoginGuard>}/>
+                        <Route path="/post-creation" element={<LoginGuard><PostCreation/></LoginGuard>} />
+                        <Route path="/map" element={<LoginGuard><HomeMap/></LoginGuard>}/>
                         <Route exact path="/travel-note-creation"
-                               element={<TravelNoteCreation readOnly={false} editMode={false} creationMode={true}/>}
+                               element={<LoginGuard><TravelNoteCreation readOnly={false} editMode={false} creationMode={true}/></LoginGuard>}
                         />
                         <Route exact path="/travel-notes/:id"
-                               element={<TravelNoteCreation readOnly={true} editMode={false} creationMode={false}/> }
+                               element={<LoginGuard><TravelNoteCreation readOnly={true} editMode={false} creationMode={false}/></LoginGuard> }
                         />
                         <Route exact path="/travel-notes/edit/:id"
-                               element={<TravelNoteCreation readOnly={false} editMode={true} creationMode={false}/>}
+                               element={<LoginGuard><TravelNoteCreation readOnly={false} editMode={true} creationMode={false}/></LoginGuard>}
                         />
                         <Route exact path="/following/travel-notes/:id"
-                               element={<FollowingTravelNotes/>}
+                               element={<LoginGuard><FollowingTravelNotes/></LoginGuard>}
                         />
                         <Route exact path="/following/posts/:id"
-                               element={<FollowingPosts/>}
+                               element={<LoginGuard><FollowingPosts/></LoginGuard>}
                         />
                         <Route exact path="/following/:id"
-                               element={<FollowingList/>}
+                               element={<LoginGuard><FollowingList/></LoginGuard>}
                         />
                         <Route exact path="/follower/:id"
-                               element={<FollowerList/>}
+                               element={<LoginGuard><FollowerList/></LoginGuard>}
                         />
                     </Routes>
                 </BrowserRouter>
