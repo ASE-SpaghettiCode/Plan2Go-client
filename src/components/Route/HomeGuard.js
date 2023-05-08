@@ -2,16 +2,16 @@ import React from "react";
 import {Navigate} from "react-router-dom";
 import PropTypes from "prop-types";
 
-const LoginGuard=(props)=>{
-    if(localStorage.getItem("token")){
+const HomeGuard=(props)=>{
+    if(!localStorage.getItem("token")){
         return props.children;
     }
     return(
-        <Navigate to="/landing"/>
+        <Navigate to="/home"/>
     )
 }
-LoginGuard.propTypes = {
+HomeGuard.propTypes = {
     children: PropTypes.node
 }
 
-export default LoginGuard;
+export default HomeGuard;
