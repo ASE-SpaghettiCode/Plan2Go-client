@@ -4,11 +4,14 @@
 }
 .post-comment input{
     display: flex;
-    width:100%;
-    min-height: 100px;
     border-radius: 5px;
+    height: 100px;
     border: solid rgba(126, 125, 125, 0.54) thin;
-    text-align: left;
+    align-items: flex-start;
+    white-space: normal;
+    overflow: hidden;
+    vertical-align: top;
+    word-wrap: break-word;
 }
 .post-comment input:focus{
     border-color: rgba(137, 173, 196, 0.46);

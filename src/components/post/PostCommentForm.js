@@ -48,18 +48,23 @@ export default function PostCommentForm(props){
             alert(`Something went wrong during the post comment: \n${handleError(error)}`);
         }
         setCommentCompleted(true);
+        const url=window.location.pathname;
+        if(url.includes('following')){
+            window.location.reload();
+        }else{
+            window.location.href=window.location.href.replace('?tab=posts','')+'?tab=posts';
+        }
     }
+
     return(
         <div>
             {commentCompleted === false &&
             <div className="post-comment">
-                <input type="text" className="post-comment" value={comment} onChange={(e)=>setComment(e.target.value)}>
-                </input>
+                <input className="post-comment" value={comment} onChange={(e)=>setComment(e.target.value)}/>
                 <div className="post-submit-container">
                     <button className="post-comment-reply-button" onClick={handleComment}>Reply</button>
                 </div>
             </div>}
         </div>
-
     )
 }
