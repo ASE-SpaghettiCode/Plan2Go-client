@@ -4,6 +4,8 @@ import React, {useState,useEffect} from "react";
 import PostCommentForm from "../post/PostCommentForm";
 import PostCommentList from "../post/PostCommentList";
 import SharingThumbnail from "../travel-note/SharingThumbnail";
+import {Button} from "antd";
+import {LikeFilled, LikeOutlined} from "@ant-design/icons";
 
 export default function PostList(){
     const path = window.location.pathname;
@@ -36,6 +38,7 @@ export default function PostList(){
     },[]);
 
 
+
     const handleClick = async(post) => {
         const userId = localStorage.getItem("id");
         const postId = post.postId;
@@ -46,6 +49,7 @@ export default function PostList(){
             alert(`Something went wrong during deleting the post: \n${handleError(error)}`);
         }
     }
+
     const dateTransfer=(props)=>{
         const date=new Date(props);
         const createdDate=date.toLocaleString('en-GB',
@@ -61,17 +65,49 @@ export default function PostList(){
         )
     }
 
+
     function ShowPostList({post}){
         const [showCommentInput, setShowCommentInput]=useState(false);
+        const [buttonStates, setButtonstates]=useState(false);
+        const [likedNum,setLikedNum]=useState();
+
+        function isLiked(post) {
+            const likeList = post.likedUsers;
+            return likeList.indexOf(myUserId) !== -1;
+        }
+
+        useEffect(()=>{
+            setButtonstates(isLiked(post));
+            setLikedNum(post.likedUsers.length);
+        },[post]);
+
         const handleClickReply=()=>{
             setShowCommentInput(!showCommentInput);
         }
+
+        const handleClickLike=(post)=>{
+            if(buttonStates===false){
+                api_posts.post(`/users/` + myUserId + `/likes/posts/` + post.postId)
+                    .catch((err) => console.log("like error: ", err))
+                setButtonstates(true);
+                setLikedNum(likedNum+1);
+            }else{
+                api_posts.delete(`/users/` + myUserId + `/likes/posts/` + post.postId)
+                    .catch((err) => console.log("like error: ", err))
+                setButtonstates(false);
+                setLikedNum(likedNum-1);
+            }
+        }
+
         return(
             <div className="postContainer">
                 <div>
                     <div className="creationDate">
                         <img src={userImage} className="comment-avatar" alt={"comment-avatar"}/>
-                        <h5>{username}</h5>&ensp; • &ensp;{dateTransfer(post.createdTime)}
+                        <div className="postdata">
+                            <h4>{username}</h4>
+                            <div className="posttime">{dateTransfer(post.createdTime)}</div>
+                        </div>
                     </div>
                     <div className="postTextContainer">
                         <div className="text">
@@ -84,14 +120,21 @@ export default function PostList(){
                                               usage="profile"
                             />
                         }
-                        <div className="delete">
+
+                        <div className="postButton">
+                            <div>
+                                <Button icon={buttonStates===false?<LikeOutlined/>:<LikeFilled style={{color: 'hotpink'}}/>} onClick={()=>handleClickLike(post)}/>
+                                <a style={buttonStates===false?{color:''}:{color:'hotpink'}}> {likedNum}</a>
+                            </div>
+                            <div className="delete">
                             <span className="post-reply-button" onClick={handleClickReply}>Reply</span>
                             {myUserId===userID &&
                                 <span className="post-delete" onClick={() => handleClick(post)}>Delete</span>}
+                            </div>
                         </div>
                     </div>
-
                 </div>
+
                 {showCommentInput === true &&
                     <div>
                         <PostCommentForm postId={post.postId}/>

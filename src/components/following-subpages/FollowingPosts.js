@@ -123,10 +123,13 @@ const FollowingPosts = () => {
                             />
                         }
                         <div style={{display: "flex", justifyContent: "space-between", alignItems: "center",marginTop:'15px'}}>
-                            <Button
-                                icon={
-                                    buttonStates[item.post.postId]?.liked ? (<LikeFilled style={{color: 'hotpink'}}/>) : (<LikeOutlined/>)
-                                } onClick={() => handleButtonClick(item.post.postId)}/>
+                            <div>
+                                <Button
+                                    icon={
+                                        buttonStates[item.post.postId]?.liked ? (<LikeFilled style={{color: 'hotpink'}}/>) : (<LikeOutlined/>)
+                                    } onClick={() => handleButtonClick(item.post.postId)}/>
+                                <a style={buttonStates[item.post.postId]?.liked?{color: 'hotpink'}:{color:'black'}}> {item.post.likedUsers.length}</a>
+                            </div>
                             <span className="post-reply-button" onClick={()=>handleReplyButtonClick(item.post.postId)}>Reply</span>
                         </div>
 
