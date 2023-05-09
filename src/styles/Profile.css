@@ -50,9 +50,10 @@
 .information{
     text-align: left;
     align-items: center;
-    padding: 20px;
+    padding: 0 20px;
     font-family: 'Inter';
-    color: black;
+    color: rgba(10, 10, 10, 0.78);
+    font-size: 14px;
 }
 h2{
     margin: 10px;

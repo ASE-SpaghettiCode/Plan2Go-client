@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 import {api, handleError} from "../../helpers/api";
 import FollowButton from "./FollowButton";
 import {Button} from 'antd';
+import UserOutlined from '@ant-design/icons';
 
 const myUserId = localStorage.getItem('id');
 
@@ -63,9 +64,8 @@ const User = () => {
             <Button type="text" href={`/follower/` + userID}>Follower: {followerNum}</Button>
             <Button type="text" href={`/following/` + userID}>Following: {followingNum}</Button>
             <div className="information">
-                <div>
-                    <UserInfo user={user}/>
-                </div>
+                <h3>Introduction</h3>
+                <UserInfo user={user}/>
             </div>
             <div style={{display: myUserId === userID ? 'block' : 'none'}}>
                 <button className="userbutton" onClick={handleEditClick}>Edit Profile</button>
@@ -81,6 +81,9 @@ const UserUsername = ({user}) => {
 };
 
 const UserInfo = ({user}) => {
+    if(user.intro===''){
+        return<div>Introduce yourself to the world.</div>
+    }
     return (
         <div>{user.intro}</div>
     );
