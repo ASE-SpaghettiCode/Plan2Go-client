@@ -5,8 +5,8 @@ import {Link} from "react-router-dom";
 import {api, handleError} from "../../helpers/api";
 import User from "../../models/user";
 export const Login = () => {
-    const [username, setUsername] = useState(null);
-    const [password, setPassword] = useState(null);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -33,10 +33,10 @@ export const Login = () => {
             <form className={"loginForm"} onSubmit={handleLogin}>
                 <div className={"formColor"}></div>
                 <h2 className="titleLogin">Welcome Back!</h2>
-                <label className="label" for={"username"}>Username</label>
+                <label className="label"  htmlFor={"username"}>Username</label>
                 <input className="input" type="text" id="username" value={username}
                        onChange={(e) => setUsername(e.target.value)}/>
-                <label className="label" for={"password"}>Password</label>
+                <label className="label" htmlFor={"password"}>Password</label>
                 <input className="input" type={"password"} id={"password"} value={password}
                        onChange={(e) => setPassword(e.target.value)}/>
                 <div className={"buttonContainer"}>

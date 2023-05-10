@@ -9,7 +9,7 @@
     border: solid rgba(126, 125, 125, 0.54) thin;
     align-items: flex-start;
     white-space: normal;
-    overflow: hidden;
+    overflow: scroll;
     vertical-align: top;
     word-wrap: break-word;
 }

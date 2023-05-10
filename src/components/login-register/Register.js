@@ -7,8 +7,8 @@ import User from "../../models/user";
 
 
 export const Register = () => {
-    const [username, setUsername] = useState(null);
-    const [password, setPassword] = useState(null);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
     const handleRegister = async (e) => {
         e.preventDefault();
