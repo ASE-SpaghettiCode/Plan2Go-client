@@ -4,7 +4,6 @@ import {useNavigate} from "react-router-dom";
 import {api, handleError} from "../../helpers/api";
 import FollowButton from "./FollowButton";
 import {Button} from 'antd';
-import UserOutlined from '@ant-design/icons';
 
 const myUserId = localStorage.getItem('id');
 

@@ -193,6 +193,7 @@ const NaviBar: React.FC = () => {
                 selectedKeys={[current]}
                 mode="horizontal"
                 items={items}
+                collapsedWidth={1000}
             />
             {(mailbox && <Mailbox setMailbox={setMailbox} notifications={notifications} deleteAll={onDeleteAll}/>)}
         </div>

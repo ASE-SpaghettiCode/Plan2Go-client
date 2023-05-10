@@ -16,12 +16,20 @@ import FollowerList from "./components/following-subpages/FollwerList";
 import {StompSessionProvider} from "react-stomp-hooks";
 import LoginGuard from "./components/Route/LoginGuard";
 import HomeGuard from "./components/Route/HomeGuard";
+import {ConfigProvider} from "antd";
 
 
 
 function App() {
 
     return (
+        <ConfigProvider
+            theme={{
+                token: {
+                    fontFamily: 'Poppins',
+                },
+            }}
+        >
         <div className="App">
             {/*StompSessionProvider : Once a user open the App, he will be connected via WS*/}
             <StompSessionProvider
@@ -65,6 +73,7 @@ function App() {
                 </BrowserRouter>
             </StompSessionProvider>
         </div>
+        </ConfigProvider>
     );
 }
 
