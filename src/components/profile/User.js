@@ -80,7 +80,7 @@ const UserUsername = ({user}) => {
 };
 
 const UserInfo = ({user}) => {
-    if(user.intro===''){
+    if(user.intro===null){
         return<div>Introduce yourself to the world.</div>
     }
     return (

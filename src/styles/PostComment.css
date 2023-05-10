@@ -2,7 +2,7 @@
     width:100%;
     margin-top: 5px;
 }
-.post-comment input{
+.post-comment textarea{
     display: flex;
     border-radius: 5px;
     height: 100px;
@@ -13,7 +13,7 @@
     vertical-align: top;
     word-wrap: break-word;
 }
-.post-comment input:focus{
+.post-comment textarea:focus{
     border-color: rgba(137, 173, 196, 0.46);
     outline: none;
 }
@@ -52,6 +52,7 @@
 .comment-content{
     margin: 0 10px;
     padding-bottom: 10px;
+    font-size: 14px;
 }
 .comment-info{
     display: flex;

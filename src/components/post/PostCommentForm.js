@@ -60,7 +60,7 @@ export default function PostCommentForm(props){
         <div>
             {commentCompleted === false &&
             <div className="post-comment">
-                <input className="post-comment" value={comment} onChange={(e)=>setComment(e.target.value)}/>
+                <textarea className="post-comment" value={comment} onChange={(e)=>setComment(e.target.value)}/>
                 <div className="post-submit-container">
                     <button className="post-comment-reply-button" onClick={handleComment}>Reply</button>
                 </div>
