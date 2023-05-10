@@ -1,5 +1,5 @@
 import '../../styles/LandingLayout.css'
-import logo from "../../images/Logo.png";
+import logo from "../../images/Logo-white.png";
 import React from "react";
 import {useNavigate} from "react-router-dom";
 export default function LandingLayout({children}) {

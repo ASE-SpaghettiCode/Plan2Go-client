@@ -12,8 +12,8 @@ const myUserId = localStorage.getItem('id');
 
 const doLogout = async () => {
     try {
-        await api.put(`/users/checking/${myUserId}`);
         localStorage.clear();
+        await api.put(`/users/checking/${myUserId}`);
     } catch (error) {
         alert(`Something went wrong during the logout: \n${handleError(error)}`);
     }
