@@ -1,4 +1,4 @@
-import {Avatar, Button, Divider, List} from 'antd';
+import {Avatar, Badge, Button, Divider, List} from 'antd';
 import {useState, useEffect} from "react";
 import {api_posts, handleError} from "../../helpers/api";
 import '../../styles/PostListSubpage.css'
@@ -124,11 +124,12 @@ const FollowingPosts = () => {
                         }
                         <div style={{display: "flex", justifyContent: "space-between", alignItems: "center",marginTop:'15px'}}>
                             <div>
+                                <Badge count={item.post.likedUsers.length} color={'pink'} offset={[5,15]}>
                                 <Button
                                     icon={
                                         buttonStates[item.post.postId]?.liked ? (<LikeFilled style={{color: 'hotpink'}}/>) : (<LikeOutlined/>)
                                     } onClick={() => handleButtonClick(item.post.postId)}/>
-                                <a style={buttonStates[item.post.postId]?.liked?{color: 'hotpink'}:{color:'black'}}> {item.post.likedUsers.length}</a>
+                                </Badge>
                             </div>
                             <span className="post-reply-button" onClick={()=>handleReplyButtonClick(item.post.postId)}>Reply</span>
                         </div>
