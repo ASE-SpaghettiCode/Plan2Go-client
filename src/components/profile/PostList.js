@@ -4,7 +4,7 @@ import React, {useState,useEffect} from "react";
 import PostCommentForm from "../post/PostCommentForm";
 import PostCommentList from "../post/PostCommentList";
 import SharingThumbnail from "../travel-note/SharingThumbnail";
-import {Button} from "antd";
+import {Button, Badge} from "antd";
 import {LikeFilled, LikeOutlined} from "@ant-design/icons";
 
 export default function PostList(){
@@ -123,8 +123,9 @@ export default function PostList(){
 
                         <div className="postButton">
                             <div>
+                                <Badge count={likedNum} color={"pink"} offset={[5,15]}>
                                 <Button icon={buttonStates===false?<LikeOutlined/>:<LikeFilled style={{color: 'hotpink'}}/>} onClick={()=>handleClickLike(post)}/>
-                                <a style={buttonStates===false?{color:''}:{color:'hotpink'}}> {likedNum}</a>
+                                </Badge>
                             </div>
                             <div className="delete">
                             <span className="post-reply-button" onClick={handleClickReply}>Reply</span>
