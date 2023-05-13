@@ -30,15 +30,20 @@
 h5{
     margin: 5px 0;
 }
-
+h4{
+    margin:2px;
+}
 .creationDate{
     font-weight: lighter;
     height: auto;
     display: flex;
     flex-direction: row;
     align-items: center;
-    font-size: .67em;
-    margin: 5px 0;
+    margin: 2px 0;
+}
+.postdata{
+    display: flex;
+    flex-direction: column;
 }
 
 .text{
@@ -46,6 +51,11 @@ h5{
     width: 90%;
     overflow: auto;
     margin-top: 8px;
+    font-size: 14px;
+}
+.posttime{
+    font-size: 14px;
+    line-height: 1.5714285714285714;
 }
 ::-webkit-scrollbar{
     width: 6px;
@@ -55,6 +65,14 @@ h5{
     background: darkgrey;
 }
 
+.postButton{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    height: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 .delete{
     display: flex;
     justify-content: flex-end;

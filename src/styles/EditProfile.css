@@ -1,5 +1,5 @@
 body {
-    font-family: "poppins";
+    font-family: 'Poppins', sans-serif;
 }
 
 .label {
@@ -9,7 +9,7 @@ body {
     position: relative;
     display: block;
     font-size: 13px;
-    font-weight: semibold;
+    font-weight: 600;
     margin-top: 20px;
 }
 

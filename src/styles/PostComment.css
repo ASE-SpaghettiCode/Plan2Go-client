@@ -1,16 +1,20 @@
 .post-comment{
     width:100%;
     margin-top: 5px;
+    font-family: Poppins, sans-serif;
 }
-.post-comment input{
+.post-comment textarea{
     display: flex;
-    width:100%;
-    min-height: 100px;
     border-radius: 5px;
+    height: 100px;
     border: solid rgba(126, 125, 125, 0.54) thin;
-    text-align: left;
+    align-items: flex-start;
+    white-space: normal;
+    overflow: scroll;
+    vertical-align: top;
+    word-wrap: break-word;
 }
-.post-comment input:focus{
+.post-comment textarea:focus{
     border-color: rgba(137, 173, 196, 0.46);
     outline: none;
 }
@@ -49,6 +53,7 @@
 .comment-content{
     margin: 0 10px;
     padding-bottom: 10px;
+    font-size: 14px;
 }
 .comment-info{
     display: flex;

@@ -20,7 +20,7 @@ export default function autoCompleteDestinationOptions(destination, setDestinati
             })
             .then((result) => {
                 const result_json = JSON.parse(result)
-                if(getDisplayName(result_json.features[0]) !== destination){
+                if(result_json.features[0] && getDisplayName(result_json.features[0]) !== destination){
                     setDestinationOptions(result_json.features)
                 }
             })
