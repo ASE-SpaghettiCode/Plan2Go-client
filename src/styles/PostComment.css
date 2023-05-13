@@ -1,6 +1,7 @@
 .post-comment{
     width:100%;
     margin-top: 5px;
+    font-family: Poppins;
 }
 .post-comment textarea{
     display: flex;
