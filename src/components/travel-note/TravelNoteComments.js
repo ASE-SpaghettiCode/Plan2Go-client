@@ -26,6 +26,7 @@ export default function TravelNoteComments(props) {
         }
         api_note.post(`/notes/${noteId}/comments`, requestBody).then(() =>{
             setRefreshTrigger(!refreshTrigger)
+            setAddedComment("")
         })
     }
     function handleDeleteComment(commentId){
