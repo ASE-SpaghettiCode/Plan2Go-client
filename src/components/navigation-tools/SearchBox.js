@@ -37,6 +37,10 @@ const SearchBox: React.FC = () => {
     const handleUserSelection = (value: string) => {
         window.location.href = `/users/` + value;
     }
+
+    const handleNoteSelection = (value: string) => {
+        window.location.href = `/travel-notes/` + value;
+    }
     function doClickUser() {
         setCurrent('User');
         fetchResults().then().catch((err) => console.log(err))
@@ -82,7 +86,7 @@ const SearchBox: React.FC = () => {
                     showSearch
                     placeholder="search"
                     optionFilterProp="children"
-                    onSelect={handleUserSelection}
+                    onSelect={(value) => current === 'User' ? handleUserSelection(value) : handleNoteSelection(value)}
                     filterOption={(input, option) =>
                         (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                     }
