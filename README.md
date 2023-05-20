@@ -1,10 +1,11 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
+# Plan2Go - Client
+Plan2Go is a social media platform designed exclusively for travel. It can be a tour guide, a resaturant reference and a place you can tell your own stories and share all your experience during adventures.
+Explore your next trip with Plan2Go!
+## Launch & Deployment
 
 In the project directory, you can run:
+### `npm install all`
+Install all the necessary dependencies.
 
 ### `npm start`
 
@@ -28,43 +29,28 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed.
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+##Technology
+React\
+Java Spring Boot\
+REST\
+MUI\
+Ant Design\
+Editor.js\
+Leaflet\
+Cloudinary\
+WebSocket
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+##Demo
+The Home page of website is a world map which display all the Travel notes with location created by users.
+![Alt text](public/HomePage.png)
+User can manage their profile and content created from profile page.
+![Alt text](public/user profile.png)
+User can create two types of content: Post and Travel note, and share the Travel notes by Post
+![Alt text](public/Post.png)
+![Alt text](public/chrome-capture-2023-4-20.png)
+As a social media platform, the website enables users to follow other users and browser updates from the users they are following.
+![Alt text](public/following.png)
+![Alt text](public/Following2.png)
+The user will receive message when other users interact with their post and travel note.
+![Alt text](public/notification.png)

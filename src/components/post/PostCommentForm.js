@@ -52,7 +52,8 @@ export default function PostCommentForm(props){
         if(url.includes('following')){
             window.location.reload();
         }else{
-            window.location.href=window.location.href.replace('?tab=posts','')+'?tab=posts';
+            const post_url=window.location.href.replace('?tab=posts','')+'?tab=posts';
+            window.location.href=post_url;
         }
     }
 
