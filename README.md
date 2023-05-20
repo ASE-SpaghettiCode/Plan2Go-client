@@ -29,7 +29,7 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed.
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-##Technology
+## Technology
 React\
 Java Spring Boot\
 REST\
@@ -41,7 +41,7 @@ Cloudinary\
 WebSocket
 
 
-##Demo
+## Demo
 The Home page of website is a world map which display all the Travel notes with location created by users.
 ![Alt text](public/HomePage.png)
 User can manage their profile and content created from profile page.
